@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://c26pqoh3wwkgy"]
+
+[ext_resource type="Texture2D" uid="uid://biabjcr8wh0l1" path="res://images/letters.png" id="1_mkkli"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aifkk"]
+atlas = ExtResource("1_mkkli")
+region = Rect2(0, 0, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rw07q"]
+atlas = ExtResource("1_mkkli")
+region = Rect2(0, 20, 20, 20)
+
+[node name="LetterTile" type="Node2D" unique_id=1291075001]
+texture_filter = 1
+
+[node name="Tile" type="Sprite2D" parent="." unique_id=229477545]
+texture = SubResource("AtlasTexture_aifkk")
+
+[node name="Letter" type="Sprite2D" parent="Tile" unique_id=149417277]
+texture = SubResource("AtlasTexture_rw07q")
