@@ -1,13 +1,18 @@
 [gd_scene format=3 uid="uid://b7a1vg5211i7h"]
 
 [ext_resource type="PackedScene" uid="uid://eks5o40sbdl2" path="res://scenes/letter_rack.tscn" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://dmcu3x7vffmda" path="res://scenes/letter_stage.tscn" id="2_yqjtg"]
 
 [node name="Game" type="Node" unique_id=1705985166]
 
 [node name="Background" type="ColorRect" parent="." unique_id=95025346]
 offset_right = 400.0
 offset_bottom = 225.0
+mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
 [node name="LetterRack" parent="." unique_id=1857639040 instance=ExtResource("1_uwrxv")]
 position = Vector2(160, 120)
+
+[node name="LetterStage" parent="." unique_id=354605681 instance=ExtResource("2_yqjtg")]
+position = Vector2(200, 60)

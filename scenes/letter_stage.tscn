@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dmcu3x7vffmda"]
+
+[ext_resource type="Script" uid="uid://bod282l2jqui0" path="res://scripts/letter_stage.gd" id="1_2ulgk"]
+
+[node name="LetterStage" type="Node2D" unique_id=354605681]
+script = ExtResource("1_2ulgk")

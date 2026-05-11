@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://biabjcr8wh0l1" path="res://images/letters.png" id="1_mkkli"]
 [ext_resource type="Script" uid="uid://bgi23m8qg8l3w" path="res://scripts/letter_tile.gd" id="1_pbye1"]
+[ext_resource type="Script" uid="uid://bm033pcrhashg" path="res://scripts/letter_tile_hover.gd" id="3_1gko5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_aifkk"]
 atlas = ExtResource("1_mkkli")
@@ -12,6 +13,8 @@ resource_local_to_scene = true
 atlas = ExtResource("1_mkkli")
 region = Rect2(0, 20, 20, 20)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pbye1"]
+
 [node name="LetterTile" type="Node2D" unique_id=1291075001]
 script = ExtResource("1_pbye1")
 
@@ -20,3 +23,12 @@ texture = SubResource("AtlasTexture_aifkk")
 
 [node name="Letter" type="Sprite2D" parent="Tile" unique_id=149417277]
 texture = SubResource("AtlasTexture_rw07q")
+
+[node name="Hover" type="Area2D" parent="." unique_id=1136965543]
+script = ExtResource("3_1gko5")
+
+[node name="HoverRect" type="CollisionShape2D" parent="Hover" unique_id=1665111346]
+shape = SubResource("RectangleShape2D_pbye1")
+
+[connection signal="mouse_entered" from="Hover" to="Hover" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Hover" to="Hover" method="_on_mouse_exited"]

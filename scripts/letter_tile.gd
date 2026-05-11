@@ -12,6 +12,14 @@ func setLetter(letter: String) -> void:
 	var y = index / 9 + 1
 	$Tile/Letter.texture.region = Rect2(x * 20, y * 20, 20, 20)
 
+# Returns the letter on this Tile.
+func getLetter() -> String:
+	return letter
+
+# Returns `true` if this tile is hovered.
+func isHovered() -> bool:
+	return $Hover.hovered
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var n = randi_range(0, 25)

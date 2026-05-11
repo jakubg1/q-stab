@@ -3,17 +3,25 @@
 [ext_resource type="PackedScene" uid="uid://b7a1vg5211i7h" path="res://scenes/game.tscn" id="1_o5qli"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_sgp6g"]
-viewport_path = NodePath("SubViewport")
+viewport_path = NodePath("SubViewportContainer/SubViewport")
 
 [node name="Main" type="Node2D" unique_id=19299424]
 
 [node name="MainCanvas" type="Sprite2D" parent="." unique_id=2059867634]
+visible = false
 texture_filter = 1
 scale = Vector2(3, 3)
 texture = SubResource("ViewportTexture_sgp6g")
 centered = false
 
-[node name="SubViewport" type="SubViewport" parent="." unique_id=39051748]
-size = Vector2i(400, 225)
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=124874134]
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(3, 3)
 
-[node name="Game" parent="SubViewport" unique_id=1462287851 instance=ExtResource("1_o5qli")]
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=39051748]
+handle_input_locally = false
+size = Vector2i(400, 225)
+render_target_update_mode = 4
+
+[node name="Game" parent="SubViewportContainer/SubViewport" unique_id=1462287851 instance=ExtResource("1_o5qli")]
