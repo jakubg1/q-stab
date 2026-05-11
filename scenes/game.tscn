@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://eks5o40sbdl2" path="res://scenes/letter_rack.tscn" id="1_uwrxv"]
 
-[node name="Game" type="Node2D" unique_id=1462287851]
+[node name="Game" type="Node" unique_id=1705985166]
 
 [node name="Background" type="ColorRect" parent="." unique_id=95025346]
 offset_right = 400.0
@@ -10,4 +10,4 @@ offset_bottom = 225.0
 color = Color(0, 0, 0, 1)
 
 [node name="LetterRack" parent="." unique_id=1857639040 instance=ExtResource("1_uwrxv")]
-position = Vector2(200, 160)
+position = Vector2(160, 120)

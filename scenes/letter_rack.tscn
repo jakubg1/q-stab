@@ -1,60 +1,13 @@
 [gd_scene format=3 uid="uid://eks5o40sbdl2"]
 
+[ext_resource type="Script" uid="uid://bi88tr258u8c4" path="res://scripts/letter_rack.gd" id="1_8vxn3"]
 [ext_resource type="Texture2D" uid="uid://b1o4xb2jmoxds" path="res://images/letter_rack.png" id="1_v145p"]
-[ext_resource type="PackedScene" uid="uid://c26pqoh3wwkgy" path="res://scenes/letter_tile.tscn" id="2_nvfm1"]
 
 [node name="LetterRack" type="Node2D" unique_id=1857639040]
-texture_filter = 1
+script = ExtResource("1_8vxn3")
 
 [node name="Background" type="Sprite2D" parent="." unique_id=1800365923]
+position = Vector2(40, 40)
 texture = ExtResource("1_v145p")
 
 [node name="Letters" type="Node2D" parent="." unique_id=2120526347]
-
-[node name="LetterTile" parent="Letters" unique_id=1291075001 instance=ExtResource("2_nvfm1")]
-position = Vector2(-30, -30)
-
-[node name="LetterTile2" parent="Letters" unique_id=1195598075 instance=ExtResource("2_nvfm1")]
-position = Vector2(-10, -30)
-
-[node name="LetterTile3" parent="Letters" unique_id=1036325400 instance=ExtResource("2_nvfm1")]
-position = Vector2(10, -30)
-
-[node name="LetterTile4" parent="Letters" unique_id=1148070644 instance=ExtResource("2_nvfm1")]
-position = Vector2(30, -30)
-
-[node name="LetterTile5" parent="Letters" unique_id=1037462 instance=ExtResource("2_nvfm1")]
-position = Vector2(-30, -10)
-
-[node name="LetterTile6" parent="Letters" unique_id=1830913166 instance=ExtResource("2_nvfm1")]
-position = Vector2(-10, -10)
-
-[node name="LetterTile7" parent="Letters" unique_id=729648113 instance=ExtResource("2_nvfm1")]
-position = Vector2(10, -10)
-
-[node name="LetterTile8" parent="Letters" unique_id=1034346351 instance=ExtResource("2_nvfm1")]
-position = Vector2(30, -10)
-
-[node name="LetterTile9" parent="Letters" unique_id=159214114 instance=ExtResource("2_nvfm1")]
-position = Vector2(-30, 10)
-
-[node name="LetterTile10" parent="Letters" unique_id=827053428 instance=ExtResource("2_nvfm1")]
-position = Vector2(-10, 10)
-
-[node name="LetterTile11" parent="Letters" unique_id=826117634 instance=ExtResource("2_nvfm1")]
-position = Vector2(10, 10)
-
-[node name="LetterTile12" parent="Letters" unique_id=201879275 instance=ExtResource("2_nvfm1")]
-position = Vector2(30, 10)
-
-[node name="LetterTile13" parent="Letters" unique_id=1686226516 instance=ExtResource("2_nvfm1")]
-position = Vector2(-30, 30)
-
-[node name="LetterTile14" parent="Letters" unique_id=86727206 instance=ExtResource("2_nvfm1")]
-position = Vector2(-10, 30)
-
-[node name="LetterTile15" parent="Letters" unique_id=1078123278 instance=ExtResource("2_nvfm1")]
-position = Vector2(10, 30)
-
-[node name="LetterTile16" parent="Letters" unique_id=1908072774 instance=ExtResource("2_nvfm1")]
-position = Vector2(30, 30)
