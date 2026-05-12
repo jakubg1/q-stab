@@ -20,14 +20,17 @@ script = ExtResource("1_pbye1")
 
 [node name="Tile" type="Sprite2D" parent="." unique_id=229477545]
 texture = SubResource("AtlasTexture_aifkk")
+centered = false
 
 [node name="Letter" type="Sprite2D" parent="Tile" unique_id=149417277]
 texture = SubResource("AtlasTexture_rw07q")
+centered = false
 
 [node name="Hover" type="Area2D" parent="." unique_id=1136965543]
 script = ExtResource("3_1gko5")
 
 [node name="HoverRect" type="CollisionShape2D" parent="Hover" unique_id=1665111346]
+position = Vector2(10, 10)
 shape = SubResource("RectangleShape2D_pbye1")
 
 [connection signal="mouse_entered" from="Hover" to="Hover" method="_on_mouse_entered"]

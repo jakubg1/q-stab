@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://b7a1vg5211i7h"]
 
+[ext_resource type="Script" uid="uid://bri670w5c1is5" path="res://scripts/letter_manager.gd" id="1_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://eks5o40sbdl2" path="res://scenes/letter_rack.tscn" id="1_uwrxv"]
 [ext_resource type="PackedScene" uid="uid://dmcu3x7vffmda" path="res://scenes/letter_stage.tscn" id="2_yqjtg"]
 
@@ -11,8 +12,11 @@ offset_bottom = 225.0
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
-[node name="LetterRack" parent="." unique_id=1857639040 instance=ExtResource("1_uwrxv")]
+[node name="LetterManager" type="Node" parent="." unique_id=726949799]
+script = ExtResource("1_lnu2h")
+
+[node name="LetterRack" parent="LetterManager" unique_id=1857639040 instance=ExtResource("1_uwrxv")]
 position = Vector2(160, 120)
 
-[node name="LetterStage" parent="." unique_id=354605681 instance=ExtResource("2_yqjtg")]
+[node name="LetterStage" parent="LetterManager" unique_id=354605681 instance=ExtResource("2_yqjtg")]
 position = Vector2(200, 60)
