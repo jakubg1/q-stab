@@ -43,6 +43,19 @@ func moveLettersToRackUntil(tile: Node) -> void:
 		if not lastTile or lastTile == tile:
 			break
 
+# Checks if the specified word is valid and returns `true` if so, `false` otherwise.
+func isWordValid(word: String) -> bool:
+	# Obviously this will be more sophisticated than that eventually.
+	return len(word) > 0
+
+# Attempts to submit the word in rack.
+func submitWord() -> void:
+	var word = letterStage.getWord()
+	if isWordValid(word):
+		letterStage.destroyTiles()
+		letterRack.fill()
+		print(word)
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -76,6 +89,8 @@ func _input(event: InputEvent) -> void:
 			moveAllLettersToRack()
 		elif event.keycode == KEY_ESCAPE:
 			moveAllLettersToRack()
+		elif event.keycode == KEY_ENTER:
+			submitWord()
 		else:
 			# Handle a letter being pressed.
 			var code = event.get_unicode()

@@ -20,6 +20,12 @@ func removeAllTiles() -> void:
 	while len(tiles) > 0:
 		removeTile()
 
+# Destroys all tiles in the stage. This is supposed to run after successfully submitting a word.
+func destroyTiles() -> void:
+	while len(tiles) > 0:
+		var tile = tiles.pop_back()
+		tile.destroy()
+
 # Returns the most recent (rightmost) tile in the stage, or `null` if the stage is empty.
 func getLastTile() -> Node:
 	return tiles[-1] if len(tiles) > 0 else null
@@ -33,7 +39,10 @@ func getHoveredTile() -> Node:
 
 # Returns a word comprised of the current tiles in the stage.
 func getWord() -> String:
-	return ""
+	var word = ""
+	for tile in tiles:
+		word += tile.getWordComponent()
+	return word
 
 # Returns a tile node position based on the index in the stage.
 func getTilePosition(i: int) -> Vector2:

@@ -21,6 +21,14 @@ func returnTile(tile: Node) -> void:
 	tile.reparent(self)
 	tile.position = getTilePosition(tile.getRackIndex())
 
+# Moves the specified tile to a different position.
+# Overwrites whatever was at the position previously and sets the tile in old position to `null`.
+func moveTile(tile: Node, index: int) -> void:
+	tiles[tile.getRackIndex()] = null
+	tiles[index] = tile
+	tile.setRackIndex(index)
+	tile.position = getTilePosition(tile.getRackIndex())
+
 # Returns a tile at given tile index.
 func getTile(index: int) -> Node:
 	return tiles[index]
@@ -40,6 +48,31 @@ func getHoveredTile() -> Node:
 		if tile.isOnRack() and tile.isHovered():
 			return tile
 	return null
+
+# Purges destroyed tiles, makes existing ones fall down in the holes and new ones fall from the top.
+func fill() -> void:
+	# Purge destroyed tiles.
+	for i in 16:
+		if getTile(i).isDestroyed():
+			tiles[i] = null
+	# Fall existing tiles into the newly created holes and spawn new tiles, column by column.
+	for x in 4:
+		for y in range(3, -1, -1): # Iterates through [3, 2, 1, 0]. Essentially, we are working our way up.
+			var index = x + y * 4
+			if getTile(index):
+				continue # There is a tile there, leave it alone.
+			# If we have arrived here, this space is empty.
+			# Look for a tile above us that we could fit here.
+			var seekTile = null
+			for seekY in range(y - 1, -1, -1): # Working our way up from the tile one above.
+				seekTile = getTile(x + seekY * 4)
+				if seekTile:
+					break # We found a tile. Seek over.
+			# If we found a tile above us, move it here. Otherwise, spawn a new tile.
+			if seekTile:
+				moveTile(seekTile, index)
+			else:
+				addTile(index)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
