@@ -44,6 +44,13 @@ func getWord() -> String:
 		word += tile.getWordComponent()
 	return word
 
+# Returns the score of the current word in stage.
+func getWordScore() -> int:
+	var score = 0
+	for tile in tiles:
+		score += tile.getScore()
+	return score
+
 # Returns a tile node position based on the index in the stage.
 func getTilePosition(i: int) -> Vector2:
 	return Vector2(i * 20 - len(tiles) * 10, 0)

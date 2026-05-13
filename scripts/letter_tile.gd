@@ -2,6 +2,11 @@ extends Node2D
 
 const LETTERS := "abcdefghijklmnopqrstuvwxyz*"
 const LETTER_MAPPINGS := {"q": "qu"}
+const LETTER_SCORES := {
+	"a": 1, "b": 3, "c": 3, "d": 2, "e": 1, "f": 4, "g": 2, "h": 4, "i": 1,
+	"j": 10, "k": 5, "l": 1, "m": 3, "n": 1, "o": 1, "p": 3, "q": 10, "r": 1,
+	"s": 1, "t": 1, "u": 2, "v": 4, "w": 5, "x": 10, "y": 4, "z": 10, "*": 0
+}
 var letter := "a"
 var onRack := true
 var rackIndex := 0
@@ -25,6 +30,10 @@ func getLetter() -> String:
 # For example, for the Q tile this returns "qu".
 func getWordComponent() -> String:
 	return LETTER_MAPPINGS[letter] if letter in LETTER_MAPPINGS else letter
+
+# Returns this Tile's letter score.
+func getScore() -> int:
+	return LETTER_SCORES[letter]
 
 # Sets whether this tile is currently on rack.
 func setOnRack(onRack: bool) -> void:

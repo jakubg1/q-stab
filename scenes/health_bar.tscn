@@ -1,0 +1,150 @@
+[gd_scene format=3 uid="uid://d25qqpfquper6"]
+
+[ext_resource type="Texture2D" uid="uid://cf3dbvdrynfs0" path="res://images/health_bar.png" id="1_1bvlm"]
+[ext_resource type="Script" uid="uid://kuirekaoou1k" path="res://scripts/health_bar.gd" id="1_6opq1"]
+[ext_resource type="Texture2D" uid="uid://c0r6ymn0ht5fs" path="res://images/health_bar_juice.png" id="3_tujlf"]
+[ext_resource type="FontFile" uid="uid://ckttjiby7l5pr" path="res://fonts/comicoro.ttf" id="4_tujlf"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_6opq1"]
+font = ExtResource("4_tujlf")
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_tujlf"]
+font = ExtResource("4_tujlf")
+font_color = Color(0, 0, 0, 1)
+outline_color = Color(0, 0, 0, 1)
+
+[node name="HealthBar" type="Node2D" unique_id=2022486482]
+script = ExtResource("1_6opq1")
+
+[node name="Background" type="NinePatchRect" parent="." unique_id=1552382997]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -27.0
+offset_top = -6.0
+offset_bottom = 6.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("1_1bvlm")
+patch_margin_left = 14
+patch_margin_right = 13
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=240633290]
+clip_contents = true
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -213.0
+offset_top = -5.0
+offset_right = -13.0
+offset_bottom = 4.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="MarginContainer" unique_id=1310766413]
+layout_mode = 2
+
+[node name="Bar" type="NinePatchRect" parent="MarginContainer/Control" unique_id=882887477]
+layout_mode = 0
+offset_left = 190.0
+offset_right = 208.0
+offset_bottom = 9.0
+texture = ExtResource("3_tujlf")
+patch_margin_left = 8
+
+[node name="Text" type="Label" parent="." unique_id=895967947]
+z_index = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -42.0
+offset_top = -8.0
+offset_right = -15.0
+offset_bottom = 7.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "20"
+label_settings = SubResource("LabelSettings_6opq1")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Outline1" type="Label" parent="Text" unique_id=952012645]
+z_index = -1
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -26.0
+offset_top = -7.5
+offset_right = 1.0
+offset_bottom = 7.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "20"
+label_settings = SubResource("LabelSettings_tujlf")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Outline2" type="Label" parent="Text" unique_id=2105559327]
+z_index = -1
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -27.0
+offset_top = -6.5
+offset_bottom = 8.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "20"
+label_settings = SubResource("LabelSettings_tujlf")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Outline3" type="Label" parent="Text" unique_id=740037156]
+z_index = -1
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -28.0
+offset_top = -7.5
+offset_right = -1.0
+offset_bottom = 7.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "20"
+label_settings = SubResource("LabelSettings_tujlf")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Outline4" type="Label" parent="Text" unique_id=1756482568]
+z_index = -1
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -27.0
+offset_top = -8.5
+offset_bottom = 6.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "20"
+label_settings = SubResource("LabelSettings_tujlf")
+horizontal_alignment = 2
+vertical_alignment = 1

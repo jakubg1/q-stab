@@ -3,6 +3,8 @@ extends Node
 @onready var letterRack: Node2D = $LetterRack
 @onready var letterStage: Node2D = $LetterStage
 
+signal word_submitted(score: int)
+
 # Moves a letter from the specified index in the rack to the stage.
 func moveLetterToStage(index: int) -> void:
 	var tile = letterRack.getTile(index)
@@ -51,10 +53,12 @@ func isWordValid(word: String) -> bool:
 # Attempts to submit the word in rack.
 func submitWord() -> void:
 	var word = letterStage.getWord()
+	var score = letterStage.getWordScore()
 	if isWordValid(word):
 		letterStage.destroyTiles()
 		letterRack.fill()
-		print(word)
+		print(word + " for " + str(score))
+		word_submitted.emit(score)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
