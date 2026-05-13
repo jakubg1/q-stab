@@ -15,8 +15,8 @@ var maxValue := 50
 
 # Updates the widget sizes.
 func updateLayout() -> void:
-	background.size.x = 17 + maxValue
-	background.position.x = -17 - maxValue
+	background.size.x = 26 + maxValue
+	background.position.x = -26 - maxValue
 	bar.size.x = 8 + value
 	bar.position.x = 200 - value
 	text.text = str(value)
