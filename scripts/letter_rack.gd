@@ -3,11 +3,11 @@ extends Node2D
 const LETTER_TILE := preload("res://scenes/letter_tile.tscn")
 var tiles: Dictionary[int, Node] = {}
 
-# Returns the tile node position at specific index.
+## Returns the tile node position at specific index.
 func getTilePosition(index: int) -> Vector2:
 	return Vector2((index % 4) * 20, (index / 4) * 20)
 
-# Adds a new tile to the rack at given index.
+## Adds a new tile to the rack at given index.
 func addTile(index: int) -> void:
 	var tile = LETTER_TILE.instantiate()
 	tiles[index] = tile
@@ -15,25 +15,25 @@ func addTile(index: int) -> void:
 	tile.position = getTilePosition(index)
 	tile.setRackIndex(index)
 
-# Returns the specified tile back to the rack.
+## Returns the specified tile back to the rack.
 func returnTile(tile: Node) -> void:
 	tile.setOnRack(true)
 	tile.reparent(self)
 	tile.position = getTilePosition(tile.getRackIndex())
 
-# Moves the specified tile to a different position.
-# Overwrites whatever was at the position previously and sets the tile in old position to `null`.
+## Moves the specified tile to a different position.
+## Overwrites whatever was at the position previously and sets the tile in old position to `null`.
 func moveTile(tile: Node, index: int) -> void:
 	tiles[tile.getRackIndex()] = null
 	tiles[index] = tile
 	tile.setRackIndex(index)
 	tile.position = getTilePosition(tile.getRackIndex())
 
-# Returns a tile at given tile index.
+## Returns a tile at given tile index.
 func getTile(index: int) -> Node:
 	return tiles[index]
 
-# Returns the first tile matching the given letter, or `null` if there isn't any.
+## Returns the first tile matching the given letter, or `null` if there isn't any.
 func getTileFromLetter(letter: String) -> Node:
 	for i in 16:
 		var tile = getTile(i)
@@ -41,8 +41,8 @@ func getTileFromLetter(letter: String) -> Node:
 			return tile
 	return null
 
-# Returns the first enhanced tile matching the given letter.
-# Falls back to `getTileFromLetter()` if no enhanced tile is found.
+## Returns the first enhanced tile matching the given letter.
+## Falls back to `getTileFromLetter()` if no enhanced tile is found.
 func getEnhancedTileFromLetter(letter: String) -> Node:
 	for i in 16:
 		var tile = getTile(i)
@@ -50,8 +50,8 @@ func getEnhancedTileFromLetter(letter: String) -> Node:
 			return tile
 	return getTileFromLetter(letter)
 
-# Returns the first regular tile matching the given letter.
-# Falls back to `getTileFromLetter()` if no regular tile is found.
+## Returns the first regular tile matching the given letter.
+## Falls back to `getTileFromLetter()` if no regular tile is found.
 func getRegularTileFromLetter(letter: String) -> Node:
 	for i in 16:
 		var tile = getTile(i)
@@ -59,7 +59,7 @@ func getRegularTileFromLetter(letter: String) -> Node:
 			return tile
 	return getTileFromLetter(letter)
 
-# Returns a random tile that is currently on the rack, or `null` if there isn't any.
+## Returns a random tile that is currently on the rack, or `null` if there isn't any.
 func getRandomTile() -> Node:
 	var tiles = []
 	for i in 16:
@@ -70,7 +70,7 @@ func getRandomTile() -> Node:
 		return tiles[randi_range(0, len(tiles) - 1)]
 	return null
 
-# Returns a random tile that is currently on the rack and not a gem, or `null` if there isn't any.
+## Returns a random tile that is currently on the rack and not a gem, or `null` if there isn't any.
 func getRandomNonGemTile() -> Node:
 	var tiles = []
 	for i in 16:
@@ -81,7 +81,7 @@ func getRandomNonGemTile() -> Node:
 		return tiles[randi_range(0, len(tiles) - 1)]
 	return null
 
-# Returns the currently hovered tile, or `null` if there isn't any.
+## Returns the currently hovered tile, or `null` if there isn't any.
 func getHoveredTile() -> Node:
 	for i in 16:
 		var tile = getTile(i)
@@ -89,7 +89,7 @@ func getHoveredTile() -> Node:
 			return tile
 	return null
 
-# Purges destroyed tiles, makes existing ones fall down in the holes and new ones fall from the top.
+## Purges destroyed tiles, makes existing ones fall down in the holes and new ones fall from the top.
 func fill() -> void:
 	# Purge destroyed tiles.
 	for i in 16:
@@ -114,11 +114,11 @@ func fill() -> void:
 			else:
 				addTile(index)
 
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	for i in 16:
 		addTile(i)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass

@@ -24,7 +24,7 @@ var onRack := true
 var rackIndex := 0
 var destroyed := false
 
-# Readjusts the tile's display.
+## Readjusts the tile's display.
 func refreshDisplay() -> void:
 	tileSprite.texture.region = Rect2(gemType * 20, 0, 20, 20)
 	var index = LETTERS.find(letter)
@@ -33,73 +33,73 @@ func refreshDisplay() -> void:
 	letterSprite.texture.region = Rect2(x * 20, y * 20, 20, 20)
 	valueSprite.texture.region = Rect2(0, getValue() * 7, 8, 7)
 
-# Sets a letter on this Tile.
-# `letter` must be a valid lowercase letter.
+## Sets a letter on this Tile.
+## `letter` must be a valid lowercase letter.
 func setLetter(letter: String) -> void:
 	self.letter = letter
 	refreshDisplay()
 
-# Returns the letter on this Tile. This is always a single character.
-# For example, for the Q tile this returns "q".
+## Returns the letter on this Tile. This is always a single character.
+## For example, for the Q tile this returns "q".
 func getLetter() -> String:
 	return letter
 
-# Sets the gem type on this Tile.
+## Sets the gem type on this Tile.
 func setGemType(gemType: Enums.GemType) -> void:
 	self.gemType = gemType
 	refreshDisplay()
 
-# Returns the current gem type on this Tile.
+## Returns the current gem type on this Tile.
 func getGemType() -> Enums.GemType:
 	return gemType
 
-# Returns the letter or multiple letters this Tile is used for a word.
-# For example, for the Q tile this returns "qu".
+## Returns the letter or multiple letters this Tile is used for a word.
+## For example, for the Q tile this returns "qu".
 func getWordComponent() -> String:
 	return LETTER_MAPPINGS[letter] if letter in LETTER_MAPPINGS else letter
 
-# Returns this Tile's letter base value, including enhancements.
+## Returns this Tile's letter base value, including enhancements.
 func getValue() -> int:
 	var value = LETTER_VALUES[letter]
 	if gemType == Enums.GemType.YELLOW:
 		value += 5
 	return value
 
-# Sets whether this tile is currently on rack.
+## Sets whether this tile is currently on rack.
 func setOnRack(onRack: bool) -> void:
 	self.onRack = onRack
 
-# Returns whether this tile is currently on rack.
+## Returns whether this tile is currently on rack.
 func isOnRack() -> bool:
 	return onRack
 
-# Sets this tile's rack index.
+## Sets this tile's rack index.
 func setRackIndex(index: int) -> void:
 	self.rackIndex = index
 
-# Returns this tile's rack index.
-# This is used so that the tile can be moved back to its home position on the rack.
+## Returns this tile's rack index.
+## This is used so that the tile can be moved back to its home position on the rack.
 func getRackIndex() -> int:
 	return rackIndex
 
-# Returns `true` if this tile is hovered.
+## Returns `true` if this tile is hovered.
 func isHovered() -> bool:
 	return hoverArea.hovered
 
-# Destroys this tile.
+## Destroys this tile.
 func destroy() -> void:
 	# This tile will still exist until the end of frame, and we need the destruction fact now.
 	destroyed = true
 	queue_free()
 
-# Returns whether this tile is destroyed, i.e. `destroy()` has been called but the node still exists.
+## Returns whether this tile is destroyed, i.e. `destroy()` has been called but the node still exists.
 func isDestroyed() -> bool:
 	return destroyed
 
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	setLetter(Utils.weightedRandomKeys(LETTER_WEIGHTS))
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass

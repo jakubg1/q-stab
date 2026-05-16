@@ -11,7 +11,7 @@ extends Node
 
 signal word_submitted(score: int)
 
-# Moves a letter in the rack to the stage. If the tile is `null`, plays a "not accepted" sound.
+## Moves a letter in the rack to the stage. If the tile is `null`, plays a "not accepted" sound.
 func moveLetterToStage(tile: Node) -> void:
 	if tile:
 		letterStage.addTile(tile)
@@ -19,14 +19,14 @@ func moveLetterToStage(tile: Node) -> void:
 	else:
 		letterNotFoundSound.play()
 
-# Moves a letter from the specified index in the rack to the stage.
+## Moves a letter from the specified index in the rack to the stage.
 func moveLetterToStageFromIndex(index: int) -> void:
 	moveLetterToStage(letterRack.getTile(index))
 
-# Moves a letter from the specified key being pressed from the rack to the stage.
-# If `enhanced` is `true`, enhanced (gem) tiles are preferred.
-# Otherwise, regular tiles are preferred.
-# Setting `enhanced` to `null` will cause the pick to be indifferent.
+## Moves a letter from the specified key being pressed from the rack to the stage.
+## If `enhanced` is `true`, enhanced (gem) tiles are preferred.
+## Otherwise, regular tiles are preferred.
+## Setting `enhanced` to `null` will cause the pick to be indifferent.
 func moveLetterToStageFromKey(letter: String, enhanced: bool) -> void:
 	# Do not move a U after a Qu tile. QoL FTW!
 	if letter == "u":
@@ -44,31 +44,31 @@ func moveLetterToStageFromKey(letter: String, enhanced: bool) -> void:
 			tile = letterRack.getTileFromLetter(letter)
 	moveLetterToStage(tile)
 
-# Moves the hovered letter in the rack to the stage.
-# Returns `false` if the letter is not found, `true` otherwise.
+## Moves the hovered letter in the rack to the stage.
+## Returns `false` if the letter is not found, `true` otherwise.
 func moveHoveredLetterToStage() -> bool:
 	var tile = letterRack.getHoveredTile()
 	if tile:
 		moveLetterToStage(tile)
 	return tile != null
 
-# Moves the last letter from the stage back to the rack and returns it.
-# If no letters were in the stage, does nothing and returns `null`.
+## Moves the last letter from the stage back to the rack and returns it.
+## If no letters were in the stage, does nothing and returns `null`.
 func moveLetterToRackInternal() -> Node:
 	var tile = letterStage.removeTile()
 	if tile:
 		letterRack.returnTile(tile)
 	return tile
 
-# Moves the last letter from the stage back to the rack and returns it.
-# If no letters were in the stage, does nothing and returns `null`.
+## Moves the last letter from the stage back to the rack and returns it.
+## If no letters were in the stage, does nothing and returns `null`.
 func moveLetterToRack() -> Node:
 	var tile = moveLetterToRackInternal()
 	if tile:
 		letterUnstageSound.play()
 	return tile
 
-# Moves all letters from the stage back to the rack.
+## Moves all letters from the stage back to the rack.
 func moveAllLettersToRack() -> void:
 	if letterStage.isEmpty():
 		return
@@ -78,7 +78,7 @@ func moveAllLettersToRack() -> void:
 			break
 	letterUnstageSound.play()
 
-# Moves all letters from the stage back to the rack until the specified tile (inclusive!).
+## Moves all letters from the stage back to the rack until the specified tile (inclusive!).
 func moveLettersToRackUntil(tile: Node) -> void:
 	if letterStage.isEmpty():
 		return
@@ -88,7 +88,7 @@ func moveLettersToRackUntil(tile: Node) -> void:
 			break
 	letterUnstageSound.play()
 
-# Attempts to submit the word in rack.
+## Attempts to submit the word in rack.
 func submitWord() -> void:
 	if letterStage.isEmpty():
 		return
@@ -107,15 +107,15 @@ func submitWord() -> void:
 		print(word + ": This is not a valid word!")
 		wordInvalidSound.play()
 
-# Called when the node enters the scene tree for the first time.
+## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
-# Called on an input event.
+## Called on an input event.
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
 		# Handle mouse button presses.

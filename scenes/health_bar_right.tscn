@@ -14,7 +14,7 @@ font = ExtResource("4_tujlf")
 font_color = Color(0, 0, 0, 1)
 outline_color = Color(0, 0, 0, 1)
 
-[node name="HealthBar" type="Node2D" unique_id=2022486482]
+[node name="HealthBarRight" type="Node2D" unique_id=2022486482]
 script = ExtResource("1_6opq1")
 
 [node name="Background" type="NinePatchRect" parent="." unique_id=1552382997]

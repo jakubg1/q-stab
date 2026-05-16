@@ -3,12 +3,16 @@
 [ext_resource type="Script" uid="uid://bri670w5c1is5" path="res://scripts/letter_manager.gd" id="1_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://eks5o40sbdl2" path="res://scenes/letter_rack.tscn" id="1_uwrxv"]
 [ext_resource type="PackedScene" uid="uid://dmcu3x7vffmda" path="res://scenes/letter_stage.tscn" id="2_yqjtg"]
+[ext_resource type="Script" uid="uid://dw4f3jesjtpcj" path="res://scripts/enemy.gd" id="3_kvuet"]
 [ext_resource type="AudioStream" uid="uid://d4bsmbc8r6fso" path="res://sounds/letter_stage.wav" id="4_gee14"]
-[ext_resource type="PackedScene" uid="uid://d25qqpfquper6" path="res://scenes/health_bar.tscn" id="4_lbhrr"]
+[ext_resource type="PackedScene" uid="uid://d25qqpfquper6" path="res://scenes/health_bar_right.tscn" id="4_lbhrr"]
 [ext_resource type="AudioStream" uid="uid://wvnbpem07fdt" path="res://sounds/letter_unstage.wav" id="5_0tnpc"]
 [ext_resource type="AudioStream" uid="uid://cysfhk3d5vqpe" path="res://sounds/word_submit.wav" id="6_vtaks"]
 [ext_resource type="AudioStream" uid="uid://cmtgi7o217x4t" path="res://sounds/word_invalid.wav" id="7_kvpfn"]
 [ext_resource type="AudioStream" uid="uid://c0mqv6oueoxmb" path="res://sounds/reject.wav" id="8_0tnpc"]
+[ext_resource type="PackedScene" uid="uid://caqabgp3qv3y1" path="res://scenes/player.tscn" id="10_kvpfn"]
+[ext_resource type="PackedScene" uid="uid://de5nihcbipmlo" path="res://scenes/enemy.tscn" id="11_dinhu"]
+[ext_resource type="PackedScene" uid="uid://ghe35iut5rnc" path="res://scenes/health_bar_left.tscn" id="11_kvuet"]
 
 [node name="Game" type="Node" unique_id=1705985166]
 
@@ -17,6 +21,13 @@ offset_right = 400.0
 offset_bottom = 225.0
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
+
+[node name="Player" parent="." unique_id=72446808 instance=ExtResource("10_kvpfn")]
+position = Vector2(70, 100)
+
+[node name="Enemy" parent="." unique_id=1569784217 instance=ExtResource("11_dinhu")]
+position = Vector2(330, 100)
+script = ExtResource("3_kvuet")
 
 [node name="LetterManager" type="Node" parent="." unique_id=726949799]
 script = ExtResource("1_lnu2h")
@@ -44,7 +55,11 @@ stream = ExtResource("6_vtaks")
 [node name="WordInvalid" type="AudioStreamPlayer" parent="LetterManager/Sound" unique_id=1569014676]
 stream = ExtResource("7_kvpfn")
 
-[node name="HealthBar" parent="." unique_id=2022486482 instance=ExtResource("4_lbhrr")]
+[node name="PlayerHealthBar" parent="." unique_id=2022486482 instance=ExtResource("11_kvuet")]
+position = Vector2(0, 18)
+
+[node name="EnemyHealthBar" parent="." unique_id=1439467667 instance=ExtResource("4_lbhrr")]
 position = Vector2(400, 18)
 
-[connection signal="word_submitted" from="LetterManager" to="HealthBar" method="_on_letter_manager_word_submitted"]
+[connection signal="health_changed" from="Enemy" to="EnemyHealthBar" method="_on_enemy_health_changed"]
+[connection signal="word_submitted" from="LetterManager" to="Enemy" method="_on_letter_manager_word_submitted"]
