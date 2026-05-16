@@ -41,6 +41,46 @@ func getTileFromLetter(letter: String) -> Node:
 			return tile
 	return null
 
+# Returns the first enhanced tile matching the given letter.
+# Falls back to `getTileFromLetter()` if no enhanced tile is found.
+func getEnhancedTileFromLetter(letter: String) -> Node:
+	for i in 16:
+		var tile = getTile(i)
+		if tile.isOnRack() and tile.getLetter() == letter and tile.getGemType() != Enums.GemType.NONE:
+			return tile
+	return getTileFromLetter(letter)
+
+# Returns the first regular tile matching the given letter.
+# Falls back to `getTileFromLetter()` if no regular tile is found.
+func getRegularTileFromLetter(letter: String) -> Node:
+	for i in 16:
+		var tile = getTile(i)
+		if tile.isOnRack() and tile.getLetter() == letter and tile.getGemType() == Enums.GemType.NONE:
+			return tile
+	return getTileFromLetter(letter)
+
+# Returns a random tile that is currently on the rack, or `null` if there isn't any.
+func getRandomTile() -> Node:
+	var tiles = []
+	for i in 16:
+		var tile = getTile(i)
+		if tile.isOnRack():
+			tiles.append(tile)
+	if len(tiles) > 0:
+		return tiles[randi_range(0, len(tiles) - 1)]
+	return null
+
+# Returns a random tile that is currently on the rack and not a gem, or `null` if there isn't any.
+func getRandomNonGemTile() -> Node:
+	var tiles = []
+	for i in 16:
+		var tile = getTile(i)
+		if tile.isOnRack() and tile.getGemType() == Enums.GemType.NONE:
+			tiles.append(tile)
+	if len(tiles) > 0:
+		return tiles[randi_range(0, len(tiles) - 1)]
+	return null
+
 # Returns the currently hovered tile, or `null` if there isn't any.
 func getHoveredTile() -> Node:
 	for i in 16:

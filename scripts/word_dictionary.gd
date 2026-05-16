@@ -9,7 +9,7 @@ func loadList(path: String) -> Dictionary[String, int]:
 	var file = FileAccess.open(path, FileAccess.READ)
 	var result: Dictionary[String, int] = {}
 	for word in file.get_as_text().split("\n"):
-		if len(word) > 0 and not word.begins_with("#"):
+		if len(word) >= 3 and not word.begins_with("#"):
 			result[word] = 1
 	file.close()
 	return result

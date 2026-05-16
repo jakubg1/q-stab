@@ -1,45 +1,69 @@
 extends Node2D
 
+@onready var tileSprite: Sprite2D = $Tile
+@onready var letterSprite: Sprite2D = $Tile/Letter
+@onready var valueSprite: Sprite2D = $Tile/Value
+@onready var hoverArea: Area2D = $Hover
+
 const LETTERS := "abcdefghijklmnopqrstuvwxyz*"
 const LETTER_MAPPINGS := {"q": "qu"}
-const LETTER_SCORES := {
+const LETTER_VALUES := {
 	"a": 1, "b": 3, "c": 3, "d": 2, "e": 1, "f": 4, "g": 2, "h": 4, "i": 1,
 	"j": 10, "k": 5, "l": 1, "m": 3, "n": 1, "o": 1, "p": 3, "q": 10, "r": 1,
 	"s": 1, "t": 1, "u": 2, "v": 4, "w": 5, "x": 10, "y": 4, "z": 10, "*": 0
 }
 const LETTER_WEIGHTS: Dictionary[Variant, int] = {
-	# Scores -> weights: 1 -> 10, 2 -> 7, 3 -> 5, 4 -> 3, 5 -> 2, 10 -> 1
-	"a": 10, "b": 5, "c": 5, "d": 7, "e": 10, "f": 3, "g": 7, "h": 3, "i": 10,
-	"j": 1, "k": 2, "l": 10, "m": 5, "n": 10, "o": 10, "p": 5, "q": 1, "r": 10,
-	"s": 10, "t": 10, "u": 7, "v": 3, "w": 2, "x": 1, "y": 3, "z": 1, "*": 0
+	# Scores -> weights: 1 -> 15, 2 -> 10, 3 -> 7, 4 -> 5, 5 -> 3, 10 -> 2
+	"a": 15, "b": 7, "c": 7, "d": 10, "e": 15, "f": 5, "g": 10, "h": 5, "i": 15,
+	"j": 2, "k": 3, "l": 15, "m": 7, "n": 15, "o": 15, "p": 7, "q": 2, "r": 15,
+	"s": 15, "t": 15, "u": 10, "v": 5, "w": 3, "x": 2, "y": 5, "z": 2, "*": 0
 }
 var letter := "a"
+var gemType := Enums.GemType.NONE
 var onRack := true
 var rackIndex := 0
 var destroyed := false
+
+# Readjusts the tile's display.
+func refreshDisplay() -> void:
+	tileSprite.texture.region = Rect2(gemType * 20, 0, 20, 20)
+	var index = LETTERS.find(letter)
+	var x = index % 9
+	var y = index / 9 + 1
+	letterSprite.texture.region = Rect2(x * 20, y * 20, 20, 20)
+	valueSprite.texture.region = Rect2(0, getValue() * 7, 8, 7)
 
 # Sets a letter on this Tile.
 # `letter` must be a valid lowercase letter.
 func setLetter(letter: String) -> void:
 	self.letter = letter
-	var index = LETTERS.find(letter)
-	var x = index % 9
-	var y = index / 9 + 1
-	$Tile/Letter.texture.region = Rect2(x * 20, y * 20, 20, 20)
+	refreshDisplay()
 
 # Returns the letter on this Tile. This is always a single character.
 # For example, for the Q tile this returns "q".
 func getLetter() -> String:
 	return letter
 
+# Sets the gem type on this Tile.
+func setGemType(gemType: Enums.GemType) -> void:
+	self.gemType = gemType
+	refreshDisplay()
+
+# Returns the current gem type on this Tile.
+func getGemType() -> Enums.GemType:
+	return gemType
+
 # Returns the letter or multiple letters this Tile is used for a word.
 # For example, for the Q tile this returns "qu".
 func getWordComponent() -> String:
 	return LETTER_MAPPINGS[letter] if letter in LETTER_MAPPINGS else letter
 
-# Returns this Tile's letter score.
-func getScore() -> int:
-	return LETTER_SCORES[letter]
+# Returns this Tile's letter base value, including enhancements.
+func getValue() -> int:
+	var value = LETTER_VALUES[letter]
+	if gemType == Enums.GemType.YELLOW:
+		value += 5
+	return value
 
 # Sets whether this tile is currently on rack.
 func setOnRack(onRack: bool) -> void:
@@ -60,7 +84,7 @@ func getRackIndex() -> int:
 
 # Returns `true` if this tile is hovered.
 func isHovered() -> bool:
-	return $Hover.hovered
+	return hoverArea.hovered
 
 # Destroys this tile.
 func destroy() -> void:

@@ -24,14 +24,25 @@ func moveLetterToStageFromIndex(index: int) -> void:
 	moveLetterToStage(letterRack.getTile(index))
 
 # Moves a letter from the specified key being pressed from the rack to the stage.
-func moveLetterToStageFromKey(letter: String) -> void:
+# If `enhanced` is `true`, enhanced (gem) tiles are preferred.
+# Otherwise, regular tiles are preferred.
+# Setting `enhanced` to `null` will cause the pick to be indifferent.
+func moveLetterToStageFromKey(letter: String, enhanced: bool) -> void:
 	# Do not move a U after a Qu tile. QoL FTW!
 	if letter == "u":
 		var lastTile = letterStage.getLastTile()
 		if lastTile and lastTile.getLetter() == "q":
 			return
 	# Look for the appropriate tile in the rack and move it if it exists.
-	moveLetterToStage(letterRack.getTileFromLetter(letter))
+	var tile = null
+	match enhanced:
+		true:
+			tile = letterRack.getEnhancedTileFromLetter(letter)
+		false:
+			tile = letterRack.getRegularTileFromLetter(letter)
+		_:
+			tile = letterRack.getTileFromLetter(letter)
+	moveLetterToStage(tile)
 
 # Moves the hovered letter in the rack to the stage.
 # Returns `false` if the letter is not found, `true` otherwise.
@@ -86,6 +97,9 @@ func submitWord() -> void:
 	if WordDictionary.isWordValid(word):
 		letterStage.destroyTiles()
 		letterRack.fill()
+		var gemCandidate = letterRack.getRandomNonGemTile()
+		if gemCandidate:
+			gemCandidate.setGemType(Enums.GemType.YELLOW)
 		print(word + " for " + str(score) + (" (!!)" if WordDictionary.isWordValidBad(word) else ""))
 		word_submitted.emit(score)
 		wordSubmitSound.play()
@@ -130,4 +144,6 @@ func _input(event: InputEvent) -> void:
 			# Handle a letter being pressed.
 			var code = event.get_unicode()
 			if code != 0:
-				moveLetterToStageFromKey(char(code))
+				var letter = char(code).to_lower()
+				var uppercase = code >= ord("A") and code <= ord("Z")
+				moveLetterToStageFromKey(letter, uppercase)

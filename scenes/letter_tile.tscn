@@ -3,8 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://biabjcr8wh0l1" path="res://images/letters.png" id="1_mkkli"]
 [ext_resource type="Script" uid="uid://bgi23m8qg8l3w" path="res://scripts/letter_tile.gd" id="1_pbye1"]
 [ext_resource type="Script" uid="uid://bm033pcrhashg" path="res://scripts/letter_tile_hover.gd" id="3_1gko5"]
+[ext_resource type="Texture2D" uid="uid://oeefup0nrn2x" path="res://images/letter_values.png" id="3_fxe1e"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_aifkk"]
+resource_local_to_scene = true
 atlas = ExtResource("1_mkkli")
 region = Rect2(0, 0, 20, 20)
 
@@ -12,6 +14,11 @@ region = Rect2(0, 0, 20, 20)
 resource_local_to_scene = true
 atlas = ExtResource("1_mkkli")
 region = Rect2(0, 20, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fo78f"]
+resource_local_to_scene = true
+atlas = ExtResource("3_fxe1e")
+region = Rect2(0, 7, 8, 7)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pbye1"]
 
@@ -24,6 +31,11 @@ centered = false
 
 [node name="Letter" type="Sprite2D" parent="Tile" unique_id=149417277]
 texture = SubResource("AtlasTexture_rw07q")
+centered = false
+
+[node name="Value" type="Sprite2D" parent="Tile" unique_id=932840766]
+position = Vector2(11, 0)
+texture = SubResource("AtlasTexture_fo78f")
 centered = false
 
 [node name="Hover" type="Area2D" parent="." unique_id=1136965543]

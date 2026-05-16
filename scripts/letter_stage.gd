@@ -52,7 +52,7 @@ func getWord() -> String:
 func getWordScore() -> int:
 	var score = 0
 	for tile in tiles:
-		score += tile.getScore()
+		score += tile.getValue()
 	return score
 
 # Returns a tile node position based on the index in the stage.
