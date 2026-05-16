@@ -3,13 +3,25 @@ extends Node
 @onready var letterRack: Node2D = $LetterRack
 @onready var letterStage: Node2D = $LetterStage
 
+@onready var letterStageSound: AudioStreamPlayer = $Sound/LetterStage
+@onready var letterUnstageSound: AudioStreamPlayer = $Sound/LetterUnstage
+@onready var letterNotFoundSound: AudioStreamPlayer = $Sound/LetterNotFound
+@onready var wordSubmitSound: AudioStreamPlayer = $Sound/WordSubmit
+@onready var wordInvalidSound: AudioStreamPlayer = $Sound/WordInvalid
+
 signal word_submitted(score: int)
 
-# Moves a letter from the specified index in the rack to the stage.
-func moveLetterToStage(index: int) -> void:
-	var tile = letterRack.getTile(index)
+# Moves a letter in the rack to the stage. If the tile is `null`, plays a "not accepted" sound.
+func moveLetterToStage(tile: Node) -> void:
 	if tile:
 		letterStage.addTile(tile)
+		letterStageSound.play()
+	else:
+		letterNotFoundSound.play()
+
+# Moves a letter from the specified index in the rack to the stage.
+func moveLetterToStageFromIndex(index: int) -> void:
+	moveLetterToStage(letterRack.getTile(index))
 
 # Moves a letter from the specified key being pressed from the rack to the stage.
 func moveLetterToStageFromKey(letter: String) -> void:
@@ -19,47 +31,67 @@ func moveLetterToStageFromKey(letter: String) -> void:
 		if lastTile and lastTile.getLetter() == "q":
 			return
 	# Look for the appropriate tile in the rack and move it if it exists.
-	var tile = letterRack.getTileFromLetter(letter)
+	moveLetterToStage(letterRack.getTileFromLetter(letter))
+
+# Moves the hovered letter in the rack to the stage.
+# Returns `false` if the letter is not found, `true` otherwise.
+func moveHoveredLetterToStage() -> bool:
+	var tile = letterRack.getHoveredTile()
 	if tile:
-		letterStage.addTile(tile)
+		moveLetterToStage(tile)
+	return tile != null
 
 # Moves the last letter from the stage back to the rack and returns it.
 # If no letters were in the stage, does nothing and returns `null`.
-func moveLetterToRack() -> Node:
+func moveLetterToRackInternal() -> Node:
 	var tile = letterStage.removeTile()
 	if tile:
 		letterRack.returnTile(tile)
 	return tile
 
+# Moves the last letter from the stage back to the rack and returns it.
+# If no letters were in the stage, does nothing and returns `null`.
+func moveLetterToRack() -> Node:
+	var tile = moveLetterToRackInternal()
+	if tile:
+		letterUnstageSound.play()
+	return tile
+
 # Moves all letters from the stage back to the rack.
 func moveAllLettersToRack() -> void:
+	if letterStage.isEmpty():
+		return
 	while true:
-		var lastTile = moveLetterToRack()
+		var lastTile = moveLetterToRackInternal()
 		if not lastTile:
 			break
+	letterUnstageSound.play()
 
 # Moves all letters from the stage back to the rack until the specified tile (inclusive!).
 func moveLettersToRackUntil(tile: Node) -> void:
+	if letterStage.isEmpty():
+		return
 	while true:
-		var lastTile = moveLetterToRack()
+		var lastTile = moveLetterToRackInternal()
 		if not lastTile or lastTile == tile:
 			break
-
-# Checks if the specified word is valid and returns `true` if so, `false` otherwise.
-func isWordValid(word: String) -> bool:
-	return len(word) > 0 and WordDictionary.isWordValid(word)
+	letterUnstageSound.play()
 
 # Attempts to submit the word in rack.
 func submitWord() -> void:
+	if letterStage.isEmpty():
+		return
 	var word = letterStage.getWord()
 	var score = letterStage.getWordScore()
-	if isWordValid(word):
+	if WordDictionary.isWordValid(word):
 		letterStage.destroyTiles()
 		letterRack.fill()
-		print(word + " for " + str(score))
+		print(word + " for " + str(score) + (" (!!)" if WordDictionary.isWordValidBad(word) else ""))
 		word_submitted.emit(score)
+		wordSubmitSound.play()
 	else:
 		print(word + ": This is not a valid word!")
+		wordInvalidSound.play()
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -75,10 +107,8 @@ func _input(event: InputEvent) -> void:
 		# Handle mouse button presses.
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			# Check rack -> stage
-			var tile = letterRack.getHoveredTile()
-			if tile:
-				letterStage.addTile(tile)
-			else:
+			var success = moveHoveredLetterToStage()
+			if not success:
 				# Check stage -> rack
 				var stageTile = letterStage.getHoveredTile()
 				if stageTile:

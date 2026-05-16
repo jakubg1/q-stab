@@ -14,7 +14,7 @@ func loadList(path: String) -> Dictionary[String, int]:
 	file.close()
 	return result
 
-# Returns whether the specified word is a valid word.
+# Checks if the specified word is valid and returns `true` if so, `false` otherwise.
 func isWordValid(word: String) -> bool:
 	return word in words or word in badWords
 

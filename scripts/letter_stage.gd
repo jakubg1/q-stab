@@ -26,6 +26,10 @@ func destroyTiles() -> void:
 		var tile = tiles.pop_back()
 		tile.destroy()
 
+# Returns whether the stage is empty.
+func isEmpty() -> bool:
+	return len(tiles) == 0
+
 # Returns the most recent (rightmost) tile in the stage, or `null` if the stage is empty.
 func getLastTile() -> Node:
 	return tiles[-1] if len(tiles) > 0 else null
