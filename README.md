@@ -5,4 +5,6 @@ No I am not switching to Godot this is a one off project lol
 
 Credits:
 
+- Belanidi Serif font by **Yuri Hanshu** (used for letter tiles): https://www.dafont.com/belanidi-serif.font
 - Comicoro font by **jeti**: https://fontenddev.com/fonts/comicoro/
+- Word lists are credited in the respective files in the `dictionary` directory.

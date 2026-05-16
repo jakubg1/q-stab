@@ -47,8 +47,7 @@ func moveLettersToRackUntil(tile: Node) -> void:
 
 # Checks if the specified word is valid and returns `true` if so, `false` otherwise.
 func isWordValid(word: String) -> bool:
-	# Obviously this will be more sophisticated than that eventually.
-	return len(word) > 0
+	return len(word) > 0 and WordDictionary.isWordValid(word)
 
 # Attempts to submit the word in rack.
 func submitWord() -> void:
@@ -59,6 +58,8 @@ func submitWord() -> void:
 		letterRack.fill()
 		print(word + " for " + str(score))
 		word_submitted.emit(score)
+	else:
+		print(word + ": This is not a valid word!")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

@@ -7,6 +7,12 @@ const LETTER_SCORES := {
 	"j": 10, "k": 5, "l": 1, "m": 3, "n": 1, "o": 1, "p": 3, "q": 10, "r": 1,
 	"s": 1, "t": 1, "u": 2, "v": 4, "w": 5, "x": 10, "y": 4, "z": 10, "*": 0
 }
+const LETTER_WEIGHTS: Dictionary[Variant, int] = {
+	# Scores -> weights: 1 -> 10, 2 -> 7, 3 -> 5, 4 -> 3, 5 -> 2, 10 -> 1
+	"a": 10, "b": 5, "c": 5, "d": 7, "e": 10, "f": 3, "g": 7, "h": 3, "i": 10,
+	"j": 1, "k": 2, "l": 10, "m": 5, "n": 10, "o": 10, "p": 5, "q": 1, "r": 10,
+	"s": 10, "t": 10, "u": 7, "v": 3, "w": 2, "x": 1, "y": 3, "z": 1, "*": 0
+}
 var letter := "a"
 var onRack := true
 var rackIndex := 0
@@ -68,8 +74,7 @@ func isDestroyed() -> bool:
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var n = randi_range(0, 25)
-	setLetter(LETTERS[n])
+	setLetter(Utils.weightedRandomKeys(LETTER_WEIGHTS))
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
