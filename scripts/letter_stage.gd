@@ -48,12 +48,19 @@ func getWord() -> String:
 		word += tile.getWordComponent()
 	return word
 
-## Returns the score of the current word in stage.
+## Returns the base score of the current word in stage.
 func getWordScore() -> int:
 	var score = 0
 	for tile in tiles:
 		score += tile.getValue()
 	return score
+
+## Returns the score multiplier of the current word in stage, such as from gem effects.
+func getWordMultiplier() -> float:
+	var mult = 1.0
+	for tile in tiles:
+		mult *= tile.getWordMultiplier()
+	return mult
 
 ## Returns a tile node position based on the index in the stage.
 func getTilePosition(i: int) -> Vector2:

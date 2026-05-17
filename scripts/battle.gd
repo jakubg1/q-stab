@@ -43,12 +43,12 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	pass
 
-## Called when a word is submitted.
-func _on_letter_manager_word_submitted(score: int) -> void:
+## Called when the player has finished their turn.
+func _on_player_turn_finished() -> void:
 	endMove()
 
-## Called when the enemy has conducted an attack.
-func _on_enemy_attacked(damage: int) -> void:
+## Called when the enemy has finished their turn.
+func _on_enemy_turn_finished() -> void:
 	endMove()
 
 ## Called when the player dies.

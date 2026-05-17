@@ -24,6 +24,8 @@ const ATTACKS = [
 
 ## Performs one attack out of the specified attacks list.
 func attack() -> void:
+	if dead:
+		return
 	var weights: Array[int] = []
 	for attack in ATTACKS:
 		weights.append(attack.weight)
@@ -43,7 +45,7 @@ func queueMove() -> void:
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	init(20)
+	init(80)
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -56,3 +58,4 @@ func _on_letter_manager_word_submitted(score: int) -> void:
 ## Called when the wait timer before attacking is up.
 func _on_action_timer_timeout() -> void:
 	attack()
+	turn_finished.emit()

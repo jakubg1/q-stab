@@ -94,19 +94,33 @@ func moveLettersToRackUntil(tile: Node) -> void:
 			break
 	letterUnstageSound.play()
 
+## Returns the gem type the player gets when scoring the specified amount of points for a word.
+func getGemType(score: int) -> Enums.GemType:
+	if score >= 20:
+		return Enums.GemType.PURPLE
+	elif score >= 16:
+		return Enums.GemType.RED
+	elif score >= 12:
+		return Enums.GemType.GREEN
+	elif score >= 8:
+		return Enums.GemType.YELLOW
+	return Enums.GemType.NONE
+
 ## Attempts to submit the word in rack.
 func submitWord() -> void:
 	if letterStage.isEmpty():
 		return
 	var word = letterStage.getWord()
-	var score = letterStage.getWordScore()
 	if WordDictionary.isWordValid(word):
+		var base = letterStage.getWordScore()
+		var score = int(ceil(base * letterStage.getWordMultiplier()))
+		var gemType = getGemType(base)
 		letterStage.destroyTiles()
 		letterRack.fill()
-		if score >= 8:
+		if gemType != Enums.GemType.NONE:
 			var gemCandidate = letterRack.getRandomNonGemTile()
 			if gemCandidate:
-				gemCandidate.setGemType(Enums.GemType.YELLOW)
+				gemCandidate.setGemType(gemType)
 		print(word + " for " + str(score) + (" (!!)" if WordDictionary.isWordValidBad(word) else ""))
 		word_submitted.emit(score)
 		wordSubmitSound.play()

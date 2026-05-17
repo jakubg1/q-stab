@@ -65,6 +65,17 @@ func getValue() -> int:
 		value += 5
 	return value
 
+## Returns the word multiplier coming from this Tile, if it has a gem effect.
+func getWordMultiplier() -> float:
+	match gemType:
+		Enums.GemType.GREEN:
+			return 1.1
+		Enums.GemType.RED:
+			return 1.2
+		Enums.GemType.PURPLE:
+			return 1.3
+	return 1.0
+
 ## Sets whether this tile is currently on rack.
 func setOnRack(onRack: bool) -> void:
 	self.onRack = onRack

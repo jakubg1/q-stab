@@ -3,7 +3,10 @@ extends Node
 ## Gem type used for tile enhancements.
 enum GemType {
 	NONE,
-	YELLOW
+	YELLOW,
+	GREEN,
+	RED,
+	PURPLE
 }
 
 ## Whose turn it currently is.

@@ -7,6 +7,7 @@ var dead = false
 
 signal initialized(maxHealth: int)
 signal health_changed(health: int)
+signal turn_finished
 signal died
 
 ## Initializes the entity by setting its maximum health.
