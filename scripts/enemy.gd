@@ -1,38 +1,26 @@
-extends Node2D
+extends Entity
 
 const ATTACKS = [
 	{
 		"name": "Basic Attack",
 		"weight": 2,
 		"effects": [
-			{"type": "damage", "amount": 10}
+			{"type": "damage", "amount": 6}
 		]
 	},
 	{
 		"name": "Basic Effect",
 		"weight": 1,
 		"effects": [
-			{"type": "damage", "amount": 5},
+			{"type": "damage", "amount": 3},
 			{"type": "effect", "effect": "burning", "turns": 2}
 		]
 	}
 ]
 
-var health = 50
-var maxHealth = 50
-
-signal health_changed(health: int)
-
-## Damages the enemy the given amount of HP.
-func damage(amount: int) -> void:
-	health = max(health - amount, 0)
-	health_changed.emit(health)
-	if health == 0:
-		print("Enemy died!")
-
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	init(20)
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

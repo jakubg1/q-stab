@@ -97,9 +97,10 @@ func submitWord() -> void:
 	if WordDictionary.isWordValid(word):
 		letterStage.destroyTiles()
 		letterRack.fill()
-		var gemCandidate = letterRack.getRandomNonGemTile()
-		if gemCandidate:
-			gemCandidate.setGemType(Enums.GemType.YELLOW)
+		if score >= 8:
+			var gemCandidate = letterRack.getRandomNonGemTile()
+			if gemCandidate:
+				gemCandidate.setGemType(Enums.GemType.YELLOW)
 		print(word + " for " + str(score) + (" (!!)" if WordDictionary.isWordValidBad(word) else ""))
 		word_submitted.emit(score)
 		wordSubmitSound.play()

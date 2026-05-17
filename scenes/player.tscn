@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://caqabgp3qv3y1"]
 
 [ext_resource type="Texture2D" uid="uid://bby4t2hcj763e" path="res://images/player.png" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://x3kkxntl63d3" path="res://scripts/player.gd" id="1_g2els"]
 
 [node name="Player" type="Node2D" unique_id=72446808]
+script = ExtResource("1_g2els")
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=1488874567]
 position = Vector2(0, -24)

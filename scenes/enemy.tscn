@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://de5nihcbipmlo"]
 
 [ext_resource type="Texture2D" uid="uid://b3j3n84c68nfd" path="res://images/enemy.png" id="1_7p1mj"]
+[ext_resource type="Script" uid="uid://dw4f3jesjtpcj" path="res://scripts/enemy.gd" id="1_md0e3"]
 
 [node name="Enemy" type="Node2D" unique_id=1569784217]
+script = ExtResource("1_md0e3")
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=1866883678]
 position = Vector2(0, -24)

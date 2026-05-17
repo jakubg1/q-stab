@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://kuirekaoou1k" path="res://scripts/health_bar.gd" id="1_5xu3r"]
 [ext_resource type="Texture2D" uid="uid://cyp4hyqb7i6t8" path="res://images/health_bar_left.png" id="2_5xu3r"]
 [ext_resource type="Texture2D" uid="uid://d3tuq0o4ugq1m" path="res://images/health_bar_juice_left.png" id="3_ef15a"]
+[ext_resource type="Texture2D" uid="uid://ddhmbwjqeu40y" path="res://images/health_bar_juice_left_flash.png" id="3_eqynm"]
 [ext_resource type="FontFile" uid="uid://ckttjiby7l5pr" path="res://fonts/comicoro.ttf" id="4_45evk"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_6opq1"]
@@ -48,6 +49,14 @@ grow_vertical = 2
 
 [node name="Control" type="Control" parent="MarginContainer" unique_id=1310766413]
 layout_mode = 2
+
+[node name="BarFlash" type="NinePatchRect" parent="MarginContainer/Control" unique_id=1848284992]
+layout_mode = 0
+offset_left = -8.0
+offset_right = 10.0
+offset_bottom = 9.0
+texture = ExtResource("3_eqynm")
+patch_margin_right = 8
 
 [node name="Bar" type="NinePatchRect" parent="MarginContainer/Control" unique_id=882887477]
 layout_mode = 0
