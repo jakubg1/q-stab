@@ -7,3 +7,7 @@ func _ready() -> void:
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
+## Called when an enemy performs an attack towards the player.
+func _on_enemy_attacked(damage: int) -> void:
+	damage(damage)

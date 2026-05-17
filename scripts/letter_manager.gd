@@ -9,7 +9,13 @@ extends Node
 @onready var wordSubmitSound: AudioStreamPlayer = $Sound/WordSubmit
 @onready var wordInvalidSound: AudioStreamPlayer = $Sound/WordInvalid
 
+var inputAllowed := true
+
 signal word_submitted(score: int)
+
+## Sets whether the player can interact with the board.
+func setInputAllowed(inputAllowed: bool) -> void:
+	self.inputAllowed = inputAllowed
 
 ## Moves a letter in the rack to the stage. If the tile is `null`, plays a "not accepted" sound.
 func moveLetterToStage(tile: Node) -> void:
@@ -118,6 +124,8 @@ func _process(delta: float) -> void:
 
 ## Called on an input event.
 func _input(event: InputEvent) -> void:
+	if not inputAllowed:
+		return
 	if event is InputEventMouseButton and event.pressed:
 		# Handle mouse button presses.
 		if event.button_index == MOUSE_BUTTON_LEFT:

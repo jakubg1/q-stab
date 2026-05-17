@@ -13,6 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://de5nihcbipmlo" path="res://scenes/enemy.tscn" id="11_dinhu"]
 [ext_resource type="PackedScene" uid="uid://ghe35iut5rnc" path="res://scenes/health_bar_left.tscn" id="11_kvuet"]
 [ext_resource type="Script" uid="uid://dwey7vij2v4d6" path="res://scripts/battle.gd" id="13_kvuet"]
+[ext_resource type="Texture2D" uid="uid://caoymieaxil56" path="res://images/victory.png" id="14_ir15t"]
+[ext_resource type="Texture2D" uid="uid://jhvajkubjk5b" path="res://images/defeat.png" id="15_ca42v"]
 
 [node name="Game" type="Node" unique_id=1705985166]
 
@@ -22,49 +24,69 @@ offset_bottom = 225.0
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
-[node name="Player" parent="." unique_id=72446808 instance=ExtResource("10_kvpfn")]
-position = Vector2(70, 100)
-
-[node name="Enemy" parent="." unique_id=1569784217 instance=ExtResource("11_dinhu")]
-position = Vector2(330, 100)
-
-[node name="LetterManager" type="Node" parent="." unique_id=726949799]
-script = ExtResource("1_lnu2h")
-
-[node name="LetterRack" parent="LetterManager" unique_id=1857639040 instance=ExtResource("1_uwrxv")]
-position = Vector2(160, 120)
-
-[node name="LetterStage" parent="LetterManager" unique_id=354605681 instance=ExtResource("2_yqjtg")]
-position = Vector2(200, 60)
-
-[node name="Sound" type="Node" parent="LetterManager" unique_id=1033649602]
-
-[node name="LetterStage" type="AudioStreamPlayer" parent="LetterManager/Sound" unique_id=878806098]
-stream = ExtResource("4_gee14")
-
-[node name="LetterUnstage" type="AudioStreamPlayer" parent="LetterManager/Sound" unique_id=1859989339]
-stream = ExtResource("5_0tnpc")
-
-[node name="LetterNotFound" type="AudioStreamPlayer" parent="LetterManager/Sound" unique_id=948638834]
-stream = ExtResource("8_0tnpc")
-
-[node name="WordSubmit" type="AudioStreamPlayer" parent="LetterManager/Sound" unique_id=256219307]
-stream = ExtResource("6_vtaks")
-
-[node name="WordInvalid" type="AudioStreamPlayer" parent="LetterManager/Sound" unique_id=1569014676]
-stream = ExtResource("7_kvpfn")
-
-[node name="PlayerHealthBar" parent="." unique_id=2022486482 instance=ExtResource("11_kvuet")]
-position = Vector2(0, 18)
-
-[node name="EnemyHealthBar" parent="." unique_id=1439467667 instance=ExtResource("4_lbhrr")]
-position = Vector2(400, 18)
-
 [node name="Battle" type="Node" parent="." unique_id=259765670]
 script = ExtResource("13_kvuet")
 
-[connection signal="health_changed" from="Player" to="PlayerHealthBar" method="_on_player_health_changed"]
-[connection signal="initialized" from="Player" to="PlayerHealthBar" method="_on_player_initialized"]
-[connection signal="health_changed" from="Enemy" to="EnemyHealthBar" method="_on_enemy_health_changed"]
-[connection signal="initialized" from="Enemy" to="EnemyHealthBar" method="_on_enemy_initialized"]
-[connection signal="word_submitted" from="LetterManager" to="Enemy" method="_on_letter_manager_word_submitted"]
+[node name="Player" parent="Battle" unique_id=72446808 instance=ExtResource("10_kvpfn")]
+position = Vector2(70, 100)
+
+[node name="Enemy" parent="Battle" unique_id=1569784217 instance=ExtResource("11_dinhu")]
+position = Vector2(330, 100)
+
+[node name="ActionTimer" type="Timer" parent="Battle/Enemy" unique_id=688136155]
+wait_time = 2.0
+one_shot = true
+
+[node name="LetterManager" type="Node" parent="Battle" unique_id=726949799]
+script = ExtResource("1_lnu2h")
+
+[node name="LetterRack" parent="Battle/LetterManager" unique_id=1857639040 instance=ExtResource("1_uwrxv")]
+position = Vector2(160, 120)
+
+[node name="LetterStage" parent="Battle/LetterManager" unique_id=354605681 instance=ExtResource("2_yqjtg")]
+position = Vector2(200, 60)
+
+[node name="Sound" type="Node" parent="Battle/LetterManager" unique_id=1033649602]
+
+[node name="LetterStage" type="AudioStreamPlayer" parent="Battle/LetterManager/Sound" unique_id=878806098]
+stream = ExtResource("4_gee14")
+
+[node name="LetterUnstage" type="AudioStreamPlayer" parent="Battle/LetterManager/Sound" unique_id=1859989339]
+stream = ExtResource("5_0tnpc")
+
+[node name="LetterNotFound" type="AudioStreamPlayer" parent="Battle/LetterManager/Sound" unique_id=948638834]
+stream = ExtResource("8_0tnpc")
+
+[node name="WordSubmit" type="AudioStreamPlayer" parent="Battle/LetterManager/Sound" unique_id=256219307]
+stream = ExtResource("6_vtaks")
+
+[node name="WordInvalid" type="AudioStreamPlayer" parent="Battle/LetterManager/Sound" unique_id=1569014676]
+stream = ExtResource("7_kvpfn")
+
+[node name="PlayerHealthBar" parent="Battle" unique_id=2022486482 instance=ExtResource("11_kvuet")]
+position = Vector2(0, 18)
+
+[node name="EnemyHealthBar" parent="Battle" unique_id=1439467667 instance=ExtResource("4_lbhrr")]
+position = Vector2(400, 18)
+
+[node name="VictorySprite" type="Sprite2D" parent="Battle" unique_id=360432278]
+visible = false
+position = Vector2(200, 110)
+texture = ExtResource("14_ir15t")
+
+[node name="DefeatSprite" type="Sprite2D" parent="Battle" unique_id=2093463604]
+visible = false
+position = Vector2(200, 110)
+texture = ExtResource("15_ca42v")
+
+[connection signal="died" from="Battle/Player" to="Battle" method="_on_player_died"]
+[connection signal="health_changed" from="Battle/Player" to="Battle/PlayerHealthBar" method="_on_player_health_changed"]
+[connection signal="initialized" from="Battle/Player" to="Battle/PlayerHealthBar" method="_on_player_initialized"]
+[connection signal="attacked" from="Battle/Enemy" to="Battle/Player" method="_on_enemy_attacked"]
+[connection signal="attacked" from="Battle/Enemy" to="Battle" method="_on_enemy_attacked"]
+[connection signal="died" from="Battle/Enemy" to="Battle" method="_on_enemy_died"]
+[connection signal="health_changed" from="Battle/Enemy" to="Battle/EnemyHealthBar" method="_on_enemy_health_changed"]
+[connection signal="initialized" from="Battle/Enemy" to="Battle/EnemyHealthBar" method="_on_enemy_initialized"]
+[connection signal="timeout" from="Battle/Enemy/ActionTimer" to="Battle/Enemy" method="_on_action_timer_timeout"]
+[connection signal="word_submitted" from="Battle/LetterManager" to="Battle/Enemy" method="_on_letter_manager_word_submitted"]
+[connection signal="word_submitted" from="Battle/LetterManager" to="Battle" method="_on_letter_manager_word_submitted"]
