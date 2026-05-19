@@ -14,12 +14,14 @@ const LETTER_VALUES := {
 }
 const LETTER_WEIGHTS: Dictionary[Variant, int] = {
 	# Scores -> weights: 1 -> 15, 2 -> 10, 3 -> 7, 4 -> 5, 5 -> 3, 10 -> 2
-	"a": 15, "b": 7, "c": 7, "d": 10, "e": 15, "f": 5, "g": 10, "h": 5, "i": 15,
-	"j": 2, "k": 3, "l": 15, "m": 7, "n": 15, "o": 15, "p": 7, "q": 2, "r": 15,
-	"s": 15, "t": 15, "u": 10, "v": 5, "w": 3, "x": 2, "y": 5, "z": 2, "*": 0
+	# Vowels have their weights multiplied by x1.5.
+	"a": 23, "b": 7, "c": 7, "d": 10, "e": 23, "f": 5, "g": 10, "h": 5, "i": 23,
+	"j": 2, "k": 3, "l": 15, "m": 7, "n": 15, "o": 23, "p": 7, "q": 2, "r": 15,
+	"s": 15, "t": 15, "u": 15, "v": 5, "w": 3, "x": 2, "y": 5, "z": 2, "*": 0
 }
 var letter := "a"
 var gemType := Enums.GemType.NONE
+var gemIndex := 1
 var onRack := true
 var rackIndex := 0
 var destroyed := false
@@ -53,6 +55,17 @@ func setGemType(gemType: Enums.GemType) -> void:
 func getGemType() -> Enums.GemType:
 	return gemType
 
+## Sets which occurrence of this tile's particular gem type this tile is in the staged word.
+## Used to calculate bonuses when two or more tiles of the same gem type are in a single word.
+## Set to 1 when in the rack; the tiles would display as if that was its first gem type occurrence.
+func setGemIndex(gemIndex: int) -> void:
+	self.gemIndex = gemIndex
+	refreshDisplay()
+
+## Returns which occurrence of this tile's particular gem type this tile is in the staged word.
+func getGemIndex() -> int:
+	return gemIndex
+
 ## Returns the letter or multiple letters this Tile is used for a word.
 ## For example, for the Q tile this returns "qu".
 func getWordComponent() -> String:
@@ -62,7 +75,7 @@ func getWordComponent() -> String:
 func getValue() -> int:
 	var value = LETTER_VALUES[letter]
 	if gemType == Enums.GemType.YELLOW:
-		value += 5
+		value += 5 + (gemIndex - 1) * 2
 	return value
 
 ## Returns the word multiplier coming from this Tile, if it has a gem effect.
@@ -75,6 +88,20 @@ func getWordMultiplier() -> float:
 		Enums.GemType.PURPLE:
 			return 1.3
 	return 1.0
+
+## Returns the status effect this Tile can inflict.
+func getEffect() -> Enums.StatusEffectType:
+	match gemType:
+		Enums.GemType.GREEN:
+			return Enums.StatusEffectType.POISON
+	return Enums.StatusEffectType.NONE
+
+## Returns the duration of the status effect this Tile can inflict.
+func getEffectDuration() -> int:
+	match gemType:
+		Enums.GemType.GREEN:
+			return 3 + (gemIndex - 1)
+	return 0
 
 ## Sets whether this tile is currently on rack.
 func setOnRack(onRack: bool) -> void:

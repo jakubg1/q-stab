@@ -1,7 +1,5 @@
 extends Entity
 
-signal attacked(damage: int)
-
 @onready var actionTimer: Timer = $ActionTimer
 
 const ATTACKS = [
@@ -17,7 +15,7 @@ const ATTACKS = [
 		"weight": 1,
 		"effects": [
 			{"type": "damage", "amount": 5},
-			{"type": "effect", "effect": "burning", "turns": 2}
+			{"type": "effect", "effect": Enums.StatusEffectType.POISON, "turns": 2}
 		]
 	}
 ]
@@ -31,11 +29,7 @@ func attack() -> void:
 		weights.append(attack.weight)
 	var n = Utils.weightedRandom(weights)
 	var attack = ATTACKS[n]
-	for effect in attack.effects:
-		if effect.type == "damage":
-			attacked.emit(effect.amount)
-		elif effect.type == "effect":
-			pass # TODO
+	attacked.emit(self, attack.effects)
 
 ## Queues a move by starting a timer until the enemy attacks.
 func queueMove() -> void:
@@ -45,15 +39,27 @@ func queueMove() -> void:
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	init(80)
+	init("Placeholder", 80)
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
-## Called when a word is submitted.
-func _on_letter_manager_word_submitted(score: int) -> void:
-	damage(score)
+## Called when a player performs an attack towards the enemy.
+func _on_player_attacked(attacker: Entity, effects: Array) -> void:
+	receiveAttack(attacker, effects)
+
+## Called when the player finishes their move.
+func _on_battle_player_move_ended() -> void:
+	queueMove()
+
+## Called when the enemy finishes their move.
+func _on_battle_enemy_move_ended() -> void:
+	tickStatusEffects()
+
+## Called when the full battle turn ends.
+func _on_battle_turn_ended() -> void:
+	pass # Replace with function body.
 
 ## Called when the wait timer before attacking is up.
 func _on_action_timer_timeout() -> void:

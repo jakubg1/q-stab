@@ -1,5 +1,11 @@
 extends Node
 
+## Status effect type used for entities.
+enum StatusEffectType {
+	NONE,
+	POISON
+}
+
 ## Gem type used for tile enhancements.
 enum GemType {
 	NONE,

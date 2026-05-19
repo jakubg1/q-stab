@@ -18,6 +18,7 @@ func addTile(index: int) -> void:
 ## Returns the specified tile back to the rack.
 func returnTile(tile: Node) -> void:
 	tile.setOnRack(true)
+	tile.setGemIndex(1)
 	tile.reparent(self)
 	tile.position = getTilePosition(tile.getRackIndex())
 

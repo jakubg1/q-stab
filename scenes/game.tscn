@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://de5nihcbipmlo" path="res://scenes/enemy.tscn" id="11_dinhu"]
 [ext_resource type="PackedScene" uid="uid://ghe35iut5rnc" path="res://scenes/health_bar_left.tscn" id="11_kvuet"]
 [ext_resource type="Script" uid="uid://dwey7vij2v4d6" path="res://scripts/battle.gd" id="13_kvuet"]
+[ext_resource type="PackedScene" uid="uid://cspfsb1wynr38" path="res://scenes/enemy_name.tscn" id="14_ca42v"]
 [ext_resource type="Texture2D" uid="uid://caoymieaxil56" path="res://images/victory.png" id="14_ir15t"]
 [ext_resource type="Texture2D" uid="uid://jhvajkubjk5b" path="res://images/defeat.png" id="15_ca42v"]
 
@@ -69,6 +70,9 @@ position = Vector2(0, 18)
 [node name="EnemyHealthBar" parent="Battle" unique_id=1439467667 instance=ExtResource("4_lbhrr")]
 position = Vector2(400, 18)
 
+[node name="EnemyName" parent="Battle" unique_id=1588843362 instance=ExtResource("14_ca42v")]
+position = Vector2(355, 9)
+
 [node name="VictorySprite" type="Sprite2D" parent="Battle" unique_id=360432278]
 visible = false
 position = Vector2(200, 110)
@@ -79,15 +83,18 @@ visible = false
 position = Vector2(200, 110)
 texture = ExtResource("15_ca42v")
 
+[connection signal="enemy_move_ended" from="Battle" to="Battle/Enemy" method="_on_battle_enemy_move_ended"]
+[connection signal="player_move_ended" from="Battle" to="Battle/Player" method="_on_battle_player_move_ended"]
+[connection signal="player_move_ended" from="Battle" to="Battle/Enemy" method="_on_battle_player_move_ended"]
+[connection signal="turn_ended" from="Battle" to="Battle/Player" method="_on_battle_turn_ended"]
+[connection signal="turn_ended" from="Battle" to="Battle/Enemy" method="_on_battle_turn_ended"]
+[connection signal="attacked" from="Battle/Player" to="Battle/Enemy" method="_on_player_attacked"]
 [connection signal="died" from="Battle/Player" to="Battle" method="_on_player_died"]
 [connection signal="health_changed" from="Battle/Player" to="Battle/PlayerHealthBar" method="_on_player_health_changed"]
-[connection signal="initialized" from="Battle/Player" to="Battle/PlayerHealthBar" method="_on_player_initialized"]
 [connection signal="turn_finished" from="Battle/Player" to="Battle" method="_on_player_turn_finished"]
 [connection signal="attacked" from="Battle/Enemy" to="Battle/Player" method="_on_enemy_attacked"]
 [connection signal="died" from="Battle/Enemy" to="Battle" method="_on_enemy_died"]
 [connection signal="health_changed" from="Battle/Enemy" to="Battle/EnemyHealthBar" method="_on_enemy_health_changed"]
-[connection signal="initialized" from="Battle/Enemy" to="Battle/EnemyHealthBar" method="_on_enemy_initialized"]
 [connection signal="turn_finished" from="Battle/Enemy" to="Battle" method="_on_enemy_turn_finished"]
 [connection signal="timeout" from="Battle/Enemy/ActionTimer" to="Battle/Enemy" method="_on_action_timer_timeout"]
 [connection signal="word_submitted" from="Battle/LetterManager" to="Battle/Player" method="_on_letter_manager_word_submitted"]
-[connection signal="word_submitted" from="Battle/LetterManager" to="Battle/Enemy" method="_on_letter_manager_word_submitted"]

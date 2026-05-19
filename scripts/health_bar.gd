@@ -23,6 +23,14 @@ var animValue := 50.0 ## Value displayed by the red portion of the bar and by th
 var animFlashValue := 50.0 ## Value displayed by the white portion of the bar.
 var damageTime := -1.0 ## Counts up from 0 when damage is taken.
 
+## Initializes this health bar by setting its maximum value.
+func init(maxValue: int) -> void:
+	value = maxValue
+	self.maxValue = maxValue
+	animValue = float(maxValue)
+	animFlashValue = float(maxValue)
+	updateLayout()
+
 ## Updates the widget sizes.
 func updateLayout() -> void:
 	background.size.x = 26 + maxValue * SCALE
@@ -66,17 +74,3 @@ func _on_player_health_changed(health: int) -> void:
 ## Called when the enemy's health changes.
 func _on_enemy_health_changed(health: int) -> void:
 	setValue(health)
-
-## Called when the player entity is initialized.
-func _on_player_initialized(maxHealth: int) -> void:
-	value = maxHealth
-	maxValue = maxHealth
-	animValue = float(maxHealth)
-	animFlashValue = float(maxHealth)
-
-## Called when the enemy entity is initialized.
-func _on_enemy_initialized(maxHealth: int) -> void:
-	value = maxHealth
-	maxValue = maxHealth
-	animValue = float(maxHealth)
-	animFlashValue = float(maxHealth)

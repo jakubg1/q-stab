@@ -10,7 +10,7 @@ func weightedRandom(weights: Array[int]) -> int:
 		total += weight
 	var rnd = randi_range(0, total - 1)
 	var i = 0
-	while rnd > weights[i]:
+	while rnd >= weights[i]:
 		rnd -= weights[i]
 		i += 1
 	return i

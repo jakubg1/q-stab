@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://cspfsb1wynr38"]
+
+[ext_resource type="Script" uid="uid://fo4111rnj8te" path="res://scripts/enemy_name.gd" id="1_wjnei"]
+[ext_resource type="Texture2D" uid="uid://d1h6jwmgrx10h" path="res://images/enemy_name.png" id="1_yqtvi"]
+[ext_resource type="FontFile" uid="uid://ckttjiby7l5pr" path="res://fonts/comicoro.ttf" id="2_wjnei"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_to2f4"]
+font = ExtResource("2_wjnei")
+
+[node name="EnemyName" type="Node2D" unique_id=1588843362]
+script = ExtResource("1_wjnei")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1825042127]
+texture = ExtResource("1_yqtvi")
+
+[node name="Label" type="Label" parent="Sprite2D" unique_id=880931636]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -79.0
+offset_top = -14.0
+offset_right = -5.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Enemy Name"
+label_settings = SubResource("LabelSettings_to2f4")
+horizontal_alignment = 1
+vertical_alignment = 1

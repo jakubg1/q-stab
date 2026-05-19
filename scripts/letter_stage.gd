@@ -8,11 +8,13 @@ func addTile(tile: Node) -> void:
 	tile.reparent(self)
 	tiles.append(tile)
 	refreshTilePositions()
+	refreshTileGemIndices()
 
 ## Removes the last tile from the stage and returns it.
 func removeTile() -> Node:
 	var tile = tiles.pop_back()
 	refreshTilePositions()
+	refreshTileGemIndices()
 	return tile
 
 ## Removes all tiles from the stage and moves them back to the rack.
@@ -62,6 +64,23 @@ func getWordMultiplier() -> float:
 		mult *= tile.getWordMultiplier()
 	return mult
 
+## Returns an array of status effects which is eligible data to be put in an attack.
+## This is an array of all status effects which this word will inflict.
+func getWordEffects() -> Array:
+	var effects = {} # Maps effect types to durations. Longest duration wins.
+	for tile in tiles:
+		var effect = tile.getEffect()
+		if effect != Enums.StatusEffectType.NONE:
+			var duration = tile.getEffectDuration()
+			if effect in effects:
+				effects[effect] = max(effects[effect], duration)
+			else:
+				effects[effect] = duration
+	var result = []
+	for effect in effects:
+		result.append({"type": "effect", "effect": effect, "turns": effects[effect]})
+	return result
+
 ## Returns a tile node position based on the index in the stage.
 func getTilePosition(i: int) -> Vector2:
 	return Vector2(i * 20 - len(tiles) * 10, 0)
@@ -70,6 +89,16 @@ func getTilePosition(i: int) -> Vector2:
 func refreshTilePositions() -> void:
 	for i in range(len(tiles)):
 		tiles[i].position = getTilePosition(i)
+
+## Updates all staged tiles' gem indices used to calculate double gem bonuses.
+func refreshTileGemIndices() -> void:
+	var gemCounts = {}
+	for i in range(len(tiles)):
+		var gemType = tiles[i].getGemType()
+		if not gemType in gemCounts:
+			gemCounts[gemType] = 0
+		gemCounts[gemType] += 1
+		tiles[i].setGemIndex(gemCounts[gemType])
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:

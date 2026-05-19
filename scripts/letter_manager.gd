@@ -11,7 +11,7 @@ extends Node
 
 var inputAllowed := true
 
-signal word_submitted(score: int)
+signal word_submitted(attack: Array)
 
 ## Sets whether the player can interact with the board.
 func setInputAllowed(inputAllowed: bool) -> void:
@@ -108,25 +108,34 @@ func getGemType(score: int) -> Enums.GemType:
 
 ## Attempts to submit the word in rack.
 func submitWord() -> void:
+	# Do not accept nothing.
 	if letterStage.isEmpty():
 		return
+	# Get the word and check if it exists in the dictionary.
 	var word = letterStage.getWord()
-	if WordDictionary.isWordValid(word):
-		var base = letterStage.getWordScore()
-		var score = int(ceil(base * letterStage.getWordMultiplier()))
-		var gemType = getGemType(base)
-		letterStage.destroyTiles()
-		letterRack.fill()
-		if gemType != Enums.GemType.NONE:
-			var gemCandidate = letterRack.getRandomNonGemTile()
-			if gemCandidate:
-				gemCandidate.setGemType(gemType)
-		print(word + " for " + str(score) + (" (!!)" if WordDictionary.isWordValidBad(word) else ""))
-		word_submitted.emit(score)
-		wordSubmitSound.play()
-	else:
+	if not WordDictionary.isWordValid(word):
 		print(word + ": This is not a valid word!")
 		wordInvalidSound.play()
+		return
+	# Calculate the word score.
+	var base = letterStage.getWordScore()
+	var score = int(ceil(base * letterStage.getWordMultiplier()))
+	# Prepare attack information.
+	var attack = [{"type":"damage","amount":score}]
+	attack += letterStage.getWordEffects()
+	# Destroy the letters and spawn new letters in the rack.
+	letterStage.destroyTiles()
+	letterRack.fill()
+	# Check if this word is eligible for a gem spawn.
+	var gemType = getGemType(base)
+	if gemType != Enums.GemType.NONE:
+		var gemCandidate = letterRack.getRandomNonGemTile()
+		if gemCandidate:
+			gemCandidate.setGemType(gemType)
+	# Play a sound and make the attack!
+	print(word + " for " + str(score) + (" (!!)" if WordDictionary.isWordValidBad(word) else ""))
+	word_submitted.emit(attack)
+	wordSubmitSound.play()
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
