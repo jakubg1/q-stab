@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://dtt1e4ipncd5r"]
+
+[ext_resource type="Texture2D" uid="uid://dw62f8ewjjo1s" path="res://images/status_effect_bar.png" id="1_cow56"]
+[ext_resource type="Script" uid="uid://cujcdrjq67yx8" path="res://scripts/status_effect_bar_segment.gd" id="2_sa6di"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vee3u"]
+resource_local_to_scene = true
+atlas = ExtResource("1_cow56")
+region = Rect2(0, 0, 16, 0)
+
+[node name="StatusEffectBarSegment" type="Sprite2D" unique_id=1982183947]
+texture = SubResource("AtlasTexture_vee3u")
+offset = Vector2(10.5, 0)
+script = ExtResource("2_sa6di")

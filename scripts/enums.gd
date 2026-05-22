@@ -3,7 +3,10 @@ extends Node
 ## Status effect type used for entities.
 enum StatusEffectType {
 	NONE,
-	POISON
+	POISON,
+	BURNING,
+	WEAKNESS,
+	VULNERABLE
 }
 
 ## Gem type used for tile enhancements.

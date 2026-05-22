@@ -1,13 +1,11 @@
 extends Node
 
-signal player_move_ended()
-signal enemy_move_ended()
-signal turn_ended()
-
 @onready var player: Node2D = $Player
 @onready var playerHealthBar: Node2D = $PlayerHealthBar
+@onready var playerStatusEffectContainer: UIStatusEffectContainer = $PlayerStatusEffectContainer
 @onready var enemy: Node2D = $Enemy
 @onready var enemyHealthBar: Node2D = $EnemyHealthBar
+@onready var enemyStatusEffectContainer: UIStatusEffectContainer = $EnemyStatusEffectContainer
 @onready var enemyName: Node2D = $EnemyName
 @onready var letterManager: Node = $LetterManager
 @onready var victorySprite: Sprite2D = $VictorySprite
@@ -15,6 +13,10 @@ signal turn_ended()
 
 var turn := Enums.Turn.PLAYER
 var over := false
+
+signal player_move_ended()
+signal enemy_move_ended()
+signal turn_ended()
 
 ## Ends the turn for the specified player.
 func endMove() -> void:
@@ -68,3 +70,27 @@ func _on_player_died() -> void:
 ## Called when the enemy dies.
 func _on_enemy_died() -> void:
 	end(true)
+
+## Called when the player gains a status effect.
+func _on_player_status_effect_added(effect: Enums.StatusEffectType, duration: int) -> void:
+	playerStatusEffectContainer.addStatusEffect(effect, duration)
+
+## Called when the player loses a status effect.
+func _on_player_status_effect_removed(effect: Enums.StatusEffectType) -> void:
+	playerStatusEffectContainer.removeStatusEffect(effect)
+
+## Called when the player's status effect changes its duration.
+func _on_player_status_effect_updated(effect: Enums.StatusEffectType, duration: int) -> void:
+	playerStatusEffectContainer.updateStatusEffect(effect, duration)
+
+## Called when the enemy gains a status effect.
+func _on_enemy_status_effect_added(effect: Enums.StatusEffectType, duration: int) -> void:
+	enemyStatusEffectContainer.addStatusEffect(effect, duration)
+
+## Called when the enemy loses a status effect.
+func _on_enemy_status_effect_removed(effect: Enums.StatusEffectType) -> void:
+	enemyStatusEffectContainer.removeStatusEffect(effect)
+
+## Called when the enemy's status effect changes its duration.
+func _on_enemy_status_effect_updated(effect: Enums.StatusEffectType, duration: int) -> void:
+	enemyStatusEffectContainer.updateStatusEffect(effect, duration)

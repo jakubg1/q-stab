@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://clftrtubxugy3"]
+
+[ext_resource type="Script" uid="uid://c4mqwosi47l5i" path="res://scripts/health_bar.gd" id="1_0kw87"]
+[ext_resource type="Texture2D" uid="uid://dmki2ut4lrmle" path="res://images/health_bar2_background.png" id="1_1bvlm"]
+[ext_resource type="Texture2D" uid="uid://0o73kqo6h5r4" path="res://images/health_bar2_juice_flash.png" id="2_6opq1"]
+[ext_resource type="Texture2D" uid="uid://b7gor6ueiqf0p" path="res://images/health_bar2_juice.png" id="3_tujlf"]
+[ext_resource type="FontFile" uid="uid://ckttjiby7l5pr" path="res://fonts/comicoro.ttf" id="4_5oo0i"]
+[ext_resource type="Texture2D" uid="uid://ciojyaa5lww44" path="res://images/health_bar2_icons.png" id="4_tujlf"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_0kw87"]
+font = ExtResource("4_5oo0i")
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5oo0i"]
+atlas = ExtResource("4_tujlf")
+region = Rect2(0, 0, 15, 0)
+
+[node name="HealthBar" type="Node2D" unique_id=419631214]
+script = ExtResource("1_0kw87")
+
+[node name="Background" type="NinePatchRect" parent="." unique_id=213363699]
+offset_left = 7.0
+offset_top = 2.0
+offset_right = 32.0
+offset_bottom = 13.0
+texture = ExtResource("1_1bvlm")
+patch_margin_right = 5
+
+[node name="BarFlash" type="NinePatchRect" parent="Background" unique_id=1019644817]
+layout_mode = 0
+offset_top = 1.0
+offset_right = 24.0
+offset_bottom = 10.0
+texture = ExtResource("2_6opq1")
+patch_margin_right = 4
+
+[node name="Bar" type="NinePatchRect" parent="Background" unique_id=1095598438]
+layout_mode = 0
+offset_top = 1.0
+offset_right = 24.0
+offset_bottom = 10.0
+texture = ExtResource("3_tujlf")
+patch_margin_right = 4
+
+[node name="Text" type="Label" parent="Background" unique_id=483575897]
+z_index = 1
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -7.5
+offset_bottom = 7.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "10"
+label_settings = SubResource("LabelSettings_0kw87")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon" type="Sprite2D" parent="." unique_id=1445534538]
+texture = SubResource("AtlasTexture_5oo0i")
+centered = false

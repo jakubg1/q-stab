@@ -94,6 +94,10 @@ func getEffect() -> Enums.StatusEffectType:
 	match gemType:
 		Enums.GemType.GREEN:
 			return Enums.StatusEffectType.POISON
+		Enums.GemType.RED:
+			return Enums.StatusEffectType.BURNING
+		Enums.GemType.PURPLE:
+			return Enums.StatusEffectType.WEAKNESS
 	return Enums.StatusEffectType.NONE
 
 ## Returns the duration of the status effect this Tile can inflict.
@@ -101,6 +105,10 @@ func getEffectDuration() -> int:
 	match gemType:
 		Enums.GemType.GREEN:
 			return 3 + (gemIndex - 1)
+		Enums.GemType.RED:
+			return 3 + (gemIndex - 1)
+		Enums.GemType.PURPLE:
+			return 2 + (gemIndex - 1)
 	return 0
 
 ## Sets whether this tile is currently on rack.

@@ -159,7 +159,7 @@ func _input(event: InputEvent) -> void:
 				var stageTile = letterStage.getHoveredTile()
 				if stageTile:
 					moveLettersToRackUntil(stageTile)
-	if event is InputEventKey and event.pressed:
+	elif event is InputEventKey and event.pressed:
 		# Handle keyboard keys.
 		if event.keycode == KEY_BACKSPACE:
 			if Input.is_key_pressed(KEY_SHIFT):
@@ -170,8 +170,6 @@ func _input(event: InputEvent) -> void:
 			moveAllLettersToRack()
 		elif event.keycode == KEY_ESCAPE:
 			moveAllLettersToRack()
-		elif event.keycode == KEY_ENTER:
-			submitWord()
 		else:
 			# Handle a letter being pressed.
 			var code = event.get_unicode()
@@ -179,3 +177,5 @@ func _input(event: InputEvent) -> void:
 				var letter = char(code).to_lower()
 				var uppercase = code >= ord("A") and code <= ord("Z")
 				moveLetterToStageFromKey(letter, uppercase)
+	if event.is_action_pressed("battle_attack"):
+		submitWord()

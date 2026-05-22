@@ -2,6 +2,8 @@ extends Node2D
 
 var tiles: Array[Node] = []
 
+signal word_updated(valid: bool)
+
 ## Takes the specified tile out of the rack and moves it to the stage.
 func addTile(tile: Node) -> void:
 	tile.setOnRack(false)
@@ -9,24 +11,29 @@ func addTile(tile: Node) -> void:
 	tiles.append(tile)
 	refreshTilePositions()
 	refreshTileGemIndices()
+	word_updated.emit(WordDictionary.isWordValid(getWord()))
 
 ## Removes the last tile from the stage and returns it.
 func removeTile() -> Node:
 	var tile = tiles.pop_back()
 	refreshTilePositions()
 	refreshTileGemIndices()
+	word_updated.emit(WordDictionary.isWordValid(getWord()))
 	return tile
 
 ## Removes all tiles from the stage and moves them back to the rack.
 func removeAllTiles() -> void:
-	while len(tiles) > 0:
-		removeTile()
+	tiles.clear()
+	refreshTilePositions()
+	refreshTileGemIndices()
+	word_updated.emit(false)
 
 ## Destroys all tiles in the stage. This is supposed to run after successfully submitting a word.
 func destroyTiles() -> void:
 	while len(tiles) > 0:
 		var tile = tiles.pop_back()
 		tile.destroy()
+	word_updated.emit(false)
 
 ## Returns whether the stage is empty.
 func isEmpty() -> bool:

@@ -1,0 +1,125 @@
+[gd_scene format=3 uid="uid://cqubghtp72fdi"]
+
+[ext_resource type="Script" uid="uid://dwey7vij2v4d6" path="res://scripts/battle.gd" id="1_dd63g"]
+[ext_resource type="PackedScene" uid="uid://caqabgp3qv3y1" path="res://scenes/player.tscn" id="2_fpf3k"]
+[ext_resource type="PackedScene" uid="uid://de5nihcbipmlo" path="res://scenes/enemy.tscn" id="3_bi5l8"]
+[ext_resource type="Script" uid="uid://bri670w5c1is5" path="res://scripts/letter_manager.gd" id="4_jt4d8"]
+[ext_resource type="PackedScene" uid="uid://eks5o40sbdl2" path="res://scenes/letter_rack.tscn" id="5_kl6ie"]
+[ext_resource type="PackedScene" uid="uid://dmcu3x7vffmda" path="res://scenes/letter_stage.tscn" id="6_1m01a"]
+[ext_resource type="AudioStream" uid="uid://d4bsmbc8r6fso" path="res://sounds/letter_stage.wav" id="7_lv4so"]
+[ext_resource type="AudioStream" uid="uid://wvnbpem07fdt" path="res://sounds/letter_unstage.wav" id="8_eivww"]
+[ext_resource type="AudioStream" uid="uid://c0mqv6oueoxmb" path="res://sounds/reject.wav" id="9_rwtbh"]
+[ext_resource type="AudioStream" uid="uid://cysfhk3d5vqpe" path="res://sounds/word_submit.wav" id="10_f0g0v"]
+[ext_resource type="AudioStream" uid="uid://cmtgi7o217x4t" path="res://sounds/word_invalid.wav" id="11_at2n2"]
+[ext_resource type="PackedScene" uid="uid://clftrtubxugy3" path="res://scenes/health_bar.tscn" id="12_saiin"]
+[ext_resource type="PackedScene" uid="uid://cli50myv4y6h7" path="res://scenes/status_effect_container.tscn" id="14_dd63g"]
+[ext_resource type="PackedScene" uid="uid://cspfsb1wynr38" path="res://scenes/enemy_name.tscn" id="15_fqtyt"]
+[ext_resource type="Texture2D" uid="uid://caoymieaxil56" path="res://images/victory.png" id="16_8a2ah"]
+[ext_resource type="Texture2D" uid="uid://jhvajkubjk5b" path="res://images/defeat.png" id="17_ikjs2"]
+[ext_resource type="Texture2D" uid="uid://g3710optnea7" path="res://images/button_attack.png" id="18_1rdfn"]
+[ext_resource type="Texture2D" uid="uid://k2xboj75b0i3" path="res://images/button_attack_pressed.png" id="19_r0ctv"]
+[ext_resource type="Texture2D" uid="uid://bni6bvrabahff" path="res://images/button_attack_hovered.png" id="20_4gblq"]
+[ext_resource type="Texture2D" uid="uid://comc3rl6gm8tl" path="res://images/button_attack_disabled.png" id="21_sattt"]
+[ext_resource type="Script" uid="uid://josfo04oq10f" path="res://scripts/attack_button.gd" id="22_jid5g"]
+
+[node name="Battle" type="Node" unique_id=507625319]
+script = ExtResource("1_dd63g")
+
+[node name="Player" parent="." unique_id=72446808 instance=ExtResource("2_fpf3k")]
+position = Vector2(70, 106)
+
+[node name="Enemy" parent="." unique_id=1569784217 instance=ExtResource("3_bi5l8")]
+position = Vector2(330, 106)
+
+[node name="ActionTimer" type="Timer" parent="Enemy" unique_id=10867434]
+wait_time = 2.0
+one_shot = true
+
+[node name="LetterManager" type="Node" parent="." unique_id=791155143]
+script = ExtResource("4_jt4d8")
+
+[node name="LetterRack" parent="LetterManager" unique_id=1857639040 instance=ExtResource("5_kl6ie")]
+position = Vector2(160, 118)
+
+[node name="LetterStage" parent="LetterManager" unique_id=354605681 instance=ExtResource("6_1m01a")]
+position = Vector2(200, 68)
+
+[node name="Sound" type="Node" parent="LetterManager" unique_id=1750574474]
+
+[node name="LetterStage" type="AudioStreamPlayer" parent="LetterManager/Sound" unique_id=1424288909]
+stream = ExtResource("7_lv4so")
+
+[node name="LetterUnstage" type="AudioStreamPlayer" parent="LetterManager/Sound" unique_id=1310108758]
+stream = ExtResource("8_eivww")
+
+[node name="LetterNotFound" type="AudioStreamPlayer" parent="LetterManager/Sound" unique_id=799820117]
+stream = ExtResource("9_rwtbh")
+
+[node name="WordSubmit" type="AudioStreamPlayer" parent="LetterManager/Sound" unique_id=434567799]
+stream = ExtResource("10_f0g0v")
+
+[node name="WordInvalid" type="AudioStreamPlayer" parent="LetterManager/Sound" unique_id=1923631268]
+stream = ExtResource("11_at2n2")
+
+[node name="PlayerHealthBar" parent="." unique_id=419631214 instance=ExtResource("12_saiin")]
+position = Vector2(1, 14)
+
+[node name="EnemyHealthBar" parent="." unique_id=1279360366 instance=ExtResource("12_saiin")]
+position = Vector2(384, 14)
+right = true
+
+[node name="PlayerStatusEffectContainer" parent="." unique_id=2081058003 instance=ExtResource("14_dd63g")]
+position = Vector2(3, 30)
+
+[node name="EnemyStatusEffectContainer" parent="." unique_id=121174613 instance=ExtResource("14_dd63g")]
+position = Vector2(397, 30)
+right = true
+
+[node name="EnemyName" parent="." unique_id=1588843362 instance=ExtResource("15_fqtyt")]
+position = Vector2(357, 7)
+
+[node name="VictorySprite" type="Sprite2D" parent="." unique_id=1145563293]
+visible = false
+position = Vector2(200, 110)
+texture = ExtResource("16_8a2ah")
+
+[node name="DefeatSprite" type="Sprite2D" parent="." unique_id=1464340937]
+visible = false
+position = Vector2(200, 110)
+texture = ExtResource("17_ikjs2")
+
+[node name="AttackButton" type="TextureButton" parent="." unique_id=1034548369]
+offset_left = 160.0
+offset_top = 204.0
+offset_right = 240.0
+offset_bottom = 224.0
+disabled = true
+texture_normal = ExtResource("18_1rdfn")
+texture_pressed = ExtResource("19_r0ctv")
+texture_hover = ExtResource("20_4gblq")
+texture_disabled = ExtResource("21_sattt")
+script = ExtResource("22_jid5g")
+
+[connection signal="enemy_move_ended" from="." to="Enemy" method="_on_battle_enemy_move_ended"]
+[connection signal="player_move_ended" from="." to="Player" method="_on_battle_player_move_ended"]
+[connection signal="player_move_ended" from="." to="Enemy" method="_on_battle_player_move_ended"]
+[connection signal="turn_ended" from="." to="Player" method="_on_battle_turn_ended"]
+[connection signal="turn_ended" from="." to="Enemy" method="_on_battle_turn_ended"]
+[connection signal="attacked" from="Player" to="Enemy" method="_on_player_attacked"]
+[connection signal="died" from="Player" to="." method="_on_player_died"]
+[connection signal="health_changed" from="Player" to="PlayerHealthBar" method="_on_player_health_changed"]
+[connection signal="status_effect_added" from="Player" to="." method="_on_player_status_effect_added"]
+[connection signal="status_effect_removed" from="Player" to="." method="_on_player_status_effect_removed"]
+[connection signal="status_effect_updated" from="Player" to="." method="_on_player_status_effect_updated"]
+[connection signal="turn_finished" from="Player" to="." method="_on_player_turn_finished"]
+[connection signal="attacked" from="Enemy" to="Player" method="_on_enemy_attacked"]
+[connection signal="died" from="Enemy" to="." method="_on_enemy_died"]
+[connection signal="health_changed" from="Enemy" to="EnemyHealthBar" method="_on_enemy_health_changed"]
+[connection signal="status_effect_added" from="Enemy" to="." method="_on_enemy_status_effect_added"]
+[connection signal="status_effect_removed" from="Enemy" to="." method="_on_enemy_status_effect_removed"]
+[connection signal="status_effect_updated" from="Enemy" to="." method="_on_enemy_status_effect_updated"]
+[connection signal="turn_finished" from="Enemy" to="." method="_on_enemy_turn_finished"]
+[connection signal="timeout" from="Enemy/ActionTimer" to="Enemy" method="_on_action_timer_timeout"]
+[connection signal="word_submitted" from="LetterManager" to="Player" method="_on_letter_manager_word_submitted"]
+[connection signal="word_updated" from="LetterManager/LetterStage" to="AttackButton" method="_on_letter_stage_word_updated"]
+[connection signal="pressed" from="AttackButton" to="AttackButton" method="_on_pressed"]

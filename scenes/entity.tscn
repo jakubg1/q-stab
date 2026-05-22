@@ -1,6 +1,20 @@
 [gd_scene format=3 uid="uid://b8k3elahpe2ha"]
 
 [ext_resource type="Script" uid="uid://bbu8in3o881ry" path="res://scripts/entity.gd" id="1_iiwub"]
+[ext_resource type="AudioStream" uid="uid://82slkngan2qt" path="res://sounds/enemy_attack.wav" id="2_51v4c"]
+[ext_resource type="AudioStream" uid="uid://dmar5i4xm48a6" path="res://sounds/effect_inflict.wav" id="3_lmnk1"]
+[ext_resource type="AudioStream" uid="uid://c3116sg34igfk" path="res://sounds/effect_tick.wav" id="4_ygnst"]
 
 [node name="Entity" type="Node2D" unique_id=752478978]
 script = ExtResource("1_iiwub")
+
+[node name="Sound" type="Node" parent="." unique_id=1828306185]
+
+[node name="Attack" type="AudioStreamPlayer" parent="Sound" unique_id=724282850]
+stream = ExtResource("2_51v4c")
+
+[node name="EffectInflict" type="AudioStreamPlayer" parent="Sound" unique_id=1468491161]
+stream = ExtResource("3_lmnk1")
+
+[node name="EffectTick" type="AudioStreamPlayer" parent="Sound" unique_id=1411704492]
+stream = ExtResource("4_ygnst")

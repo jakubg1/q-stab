@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://bx5vjya2133ch"]
+
+[ext_resource type="Script" uid="uid://c28l4vr67lctg" path="res://scripts/status_effect.gd" id="1_3xi7g"]
+[ext_resource type="Texture2D" uid="uid://di21b412d5qwi" path="res://images/status_effect_icons.png" id="1_qr8jy"]
+[ext_resource type="Texture2D" uid="uid://v1xek4phmbli" path="res://images/status_effect_frame.png" id="2_ws713"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ws713"]
+resource_local_to_scene = true
+atlas = ExtResource("1_qr8jy")
+region = Rect2(0, 0, 11, 11)
+
+[node name="StatusEffect" type="Node2D" unique_id=66047214]
+script = ExtResource("1_3xi7g")
+
+[node name="Bar" type="Node2D" parent="." unique_id=587624091]
+position = Vector2(7.5, 7.5)
+
+[node name="Icon" type="Sprite2D" parent="." unique_id=20546792]
+position = Vector2(2, 2)
+texture = SubResource("AtlasTexture_ws713")
+centered = false
+
+[node name="Frame" type="Sprite2D" parent="." unique_id=653417317]
+texture = ExtResource("2_ws713")
+centered = false
