@@ -69,10 +69,10 @@ position = Vector2(384, 14)
 right = true
 
 [node name="PlayerStatusEffectContainer" parent="." unique_id=2081058003 instance=ExtResource("14_dd63g")]
-position = Vector2(3, 30)
+position = Vector2(12, 28)
 
 [node name="EnemyStatusEffectContainer" parent="." unique_id=121174613 instance=ExtResource("14_dd63g")]
-position = Vector2(397, 30)
+position = Vector2(388, 28)
 right = true
 
 [node name="EnemyName" parent="." unique_id=1588843362 instance=ExtResource("15_fqtyt")]
