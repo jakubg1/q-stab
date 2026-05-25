@@ -49,6 +49,17 @@ func damage(amount: int, bypassBlock: bool = false) -> void:
 		dead = true
 		died.emit()
 
+## Regenerates tne specified amount of HP.
+func regenerate(amount: int) -> void:
+	if dead:
+		return
+	health = min(health + amount, maxHealth)
+	health_changed.emit(health)
+
+## Regenerates all HP.
+func regenerateFull() -> void:
+	regenerate(maxHealth - health)
+
 ## Inflicts the specified status effect on this entity.
 ## If the entity already has the effect, it will be extended to be at least the specified duration.
 func addStatusEffect(effect: Enums.StatusEffectType, duration: int) -> void:
@@ -61,7 +72,7 @@ func addStatusEffect(effect: Enums.StatusEffectType, duration: int) -> void:
 		status_effect_updated.emit(effect, duration)
 	else:
 		status_effect_added.emit(effect, duration)
-	print(name + ": Status effect inflicted!")
+	print(displayName + ": Status effect inflicted!")
 
 ## Removes the specified status effect from this entity.
 func removeStatusEffect(effect: Enums.StatusEffectType) -> void:
@@ -87,19 +98,19 @@ func tickStatusEffects() -> void:
 				#effectTickSound.play()
 			Enums.StatusEffectType.BURNING:
 				damage(ceil(maxHealth * 0.1), true)
-		print(name + ": Status effect applied!")
+		print(displayName + ": Status effect applied!")
 		# Tick the length.
 		statusEffects[effect] -= 1
 		if statusEffects[effect] == 0:
-			print(name + ": Status effect worn off!")
+			print(displayName + ": Status effect worn off!")
 			removeStatusEffect(effect)
-		else:
+		elif not dead: # The enemy might have gotten fatal damage from the effect tick.
 			status_effect_updated.emit(effect, statusEffects[effect])
-	print(name + ": Status effects: " + str(statusEffects))
+	print(displayName + ": Status effects: " + str(statusEffects))
 
 ## Dispatches an attack by reducing HP and applying status effects.
 func receiveAttack(attacker: Entity, effects: Array) -> void:
-	print(attacker.getName() + " attacked " + name + " with: " + str(effects))
+	print(attacker.getName() + " attacked " + displayName + " with: " + str(effects))
 	for effect in effects:
 		match effect.type:
 			"damage":

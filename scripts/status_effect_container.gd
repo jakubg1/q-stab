@@ -45,6 +45,13 @@ func removeStatusEffect(effect: Enums.StatusEffectType) -> void:
 	bar.queue_free()
 	updateBarPositions()
 
+## Removes all status effects.
+func clear() -> void:
+	for bar in statusEffects:
+		bar.queue_free()
+	statusEffects.clear()
+	statusEffectsByEffect.clear()
+
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.

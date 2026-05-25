@@ -15,6 +15,7 @@ var maxValue := 50
 var animValue := 50.0 ## Value displayed by the red portion of the bar and by the counter.
 var animFlashValue := 50.0 ## Value displayed by the white portion of the bar.
 var damageTime := -1.0 ## Counts up from 0 when damage is taken.
+var regenTime := -1.0 ## Counts up from 0 when regenerating health.
 
 ## Initializes this health bar by setting its maximum value.
 func init(maxValue: int) -> void:
@@ -43,9 +44,11 @@ func updateLayout() -> void:
 
 ## Sets the bar value and starts the hurt animation.
 func setValue(value: int) -> void:
+	if value < self.value:
+		damageTime = 0
+	elif value > self.value:
+		regenTime = 0
 	self.value = max(value, 0)
-	# TODO: Do something with this. This shouldn't probably belong here. Or at least add some conditions?
-	damageTime = 0
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -63,6 +66,11 @@ func _process(delta: float) -> void:
 			if animFlashValue == value:
 				damageTime = -1
 		updateLayout()
+	if regenTime >= 0:
+		regenTime += delta
+		animValue = min(animValue + delta * regenTime * 10, value)
+		if animValue == value:
+			regenTime = -1
 
 ## Called when the player's health changes.
 func _on_player_health_changed(health: int) -> void:

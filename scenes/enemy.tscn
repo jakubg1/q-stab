@@ -9,3 +9,9 @@ script = ExtResource("1_md0e3")
 [node name="Sprite" type="Sprite2D" parent="." unique_id=1866883678]
 position = Vector2(0, -24)
 texture = ExtResource("1_7p1mj")
+
+[node name="ActionTimer" type="Timer" parent="." unique_id=1427865952]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="timeout" from="ActionTimer" to="." method="_on_action_timer_timeout"]

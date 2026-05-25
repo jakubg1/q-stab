@@ -1,9 +1,9 @@
 extends Node
 
-@onready var player: Node2D = $Player
+@onready var player: Player = $Player
 @onready var playerHealthBar: Node2D = $PlayerHealthBar
 @onready var playerStatusEffectContainer: UIStatusEffectContainer = $PlayerStatusEffectContainer
-@onready var enemy: Node2D = $Enemy
+@onready var enemyAnchor: Node2D = $EnemyAnchor
 @onready var enemyHealthBar: Node2D = $EnemyHealthBar
 @onready var enemyStatusEffectContainer: UIStatusEffectContainer = $EnemyStatusEffectContainer
 @onready var enemyName: Node2D = $EnemyName
@@ -11,12 +11,37 @@ extends Node
 @onready var victorySprite: Sprite2D = $VictorySprite
 @onready var defeatSprite: Sprite2D = $DefeatSprite
 
+const ENEMY := preload("res://scenes/enemy.tscn")
+var enemy: Enemy = null
 var turn := Enums.Turn.PLAYER
 var over := false
 
 signal player_move_ended()
 signal enemy_move_ended()
 signal turn_ended()
+
+## Spawns a new enemy on the battlefield.
+func spawnEnemy() -> void:
+	enemy = ENEMY.instantiate()
+	enemyAnchor.add_child(enemy)
+	enemy.name = "Enemy"
+	# Connect signals going out of the enemy.
+	enemy.attacked.connect(player._on_enemy_attacked)
+	enemy.died.connect(_on_enemy_died)
+	enemy.health_changed.connect(enemyHealthBar._on_enemy_health_changed)
+	enemy.status_effect_added.connect(_on_enemy_status_effect_added)
+	enemy.status_effect_removed.connect(_on_enemy_status_effect_removed)
+	enemy.status_effect_updated.connect(_on_enemy_status_effect_updated)
+	enemy.turn_finished.connect(_on_enemy_turn_finished)
+	# Connect signals going into the enemy.
+	player.attacked.connect(enemy._on_player_attacked)
+	player_move_ended.connect(enemy._on_battle_player_move_ended)
+	enemy_move_ended.connect(enemy._on_battle_enemy_move_ended)
+	turn_ended.connect(enemy._on_battle_turn_ended)
+	# Initialize some relevant UI elements.
+	enemyHealthBar.init(enemy.getMaxHealth())
+	enemyName.setText(enemy.getName())
+	enemyStatusEffectContainer.clear()
 
 ## Ends the turn for the specified player.
 func endMove() -> void:
@@ -41,15 +66,21 @@ func end(won: bool) -> void:
 	over = true
 	letterManager.setInputAllowed(false)
 	if won:
-		victorySprite.show()
+		# TODO: Handle killing an enemy better instead of having to do this.
+		# TODO: Enemy sets
+		over = false
+		player.regenerateFull()
+		enemy.queue_free()
+		spawnEnemy()
+		turn = Enums.Turn.PLAYER
+		#victorySprite.show()
 	else:
 		defeatSprite.show()
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	playerHealthBar.init(player.getMaxHealth())
-	enemyHealthBar.init(enemy.getMaxHealth())
-	enemyName.setText(enemy.getName())
+	spawnEnemy()
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

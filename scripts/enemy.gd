@@ -1,4 +1,5 @@
 extends Entity
+class_name Enemy
 
 @onready var actionTimer: Timer = $ActionTimer
 
@@ -63,5 +64,7 @@ func _on_battle_turn_ended() -> void:
 
 ## Called when the wait timer before attacking is up.
 func _on_action_timer_timeout() -> void:
+	if dead:
+		return
 	attack()
 	turn_finished.emit()

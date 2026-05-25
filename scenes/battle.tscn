@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://dwey7vij2v4d6" path="res://scripts/battle.gd" id="1_dd63g"]
 [ext_resource type="PackedScene" uid="uid://caqabgp3qv3y1" path="res://scenes/player.tscn" id="2_fpf3k"]
-[ext_resource type="PackedScene" uid="uid://de5nihcbipmlo" path="res://scenes/enemy.tscn" id="3_bi5l8"]
 [ext_resource type="Script" uid="uid://bri670w5c1is5" path="res://scripts/letter_manager.gd" id="4_jt4d8"]
 [ext_resource type="PackedScene" uid="uid://eks5o40sbdl2" path="res://scenes/letter_rack.tscn" id="5_kl6ie"]
 [ext_resource type="PackedScene" uid="uid://dmcu3x7vffmda" path="res://scenes/letter_stage.tscn" id="6_1m01a"]
@@ -28,12 +27,8 @@ script = ExtResource("1_dd63g")
 [node name="Player" parent="." unique_id=72446808 instance=ExtResource("2_fpf3k")]
 position = Vector2(70, 106)
 
-[node name="Enemy" parent="." unique_id=1569784217 instance=ExtResource("3_bi5l8")]
+[node name="EnemyAnchor" type="Node2D" parent="." unique_id=1903887023]
 position = Vector2(330, 106)
-
-[node name="ActionTimer" type="Timer" parent="Enemy" unique_id=10867434]
-wait_time = 2.0
-one_shot = true
 
 [node name="LetterManager" type="Node" parent="." unique_id=791155143]
 script = ExtResource("4_jt4d8")
@@ -100,26 +95,14 @@ texture_hover = ExtResource("20_4gblq")
 texture_disabled = ExtResource("21_sattt")
 script = ExtResource("22_jid5g")
 
-[connection signal="enemy_move_ended" from="." to="Enemy" method="_on_battle_enemy_move_ended"]
 [connection signal="player_move_ended" from="." to="Player" method="_on_battle_player_move_ended"]
-[connection signal="player_move_ended" from="." to="Enemy" method="_on_battle_player_move_ended"]
 [connection signal="turn_ended" from="." to="Player" method="_on_battle_turn_ended"]
-[connection signal="turn_ended" from="." to="Enemy" method="_on_battle_turn_ended"]
-[connection signal="attacked" from="Player" to="Enemy" method="_on_player_attacked"]
 [connection signal="died" from="Player" to="." method="_on_player_died"]
 [connection signal="health_changed" from="Player" to="PlayerHealthBar" method="_on_player_health_changed"]
 [connection signal="status_effect_added" from="Player" to="." method="_on_player_status_effect_added"]
 [connection signal="status_effect_removed" from="Player" to="." method="_on_player_status_effect_removed"]
 [connection signal="status_effect_updated" from="Player" to="." method="_on_player_status_effect_updated"]
 [connection signal="turn_finished" from="Player" to="." method="_on_player_turn_finished"]
-[connection signal="attacked" from="Enemy" to="Player" method="_on_enemy_attacked"]
-[connection signal="died" from="Enemy" to="." method="_on_enemy_died"]
-[connection signal="health_changed" from="Enemy" to="EnemyHealthBar" method="_on_enemy_health_changed"]
-[connection signal="status_effect_added" from="Enemy" to="." method="_on_enemy_status_effect_added"]
-[connection signal="status_effect_removed" from="Enemy" to="." method="_on_enemy_status_effect_removed"]
-[connection signal="status_effect_updated" from="Enemy" to="." method="_on_enemy_status_effect_updated"]
-[connection signal="turn_finished" from="Enemy" to="." method="_on_enemy_turn_finished"]
-[connection signal="timeout" from="Enemy/ActionTimer" to="Enemy" method="_on_action_timer_timeout"]
 [connection signal="word_submitted" from="LetterManager" to="Player" method="_on_letter_manager_word_submitted"]
 [connection signal="word_updated" from="LetterManager/LetterStage" to="AttackButton" method="_on_letter_stage_word_updated"]
 [connection signal="pressed" from="AttackButton" to="AttackButton" method="_on_pressed"]
