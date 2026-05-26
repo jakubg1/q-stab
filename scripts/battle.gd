@@ -46,8 +46,18 @@ func spawnEnemy() -> void:
 ## Ends the turn for the specified player.
 func endMove() -> void:
 	if over:
-		return
-	if turn == Enums.Turn.PLAYER:
+		# Respawn and reset after killing the previous enemy.
+		# TODO: Handle killing an enemy better instead of having to do this.
+		# TODO: Enemy sets
+		over = false
+		player.regenerateFull()
+		player.removeStatusEffects()
+		enemy.queue_free()
+		spawnEnemy()
+		turn = Enums.Turn.PLAYER
+		letterManager.setInputAllowed(true)
+		victorySprite.hide()
+	elif turn == Enums.Turn.PLAYER:
 		turn = Enums.Turn.ENEMY
 		player_move_ended.emit()
 		letterManager.setInputAllowed(false)
@@ -66,14 +76,7 @@ func end(won: bool) -> void:
 	over = true
 	letterManager.setInputAllowed(false)
 	if won:
-		# TODO: Handle killing an enemy better instead of having to do this.
-		# TODO: Enemy sets
-		over = false
-		player.regenerateFull()
-		enemy.queue_free()
-		spawnEnemy()
-		turn = Enums.Turn.PLAYER
-		#victorySprite.show()
+		victorySprite.show()
 	else:
 		defeatSprite.show()
 

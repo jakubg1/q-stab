@@ -68,9 +68,11 @@ func _process(delta: float) -> void:
 		updateLayout()
 	if regenTime >= 0:
 		regenTime += delta
-		animValue = min(animValue + delta * regenTime * 10, value)
+		animValue = min(animValue + delta * regenTime * 20, value)
+		animFlashValue = animValue
 		if animValue == value:
 			regenTime = -1
+		updateLayout()
 
 ## Called when the player's health changes.
 func _on_player_health_changed(health: int) -> void:

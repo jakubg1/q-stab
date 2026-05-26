@@ -19,6 +19,14 @@ func weightedRandom(weights: Array[int]) -> int:
 func weightedRandomKeys(weights: Dictionary[Variant, int]) -> Variant:
 	return weights.keys()[weightedRandom(weights.values())]
 
+## Accepts a list of dictionaries with a `weight` field each.
+## Picks one of the objects respecting these weights.
+func weightedRandomObject(choices: Array[Dictionary]) -> Dictionary:
+	var weights: Array[int] = []
+	for choice in choices:
+		weights.append(choice.weight)
+	return choices[weightedRandom(weights)]
+
 ## Executed on start
 func _ready():
 	pass

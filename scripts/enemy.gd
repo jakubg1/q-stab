@@ -3,7 +3,7 @@ class_name Enemy
 
 @onready var actionTimer: Timer = $ActionTimer
 
-const ATTACKS = [
+const ATTACKS: Array[Dictionary] = [
 	{
 		"name": "Basic Attack",
 		"weight": 2,
@@ -25,11 +25,7 @@ const ATTACKS = [
 func attack() -> void:
 	if dead:
 		return
-	var weights: Array[int] = []
-	for attack in ATTACKS:
-		weights.append(attack.weight)
-	var n = Utils.weightedRandom(weights)
-	var attack = ATTACKS[n]
+	var attack = Utils.weightedRandomObject(ATTACKS)
 	attacked.emit(self, attack.effects)
 
 ## Queues a move by starting a timer until the enemy attacks.
@@ -40,7 +36,7 @@ func queueMove() -> void:
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	init("Placeholder", 80)
+	init("Placeholder", 35)
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

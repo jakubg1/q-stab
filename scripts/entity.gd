@@ -48,6 +48,7 @@ func damage(amount: int, bypassBlock: bool = false) -> void:
 	if health == 0:
 		dead = true
 		died.emit()
+		print(displayName + " died!")
 
 ## Regenerates tne specified amount of HP.
 func regenerate(amount: int) -> void:
@@ -83,6 +84,7 @@ func removeStatusEffect(effect: Enums.StatusEffectType) -> void:
 func removeStatusEffects() -> void:
 	for effect in statusEffects:
 		removeStatusEffect(effect)
+	print(displayName + ": Status effects removed!")
 
 ## Returns whether this Entity has the specified status effect.
 func hasStatusEffect(effect: Enums.StatusEffectType) -> bool:
