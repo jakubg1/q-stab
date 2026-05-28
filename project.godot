@@ -24,6 +24,7 @@ buses/default_bus_layout="uid://cd5dgq3jr8qng"
 Utils="*uid://w8hcw82sk7hb"
 WordDictionary="*uid://cw5l0be1veuq5"
 Enums="*uid://ckmbqpwui76fg"
+EnemyDatabase="*uid://dbcb5plkfmnfv"
 
 [display]
 

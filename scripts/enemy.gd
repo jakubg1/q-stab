@@ -3,29 +3,18 @@ class_name Enemy
 
 @onready var actionTimer: Timer = $ActionTimer
 
-const ATTACKS: Array[Dictionary] = [
-	{
-		"name": "Basic Attack",
-		"weight": 2,
-		"effects": [
-			{"type": "damage", "amount": 10}
-		]
-	},
-	{
-		"name": "Basic Effect",
-		"weight": 1,
-		"effects": [
-			{"type": "damage", "amount": 5},
-			{"type": "effect", "effect": Enums.StatusEffectType.POISON, "turns": 2}
-		]
-	}
-]
+var attacks: Array[Dictionary] = []
+
+## Loads enemy data from the enemy database entry. You must call this when creating an enemy.
+func setData(enemyData: Dictionary[String, Variant]) -> void:
+	init(enemyData.name, enemyData.health)
+	attacks.assign(enemyData.attacks)
 
 ## Performs one attack out of the specified attacks list.
 func attack() -> void:
 	if dead:
 		return
-	var attack = Utils.weightedRandomObject(ATTACKS)
+	var attack = Utils.weightedRandomObject(attacks)
 	attacked.emit(self, attack.effects)
 
 ## Queues a move by starting a timer until the enemy attacks.
@@ -36,7 +25,7 @@ func queueMove() -> void:
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	init("Placeholder", 35)
+	pass
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

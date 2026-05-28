@@ -23,8 +23,8 @@ signal turn_ended()
 ## Spawns a new enemy on the battlefield.
 func spawnEnemy() -> void:
 	enemy = ENEMY.instantiate()
-	enemyAnchor.add_child(enemy)
 	enemy.name = "Enemy"
+	enemy.setData(EnemyDatabase.placeholder)
 	# Connect signals going out of the enemy.
 	enemy.attacked.connect(player._on_enemy_attacked)
 	enemy.died.connect(_on_enemy_died)
@@ -42,6 +42,8 @@ func spawnEnemy() -> void:
 	enemyHealthBar.init(enemy.getMaxHealth())
 	enemyName.setText(enemy.getName())
 	enemyStatusEffectContainer.clear()
+	# Add to the tree.
+	enemyAnchor.add_child(enemy)
 
 ## Ends the turn for the specified player.
 func endMove() -> void:
