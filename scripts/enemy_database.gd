@@ -21,3 +21,25 @@ const placeholder: Dictionary[String, Variant] = {
 		}
 	]
 }
+
+const slime: Dictionary[String, Variant] = {
+	"name": "Slime",
+	"health": 25,
+	"attacks": [
+		{
+			"name": "Jump",
+			"weight": 2,
+			"effects": [
+				{"type": "damage", "amount": 10}
+			]
+		},
+		{
+			"name": "Poison Spit",
+			"weight": 1,
+			"effects": [
+				{"type": "damage", "amount": 5},
+				{"type": "effect", "effect": Enums.StatusEffectType.POISON, "turns": 2}
+			]
+		}
+	]
+}

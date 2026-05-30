@@ -12,7 +12,7 @@ func addTile(index: int) -> void:
 	var tile = LETTER_TILE.instantiate()
 	tiles[index] = tile
 	$Letters.add_child(tile)
-	tile.position = getTilePosition(index)
+	tile.setPos(getTilePosition(index))
 	tile.setRackIndex(index)
 
 ## Returns the specified tile back to the rack.
@@ -20,7 +20,7 @@ func returnTile(tile: Node) -> void:
 	tile.setOnRack(true)
 	tile.setGemIndex(1)
 	tile.reparent(self)
-	tile.position = getTilePosition(tile.getRackIndex())
+	tile.setPos(getTilePosition(tile.getRackIndex()))
 
 ## Moves the specified tile to a different position.
 ## Overwrites whatever was at the position previously and sets the tile in old position to `null`.
@@ -28,7 +28,7 @@ func moveTile(tile: Node, index: int) -> void:
 	tiles[tile.getRackIndex()] = null
 	tiles[index] = tile
 	tile.setRackIndex(index)
-	tile.position = getTilePosition(tile.getRackIndex())
+	tile.setPos(getTilePosition(tile.getRackIndex()))
 
 ## Returns a tile at given tile index.
 func getTile(index: int) -> Node:

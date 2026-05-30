@@ -4,6 +4,7 @@ extends Node2D
 @onready var bar: NinePatchRect = $Background/Bar
 @onready var barFlash: NinePatchRect = $Background/BarFlash
 @onready var label: Label = $Background/Text
+@onready var icon: Sprite2D = $Icon
 
 ## `false` - the bar will grow from left to right, `true` - the bar will grow from right to left
 @export var right = false
@@ -39,6 +40,8 @@ func updateLayout() -> void:
 	label.position.x = background.size.x if right else 1
 	# Set the health text value.
 	label.text = str(int(animValue))
+	# Set the heart's broken icon when dead.
+	icon.texture.region = Rect2(15 if value == 0 else 0, 0, 15, 0)
 	# Flash the bar when animating.
 	bar.visible = not ((damageTime >= 0.1 and damageTime < 0.25) or (damageTime >= 0.3 and damageTime < 0.45))
 

@@ -18,17 +18,22 @@
 [ext_resource type="Texture2D" uid="uid://g3710optnea7" path="res://images/button_attack.png" id="18_1rdfn"]
 [ext_resource type="Texture2D" uid="uid://k2xboj75b0i3" path="res://images/button_attack_pressed.png" id="19_r0ctv"]
 [ext_resource type="Texture2D" uid="uid://bni6bvrabahff" path="res://images/button_attack_hovered.png" id="20_4gblq"]
+[ext_resource type="Texture2D" uid="uid://cmkhuath3rbkv" path="res://images/background.png" id="21_saiin"]
 [ext_resource type="Texture2D" uid="uid://comc3rl6gm8tl" path="res://images/button_attack_disabled.png" id="21_sattt"]
 [ext_resource type="Script" uid="uid://josfo04oq10f" path="res://scripts/attack_button.gd" id="22_jid5g"]
 
 [node name="Battle" type="Node" unique_id=507625319]
 script = ExtResource("1_dd63g")
 
+[node name="Background" type="Sprite2D" parent="." unique_id=1064171155]
+texture = ExtResource("21_saiin")
+centered = false
+
 [node name="Player" parent="." unique_id=72446808 instance=ExtResource("2_fpf3k")]
-position = Vector2(70, 106)
+position = Vector2(70, 98)
 
 [node name="EnemyAnchor" type="Node2D" parent="." unique_id=1903887023]
-position = Vector2(330, 106)
+position = Vector2(330, 98)
 
 [node name="LetterManager" type="Node" parent="." unique_id=791155143]
 script = ExtResource("4_jt4d8")
@@ -57,17 +62,17 @@ stream = ExtResource("10_f0g0v")
 stream = ExtResource("11_at2n2")
 
 [node name="PlayerHealthBar" parent="." unique_id=419631214 instance=ExtResource("12_saiin")]
-position = Vector2(1, 14)
+position = Vector2(2, 14)
 
 [node name="EnemyHealthBar" parent="." unique_id=1279360366 instance=ExtResource("12_saiin")]
-position = Vector2(384, 14)
+position = Vector2(383, 14)
 right = true
 
 [node name="PlayerStatusEffectContainer" parent="." unique_id=2081058003 instance=ExtResource("14_dd63g")]
-position = Vector2(12, 28)
+position = Vector2(13, 28)
 
 [node name="EnemyStatusEffectContainer" parent="." unique_id=121174613 instance=ExtResource("14_dd63g")]
-position = Vector2(388, 28)
+position = Vector2(387, 28)
 right = true
 
 [node name="EnemyName" parent="." unique_id=1588843362 instance=ExtResource("15_fqtyt")]
@@ -95,6 +100,10 @@ texture_hover = ExtResource("20_4gblq")
 texture_disabled = ExtResource("21_sattt")
 script = ExtResource("22_jid5g")
 
+[node name="EnemyRespawnTimer" type="Timer" parent="." unique_id=1926284760]
+wait_time = 5.0
+one_shot = true
+
 [connection signal="player_move_ended" from="." to="Player" method="_on_battle_player_move_ended"]
 [connection signal="turn_ended" from="." to="Player" method="_on_battle_turn_ended"]
 [connection signal="died" from="Player" to="." method="_on_player_died"]
@@ -106,3 +115,4 @@ script = ExtResource("22_jid5g")
 [connection signal="word_submitted" from="LetterManager" to="Player" method="_on_letter_manager_word_submitted"]
 [connection signal="word_updated" from="LetterManager/LetterStage" to="AttackButton" method="_on_letter_stage_word_updated"]
 [connection signal="pressed" from="AttackButton" to="AttackButton" method="_on_pressed"]
+[connection signal="timeout" from="EnemyRespawnTimer" to="." method="_on_enemy_respawn_timer_timeout"]

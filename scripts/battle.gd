@@ -10,6 +10,7 @@ extends Node
 @onready var letterManager: Node = $LetterManager
 @onready var victorySprite: Sprite2D = $VictorySprite
 @onready var defeatSprite: Sprite2D = $DefeatSprite
+@onready var enemyRespawnTimer: Timer = $EnemyRespawnTimer
 
 const ENEMY := preload("res://scenes/enemy.tscn")
 var enemy: Enemy = null
@@ -24,7 +25,7 @@ signal turn_ended()
 func spawnEnemy() -> void:
 	enemy = ENEMY.instantiate()
 	enemy.name = "Enemy"
-	enemy.setData(EnemyDatabase.placeholder)
+	enemy.setData(EnemyDatabase.slime)
 	# Connect signals going out of the enemy.
 	enemy.attacked.connect(player._on_enemy_attacked)
 	enemy.died.connect(_on_enemy_died)
@@ -54,11 +55,8 @@ func endMove() -> void:
 		over = false
 		player.regenerateFull()
 		player.removeStatusEffects()
-		enemy.queue_free()
-		spawnEnemy()
-		turn = Enums.Turn.PLAYER
-		letterManager.setInputAllowed(true)
 		victorySprite.hide()
+		enemyRespawnTimer.start()
 	elif turn == Enums.Turn.PLAYER:
 		turn = Enums.Turn.ENEMY
 		player_move_ended.emit()
@@ -130,3 +128,10 @@ func _on_enemy_status_effect_removed(effect: Enums.StatusEffectType) -> void:
 ## Called when the enemy's status effect changes its duration.
 func _on_enemy_status_effect_updated(effect: Enums.StatusEffectType, duration: int) -> void:
 	enemyStatusEffectContainer.updateStatusEffect(effect, duration)
+
+## Called when the enemy respawn timer has expired.
+func _on_enemy_respawn_timer_timeout() -> void:
+	enemy.queue_free()
+	spawnEnemy()
+	turn = Enums.Turn.PLAYER
+	letterManager.setInputAllowed(true)

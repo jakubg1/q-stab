@@ -46,9 +46,16 @@ func damage(amount: int, bypassBlock: bool = false) -> void:
 	health = max(health - notBlocked, 0)
 	health_changed.emit(health)
 	if health == 0:
-		dead = true
-		died.emit()
-		print(displayName + " died!")
+		kill()
+
+## Kills this entity.
+func kill() -> void:
+	if health > 0:
+		health = 0
+		health_changed.emit(health)
+	dead = true
+	died.emit()
+	print(displayName + " died!")
 
 ## Regenerates tne specified amount of HP.
 func regenerate(amount: int) -> void:

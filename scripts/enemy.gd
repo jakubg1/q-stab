@@ -1,6 +1,7 @@
 extends Entity
 class_name Enemy
 
+@onready var sprite: AnimatedSprite2D = $Sprite
 @onready var actionTimer: Timer = $ActionTimer
 
 var attacks: Array[Dictionary] = []
@@ -14,8 +15,19 @@ func setData(enemyData: Dictionary[String, Variant]) -> void:
 func attack() -> void:
 	if dead:
 		return
+	sprite.play("Attack")
 	var attack = Utils.weightedRandomObject(attacks)
 	attacked.emit(self, attack.effects)
+
+## Damages the entity the given amount of HP. Kills it when the health reaches 0.
+func damage(amount: int, bypassBlock: bool = false) -> void:
+	sprite.play("Hurt")
+	super.damage(amount, bypassBlock)
+
+## Kills this entity.
+func kill() -> void:
+	sprite.play("Dead")
+	super.kill()
 
 ## Queues a move by starting a timer until the enemy attacks.
 func queueMove() -> void:
@@ -53,3 +65,8 @@ func _on_action_timer_timeout() -> void:
 		return
 	attack()
 	turn_finished.emit()
+
+## Called when an animation on the enemy sprite has finished.
+func _on_sprite_animation_finished() -> void:
+	if sprite.animation != "Dead":
+		sprite.play("Idle")

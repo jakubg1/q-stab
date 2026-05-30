@@ -12,6 +12,7 @@ font = ExtResource("4_5oo0i")
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5oo0i"]
+resource_local_to_scene = true
 atlas = ExtResource("4_tujlf")
 region = Rect2(0, 0, 15, 0)
 

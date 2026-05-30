@@ -1,4 +1,5 @@
 extends Node2D
+class_name LetterTile
 
 @onready var tileSprite: Sprite2D = $Tile
 @onready var letterSprite: Sprite2D = $Tile/Letter
@@ -19,6 +20,8 @@ const LETTER_WEIGHTS: Dictionary[Variant, int] = {
 	"j": 2, "k": 3, "l": 15, "m": 7, "n": 15, "o": 23, "p": 7, "q": 2, "r": 15,
 	"s": 15, "t": 15, "u": 15, "v": 5, "w": 3, "x": 2, "y": 5, "z": 2, "*": 0
 }
+var pos := Vector2()
+var posAnim := Vector2()
 var letter := "a"
 var gemType := Enums.GemType.NONE
 var gemIndex := 1
@@ -26,7 +29,7 @@ var onRack := true
 var rackIndex := 0
 var destroyed := false
 
-## Readjusts the tile's display.
+## Readjusts the tile's display. This does NOT set the tile position.
 func refreshDisplay() -> void:
 	tileSprite.texture.region = Rect2(gemType * 20, 0, 20, 20)
 	var index = LETTERS.find(letter)
@@ -34,6 +37,12 @@ func refreshDisplay() -> void:
 	var y = index / 9 + 1
 	letterSprite.texture.region = Rect2(x * 20, y * 20, 20, 20)
 	valueSprite.texture.region = Rect2(0, getValue() * 7, 8, 7)
+
+## Sets the new desired position of this tile.
+## This is intepolated in the update function.
+func setPos(pos: Vector2) -> void:
+	#self.pos = pos
+	position = pos
 
 ## Sets a letter on this Tile.
 ## `letter` must be a valid lowercase letter.
@@ -149,3 +158,11 @@ func _ready() -> void:
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+	# Smooth position changes don't really work when we're reparenting the tiles :(
+	#if posAnim != pos:
+		#var posDelta = (pos - posAnim) * (delta * 1.5 + 0.1)
+		#if posDelta.length() > (pos - posAnim).length():
+		#	posAnim = pos
+		#else:
+		#	posAnim += posDelta
+		#position = floor(posAnim)

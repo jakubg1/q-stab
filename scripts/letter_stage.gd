@@ -95,7 +95,7 @@ func getTilePosition(i: int) -> Vector2:
 ## Moves all tiles on stage to their correct locations.
 func refreshTilePositions() -> void:
 	for i in range(len(tiles)):
-		tiles[i].position = getTilePosition(i)
+		tiles[i].setPos(getTilePosition(i))
 
 ## Updates all staged tiles' gem indices used to calculate double gem bonuses.
 func refreshTileGemIndices() -> void:
