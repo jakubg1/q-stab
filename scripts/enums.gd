@@ -18,6 +18,12 @@ enum GemType {
 	PURPLE
 }
 
+## Effect type used for tile powerdowns.
+enum TileEffectType {
+	NONE,
+	CHAINED
+}
+
 ## Whose turn it currently is.
 enum Turn {
 	PLAYER,

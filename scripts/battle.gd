@@ -7,14 +7,24 @@ extends Node
 @onready var enemyHealthBar: Node2D = $EnemyHealthBar
 @onready var enemyStatusEffectContainer: UIStatusEffectContainer = $EnemyStatusEffectContainer
 @onready var enemyName: Node2D = $EnemyName
+@onready var enemyRespawnTimer: Timer = $EnemyRespawnTimer
+@onready var statusText: Label = $StatusText
 @onready var letterManager: Node = $LetterManager
+@onready var playerTurnSprite: UITurnSprite = $PlayerTurnSprite
+@onready var enemyTurnSprite: UITurnSprite = $EnemyTurnSprite
 @onready var victorySprite: Sprite2D = $VictorySprite
 @onready var defeatSprite: Sprite2D = $DefeatSprite
-@onready var enemyRespawnTimer: Timer = $EnemyRespawnTimer
+
+var WAVES := [
+	EnemyDatabase.slime,
+	EnemyDatabase.slime,
+	EnemyDatabase.slime
+]
 
 const ENEMY := preload("res://scenes/enemy.tscn")
 var enemy: Enemy = null
 var turn := Enums.Turn.PLAYER
+var wave := 1 ## Wave number, starting from 1 (1st wave).
 var over := false
 
 signal player_move_ended()
@@ -25,7 +35,7 @@ signal turn_ended()
 func spawnEnemy() -> void:
 	enemy = ENEMY.instantiate()
 	enemy.name = "Enemy"
-	enemy.setData(EnemyDatabase.slime)
+	enemy.setData(WAVES[wave - 1])
 	# Connect signals going out of the enemy.
 	enemy.attacked.connect(player._on_enemy_attacked)
 	enemy.died.connect(_on_enemy_died)
@@ -45,31 +55,42 @@ func spawnEnemy() -> void:
 	enemyStatusEffectContainer.clear()
 	# Add to the tree.
 	enemyAnchor.add_child(enemy)
+	# Update status text.
+	statusText.text = "Wave {0} of {1}".format([wave, len(WAVES)])
 
-## Ends the turn for the specified player.
+## Ends the turn for the current player.
 func endMove() -> void:
-	if over:
-		# Respawn and reset after killing the previous enemy.
-		# TODO: Handle killing an enemy better instead of having to do this.
-		# TODO: Enemy sets
-		over = false
-		player.regenerateFull()
-		player.removeStatusEffects()
-		victorySprite.hide()
-		enemyRespawnTimer.start()
-	elif turn == Enums.Turn.PLAYER:
-		turn = Enums.Turn.ENEMY
-		player_move_ended.emit()
-		letterManager.setInputAllowed(false)
-	elif turn == Enums.Turn.ENEMY:
-		turn = Enums.Turn.PLAYER
-		enemy_move_ended.emit()
-		endTurn()
-		letterManager.setInputAllowed(true)
+	# Do not start a new turn if any of the parties is dead.
+	if player.dead or enemy.dead:
+		return
+	# End and switch the turn.
+	match turn:
+		Enums.Turn.PLAYER:
+			player_move_ended.emit()
+			letterManager.setInputAllowed(false)
+			enemyTurnSprite.display()
+			turn = Enums.Turn.ENEMY
+		Enums.Turn.ENEMY:
+			enemy_move_ended.emit()
+			endTurn()
+			letterManager.setInputAllowed(true)
+			playerTurnSprite.display()
+			turn = Enums.Turn.PLAYER
 
-## Ends the turn after both the player and enemy have played. This ticks status effects, etc.
+## Ends the turn after both the player and enemy have played. This ticks uhhh...
 func endTurn() -> void:
 	turn_ended.emit()
+
+## Advances the wave when the enemy is killed.
+## If this was the last wave, ends the battle with a victory.
+func advanceWave() -> void:
+	if wave < len(WAVES):
+		wave += 1
+		player.regenerateFull()
+		player.removeStatusEffects()
+		enemyRespawnTimer.start()
+	else:
+		end(true)
 
 ## Ends the battle and shows a victory or defeat screen. Player input is revoked.
 func end(won: bool) -> void:
@@ -103,7 +124,7 @@ func _on_player_died() -> void:
 
 ## Called when the enemy dies.
 func _on_enemy_died() -> void:
-	end(true)
+	advanceWave()
 
 ## Called when the player gains a status effect.
 func _on_player_status_effect_added(effect: Enums.StatusEffectType, duration: int) -> void:
