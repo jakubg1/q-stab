@@ -135,11 +135,13 @@ one_shot = true
 
 [connection signal="player_move_ended" from="." to="Player" method="_on_battle_player_move_ended"]
 [connection signal="turn_ended" from="." to="Player" method="_on_battle_turn_ended"]
+[connection signal="turn_ended" from="." to="LetterManager/LetterRack" method="_on_battle_turn_ended"]
 [connection signal="died" from="Player" to="." method="_on_player_died"]
 [connection signal="health_changed" from="Player" to="PlayerHealthBar" method="_on_player_health_changed"]
 [connection signal="status_effect_added" from="Player" to="." method="_on_player_status_effect_added"]
 [connection signal="status_effect_removed" from="Player" to="." method="_on_player_status_effect_removed"]
 [connection signal="status_effect_updated" from="Player" to="." method="_on_player_status_effect_updated"]
+[connection signal="tile_effect_attack_received" from="Player" to="LetterManager/LetterRack" method="_on_player_tile_effect_attack_received"]
 [connection signal="turn_finished" from="Player" to="." method="_on_player_turn_finished"]
 [connection signal="word_submitted" from="LetterManager" to="Player" method="_on_letter_manager_word_submitted"]
 [connection signal="word_updated" from="LetterManager/LetterStage" to="AttackButton" method="_on_letter_stage_word_updated"]

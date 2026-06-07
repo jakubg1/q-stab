@@ -4,6 +4,7 @@ class_name LetterTile
 @onready var tileSprite: Sprite2D = $Tile
 @onready var letterSprite: Sprite2D = $Tile/Letter
 @onready var valueSprite: Sprite2D = $Tile/Value
+@onready var effectSprite: Sprite2D = $Tile/Effect
 @onready var hoverArea: Area2D = $Hover
 
 const LETTERS := "abcdefghijklmnopqrstuvwxyz*"
@@ -25,6 +26,8 @@ var posAnim := Vector2()
 var letter := "a"
 var gemType := Enums.GemType.NONE
 var gemIndex := 1
+var effectType := Enums.TileEffectType.NONE
+var effectDuration := 0
 var onRack := true
 var rackIndex := 0
 var destroyed := false
@@ -37,6 +40,8 @@ func refreshDisplay() -> void:
 	var y = index / 9 + 1
 	letterSprite.texture.region = Rect2(x * 20, y * 20, 20, 20)
 	valueSprite.texture.region = Rect2(0, getValue() * 7, 8, 7)
+	effectSprite.visible = effectType != Enums.TileEffectType.NONE
+	effectSprite.texture.region = Rect2((effectType - 1) * 20, 80, 20, 20)
 
 ## Sets the new desired position of this tile.
 ## This is intepolated in the update function.
@@ -75,10 +80,32 @@ func setGemIndex(gemIndex: int) -> void:
 func getGemIndex() -> int:
 	return gemIndex
 
+## Sets the current tile effect type and its duration.
+func setEffectType(effectType: Enums.TileEffectType, duration: int) -> void:
+	self.effectType = effectType
+	self.effectDuration = duration
+	refreshDisplay()
+
+## Returns the current tile effect type.
+func getEffectType() -> Enums.TileEffectType:
+	return effectType
+
+## Ticks the current tile effect, if any.
+func tickEffect() -> void:
+	if effectDuration > 0:
+		effectDuration -= 1
+		if effectDuration == 0:
+			effectType = Enums.TileEffectType.NONE
+			refreshDisplay()
+
 ## Returns the letter or multiple letters this Tile is used for a word.
 ## For example, for the Q tile this returns "qu".
 func getWordComponent() -> String:
 	return LETTER_MAPPINGS[letter] if letter in LETTER_MAPPINGS else letter
+
+## Returns whether this Tile can be picked up from the rack.
+func isSelectable() -> bool:
+	return effectType != Enums.TileEffectType.CHAINED
 
 ## Returns this Tile's letter base value, including enhancements.
 func getValue() -> int:

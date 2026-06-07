@@ -17,6 +17,7 @@ signal health_changed(health: int)
 signal status_effect_added(effect: Enums.StatusEffectType, duration: int)
 signal status_effect_removed(effect: Enums.StatusEffectType)
 signal status_effect_updated(effect: Enums.StatusEffectType, duration: int)
+signal tile_effect_attack_received(effect: Enums.TileEffectType, duration: int, amount: int)
 signal died
 signal attacked(attacker: Entity, effects: Array) ## Attacked as in "conducted an attack", not "has been attacked".
 signal turn_finished
@@ -131,6 +132,8 @@ func receiveAttack(attacker: Entity, effects: Array) -> void:
 				damage(amount)
 			"effect":
 				addStatusEffect(effect.effect, effect.turns)
+			"tileEffect":
+				tile_effect_attack_received.emit(effect.effect, effect.duration, effect.amount)
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:

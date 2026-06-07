@@ -18,12 +18,15 @@ func setInputAllowed(inputAllowed: bool) -> void:
 	self.inputAllowed = inputAllowed
 
 ## Moves a letter in the rack to the stage. If the tile is `null`, plays a "not accepted" sound.
-func moveLetterToStage(tile: Node) -> void:
-	if tile:
-		letterStage.addTile(tile)
-		letterStageSound.play()
-	else:
+func moveLetterToStage(tile: LetterTile) -> void:
+	if not tile:
 		letterNotFoundSound.play()
+		return
+	if not tile.isSelectable():
+		# letterChainedSound.play()
+		return
+	letterStage.addTile(tile)
+	letterStageSound.play()
 
 ## Moves a letter from the specified index in the rack to the stage.
 func moveLetterToStageFromIndex(index: int) -> void:

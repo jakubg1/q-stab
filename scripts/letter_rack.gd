@@ -1,7 +1,7 @@
 extends Node2D
 
 const LETTER_TILE := preload("res://scenes/letter_tile.tscn")
-var tiles: Dictionary[int, Node] = {}
+var tiles: Dictionary[int, LetterTile] = {}
 
 ## Returns the tile node position at specific index.
 func getTilePosition(index: int) -> Vector2:
@@ -16,7 +16,7 @@ func addTile(index: int) -> void:
 	tile.setRackIndex(index)
 
 ## Returns the specified tile back to the rack.
-func returnTile(tile: Node) -> void:
+func returnTile(tile: LetterTile) -> void:
 	tile.setOnRack(true)
 	tile.setGemIndex(1)
 	tile.reparent(self)
@@ -24,44 +24,44 @@ func returnTile(tile: Node) -> void:
 
 ## Moves the specified tile to a different position.
 ## Overwrites whatever was at the position previously and sets the tile in old position to `null`.
-func moveTile(tile: Node, index: int) -> void:
+func moveTile(tile: LetterTile, index: int) -> void:
 	tiles[tile.getRackIndex()] = null
 	tiles[index] = tile
 	tile.setRackIndex(index)
 	tile.setPos(getTilePosition(tile.getRackIndex()))
 
 ## Returns a tile at given tile index.
-func getTile(index: int) -> Node:
+func getTile(index: int) -> LetterTile:
 	return tiles[index]
 
-## Returns the first tile matching the given letter, or `null` if there isn't any.
-func getTileFromLetter(letter: String) -> Node:
+## Returns the first selectable tile matching the given letter, or `null` if there isn't any.
+func getTileFromLetter(letter: String) -> LetterTile:
 	for i in 16:
 		var tile = getTile(i)
-		if tile.isOnRack() and tile.getLetter() == letter:
+		if tile.isOnRack() and tile.isSelectable() and tile.getLetter() == letter:
 			return tile
 	return null
 
-## Returns the first enhanced tile matching the given letter.
+## Returns the first selectable enhanced tile matching the given letter.
 ## Falls back to `getTileFromLetter()` if no enhanced tile is found.
-func getEnhancedTileFromLetter(letter: String) -> Node:
+func getEnhancedTileFromLetter(letter: String) -> LetterTile:
 	for i in 16:
 		var tile = getTile(i)
-		if tile.isOnRack() and tile.getLetter() == letter and tile.getGemType() != Enums.GemType.NONE:
+		if tile.isOnRack() and tile.isSelectable() and tile.getLetter() == letter and tile.getGemType() != Enums.GemType.NONE:
 			return tile
 	return getTileFromLetter(letter)
 
-## Returns the first regular tile matching the given letter.
+## Returns the first selectable regular tile matching the given letter.
 ## Falls back to `getTileFromLetter()` if no regular tile is found.
-func getRegularTileFromLetter(letter: String) -> Node:
+func getRegularTileFromLetter(letter: String) -> LetterTile:
 	for i in 16:
 		var tile = getTile(i)
-		if tile.isOnRack() and tile.getLetter() == letter and tile.getGemType() == Enums.GemType.NONE:
+		if tile.isOnRack() and tile.isSelectable() and tile.getLetter() == letter and tile.getGemType() == Enums.GemType.NONE:
 			return tile
 	return getTileFromLetter(letter)
 
 ## Returns a random tile that is currently on the rack, or `null` if there isn't any.
-func getRandomTile() -> Node:
+func getRandomTile() -> LetterTile:
 	var tiles = []
 	for i in 16:
 		var tile = getTile(i)
@@ -72,7 +72,7 @@ func getRandomTile() -> Node:
 	return null
 
 ## Returns a random tile that is currently on the rack and not a gem, or `null` if there isn't any.
-func getRandomNonGemTile() -> Node:
+func getRandomNonGemTile() -> LetterTile:
 	var tiles = []
 	for i in 16:
 		var tile = getTile(i)
@@ -82,8 +82,19 @@ func getRandomNonGemTile() -> Node:
 		return tiles[randi_range(0, len(tiles) - 1)]
 	return null
 
+## Returns a random tile that is currently on the rack and with no effect, or `null` if there isn't any.
+func getRandomNonEffectTile() -> LetterTile:
+	var tiles = []
+	for i in 16:
+		var tile = getTile(i)
+		if tile.isOnRack() and tile.getEffectType() == Enums.TileEffectType.NONE:
+			tiles.append(tile)
+	if len(tiles) > 0:
+		return tiles[randi_range(0, len(tiles) - 1)]
+	return null
+
 ## Returns the currently hovered tile, or `null` if there isn't any.
-func getHoveredTile() -> Node:
+func getHoveredTile() -> LetterTile:
 	for i in 16:
 		var tile = getTile(i)
 		if tile.isOnRack() and tile.isHovered():
@@ -115,6 +126,13 @@ func fill() -> void:
 			else:
 				addTile(index)
 
+## Ticks tile effects on all tiles on the rack.
+func tickTileEffects() -> void:
+	for i in 16:
+		var tile = getTile(i)
+		if tile:
+			tile.tickEffect()
+
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	for i in 16:
@@ -123,3 +141,14 @@ func _ready() -> void:
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
+## Called when the player is attacked with a tile effect attack.
+func _on_player_tile_effect_attack_received(effect: int, duration: int, amount: int) -> void:
+	for i in amount:
+		var tile = getRandomNonEffectTile()
+		if tile:
+			tile.setEffectType(effect, duration)
+
+## Called when the battle's volley has ended.
+func _on_battle_turn_ended() -> void:
+	tickTileEffects()

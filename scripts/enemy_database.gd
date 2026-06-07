@@ -18,6 +18,13 @@ const placeholder: Dictionary[String, Variant] = {
 				{"type": "damage", "amount": 5},
 				{"type": "effect", "effect": Enums.StatusEffectType.POISON, "turns": 2}
 			]
+		},
+		{
+			"name": "Chain Test",
+			"weight": 30,
+			"effects": [
+				{"type": "tileEffect", "effect": Enums.TileEffectType.CHAINED, "duration": 3, "amount": 2}
+			]
 		}
 	]
 }

@@ -20,6 +20,11 @@ resource_local_to_scene = true
 atlas = ExtResource("3_fxe1e")
 region = Rect2(0, 7, 8, 7)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_fxe1e"]
+resource_local_to_scene = true
+atlas = ExtResource("1_mkkli")
+region = Rect2(0, 80, 20, 20)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pbye1"]
 
 [node name="LetterTile" type="Node2D" unique_id=1291075001]
@@ -36,6 +41,10 @@ centered = false
 [node name="Value" type="Sprite2D" parent="Tile" unique_id=932840766]
 position = Vector2(11, 0)
 texture = SubResource("AtlasTexture_fo78f")
+centered = false
+
+[node name="Effect" type="Sprite2D" parent="Tile" unique_id=1453042941]
+texture = SubResource("AtlasTexture_fxe1e")
 centered = false
 
 [node name="Hover" type="Area2D" parent="." unique_id=1136965543]

@@ -16,7 +16,7 @@ extends Node
 @onready var defeatSprite: Sprite2D = $DefeatSprite
 
 var WAVES := [
-	EnemyDatabase.slime,
+	EnemyDatabase.placeholder,
 	EnemyDatabase.slime,
 	EnemyDatabase.slime
 ]
