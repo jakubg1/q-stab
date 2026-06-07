@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://du4weehsnsg6r"]
+
+[ext_resource type="Texture2D" uid="uid://mltt4q55tecg" path="res://images/level_stats_background.png" id="1_8x2fi"]
+[ext_resource type="LabelSettings" uid="uid://doftay8drgli7" path="res://label_settings.tres" id="2_r1qnw"]
+
+[node name="BattleStats" type="Control" unique_id=942397546]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=990084487]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -42.5
+offset_top = -60.0
+offset_right = 42.5
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_8x2fi")
+
+[node name="ResultLabel" type="Label" parent="." unique_id=466553814]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -42.0
+offset_top = -56.5
+offset_right = 43.0
+offset_bottom = -41.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Victory!"
+label_settings = ExtResource("2_r1qnw")
+horizontal_alignment = 1

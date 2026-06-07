@@ -2,10 +2,7 @@
 
 [ext_resource type="Script" uid="uid://fo4111rnj8te" path="res://scripts/enemy_name.gd" id="1_wjnei"]
 [ext_resource type="Texture2D" uid="uid://d1h6jwmgrx10h" path="res://images/enemy_name.png" id="1_yqtvi"]
-[ext_resource type="FontFile" uid="uid://ckttjiby7l5pr" path="res://fonts/comicoro.ttf" id="2_wjnei"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_to2f4"]
-font = ExtResource("2_wjnei")
+[ext_resource type="LabelSettings" uid="uid://doftay8drgli7" path="res://label_settings.tres" id="3_wjnei"]
 
 [node name="EnemyName" type="Node2D" unique_id=1588843362]
 script = ExtResource("1_wjnei")
@@ -26,6 +23,6 @@ offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Enemy Name"
-label_settings = SubResource("LabelSettings_to2f4")
+label_settings = ExtResource("3_wjnei")
 horizontal_alignment = 1
 vertical_alignment = 1

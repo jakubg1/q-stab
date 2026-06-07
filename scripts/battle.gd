@@ -14,13 +14,15 @@ extends Node
 @onready var enemyTurnSprite: UITurnSprite = $EnemyTurnSprite
 @onready var victorySprite: Sprite2D = $VictorySprite
 @onready var defeatSprite: Sprite2D = $DefeatSprite
+@onready var battleStatsModal: UIBattleStatsModal = $BattleStatsModal
 
 var WAVES := [
-	EnemyDatabase.placeholder,
-	EnemyDatabase.slime,
+	#EnemyDatabase.placeholder,
+	#EnemyDatabase.slime,
 	EnemyDatabase.slime
 ]
 
+var game: Game = null
 const ENEMY := preload("res://scenes/enemy.tscn")
 var enemy: Enemy = null
 var turn := Enums.Turn.PLAYER
@@ -30,6 +32,11 @@ var over := false
 signal player_move_ended()
 signal enemy_move_ended()
 signal turn_ended()
+
+## Sets the game when this scene starts.
+## This is necessary so that we can move the game control out of the scene tree!
+func setGame(game: Game) -> void:
+	self.game = game
 
 ## Spawns a new enemy on the battlefield.
 func spawnEnemy() -> void:
@@ -98,6 +105,7 @@ func end(won: bool) -> void:
 	letterManager.setInputAllowed(false)
 	if won:
 		victorySprite.show()
+		battleStatsModal.showDialog(2)
 	else:
 		defeatSprite.show()
 

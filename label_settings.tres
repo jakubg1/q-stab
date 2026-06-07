@@ -1,0 +1,6 @@
+[gd_resource type="LabelSettings" format=3 uid="uid://doftay8drgli7"]
+
+[ext_resource type="FontFile" uid="uid://ckttjiby7l5pr" path="res://fonts/comicoro.ttf" id="1_8aso4"]
+
+[resource]
+font = ExtResource("1_8aso4")

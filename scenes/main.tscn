@@ -10,14 +10,12 @@ viewport_path = NodePath("SubViewportContainer/SubViewport")
 [node name="MainCanvas" type="Sprite2D" parent="." unique_id=2059867634]
 visible = false
 texture_filter = 1
-scale = Vector2(3, 3)
 texture = SubResource("ViewportTexture_sgp6g")
 centered = false
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=124874134]
-offset_right = 40.0
-offset_bottom = 40.0
-scale = Vector2(3, 3)
+offset_right = 400.0
+offset_bottom = 225.0
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=39051748]
 handle_input_locally = false

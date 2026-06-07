@@ -31,7 +31,7 @@ const placeholder: Dictionary[String, Variant] = {
 
 const slime: Dictionary[String, Variant] = {
 	"name": "Slime",
-	"health": 25,
+	"health": 2, # 25
 	"attacks": [
 		{
 			"name": "Jump",

@@ -1,13 +1,12 @@
 [gd_scene format=3 uid="uid://b7a1vg5211i7h"]
 
-[ext_resource type="PackedScene" uid="uid://cqubghtp72fdi" path="res://scenes/battle.tscn" id="1_uwrxv"]
+[ext_resource type="Script" uid="uid://ccrqw3m8h104v" path="res://scripts/game.gd" id="1_lnu2h"]
 
 [node name="Game" type="Node" unique_id=1705985166]
+script = ExtResource("1_lnu2h")
 
 [node name="Background" type="ColorRect" parent="." unique_id=95025346]
 offset_right = 400.0
 offset_bottom = 225.0
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
-
-[node name="Battle" parent="." unique_id=507625319 instance=ExtResource("1_uwrxv")]

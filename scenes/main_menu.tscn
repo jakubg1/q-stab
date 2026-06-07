@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://d22ki213w0fg5"]
+
+[ext_resource type="Texture2D" uid="uid://d3v2dyalya643" path="res://images/main_menu.png" id="1_l6cm7"]
+[ext_resource type="Script" uid="uid://dk7uf5nlor50p" path="res://scripts/main_menu.gd" id="1_tbmy8"]
+[ext_resource type="Texture2D" uid="uid://be0v2ucvscy4m" path="res://images/button_play.png" id="2_oa1go"]
+[ext_resource type="Texture2D" uid="uid://y6d5n8kmycvj" path="res://images/button_play_pressed.png" id="3_tbmy8"]
+[ext_resource type="Texture2D" uid="uid://cwv7x3uov4k5p" path="res://images/button_play_hovered.png" id="4_jk1qb"]
+[ext_resource type="Texture2D" uid="uid://rmdv8dtjm3wy" path="res://images/button_quit.png" id="5_5dd4i"]
+[ext_resource type="Texture2D" uid="uid://rute07uugp2" path="res://images/button_settings.png" id="6_flqon"]
+[ext_resource type="Texture2D" uid="uid://cggcqirm7fowx" path="res://images/button_quit_pressed.png" id="6_lgwnu"]
+[ext_resource type="Texture2D" uid="uid://bsr1pwdwwwnj2" path="res://images/button_quit_hovered.png" id="7_flqon"]
+[ext_resource type="Texture2D" uid="uid://354wooai7anx" path="res://images/button_settings_pressed.png" id="7_rcqid"]
+[ext_resource type="Texture2D" uid="uid://fcqpag3epc3g" path="res://images/button_settings_hovered.png" id="8_1ajci"]
+
+[node name="MainMenu" type="Control" unique_id=193385688]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_tbmy8")
+
+[node name="Background" type="TextureRect" parent="." unique_id=1928295332]
+layout_mode = 1
+offset_right = 400.0
+offset_bottom = 225.0
+texture = ExtResource("1_l6cm7")
+
+[node name="ButtonPlay" type="TextureButton" parent="." unique_id=2095038149]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 158.0
+offset_top = 131.0
+offset_right = 238.0
+offset_bottom = 151.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("2_oa1go")
+texture_pressed = ExtResource("3_tbmy8")
+texture_hover = ExtResource("4_jk1qb")
+
+[node name="ButtonSettings" type="TextureButton" parent="." unique_id=1192182312]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 158.0
+offset_top = 155.0
+offset_right = 238.0
+offset_bottom = 175.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("6_flqon")
+texture_pressed = ExtResource("7_rcqid")
+texture_hover = ExtResource("8_1ajci")
+
+[node name="ButtonQuit" type="TextureButton" parent="." unique_id=1596078035]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 158.0
+offset_top = 179.0
+offset_right = 238.0
+offset_bottom = 199.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("5_5dd4i")
+texture_pressed = ExtResource("6_lgwnu")
+texture_hover = ExtResource("7_flqon")
+
+[connection signal="pressed" from="ButtonPlay" to="." method="_on_button_play_pressed"]
+[connection signal="pressed" from="ButtonSettings" to="." method="_on_button_settings_pressed"]
+[connection signal="pressed" from="ButtonQuit" to="." method="_on_button_quit_pressed"]
