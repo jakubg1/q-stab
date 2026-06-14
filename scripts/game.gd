@@ -27,6 +27,7 @@ func startGame() -> void:
 	# GDScript can't into lambdas, LOVE2D can:
 	# transition.start(function() self.setScene("battle") end)
 	transition.start(Callable(self, "setSceneBattle"))
+	MusicManager.stop(0.5)
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:

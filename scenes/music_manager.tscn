@@ -1,6 +1,17 @@
 [gd_scene format=3 uid="uid://mn1dserku0v5"]
 
 [ext_resource type="Script" uid="uid://cijkwlvqwrcun" path="res://scripts/music_manager.gd" id="1_tn5dr"]
+[ext_resource type="AudioStream" uid="uid://rnbqnk0kbswj" path="res://music/OG-Title.wav" id="2_jd6i5"]
+[ext_resource type="Script" uid="uid://dcj8vwt5kh156" path="res://scripts/music.gd" id="3_xcw26"]
+[ext_resource type="AudioStream" uid="uid://bhuvuabrsym7j" path="res://music/Track11.ogg" id="3_yodp2"]
 
 [node name="MusicManager" type="Node" unique_id=88930590]
 script = ExtResource("1_tn5dr")
+
+[node name="Title" type="AudioStreamPlayer" parent="." unique_id=523667302]
+stream = ExtResource("2_jd6i5")
+script = ExtResource("3_xcw26")
+
+[node name="Level" type="AudioStreamPlayer" parent="." unique_id=614568296]
+stream = ExtResource("3_yodp2")
+script = ExtResource("3_xcw26")

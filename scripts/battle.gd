@@ -113,6 +113,7 @@ func end(won: bool) -> void:
 func _ready() -> void:
 	playerHealthBar.init(player.getMaxHealth())
 	spawnEnemy()
+	MusicManager.play("level")
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
