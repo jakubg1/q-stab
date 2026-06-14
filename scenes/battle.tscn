@@ -124,6 +124,8 @@ one_shot = true
 [connection signal="status_effect_updated" from="Player" to="." method="_on_player_status_effect_updated"]
 [connection signal="tile_effect_attack_received" from="Player" to="LetterManager/LetterRack" method="_on_player_tile_effect_attack_received"]
 [connection signal="turn_finished" from="Player" to="." method="_on_player_turn_finished"]
+[connection signal="attack_prepared" from="LetterManager" to="Player" method="_on_letter_manager_attack_prepared"]
+[connection signal="word_submitted" from="LetterManager" to="." method="_on_letter_manager_word_submitted"]
 [connection signal="word_submitted" from="LetterManager" to="Player" method="_on_letter_manager_word_submitted"]
 [connection signal="word_updated" from="LetterManager/LetterStage" to="AttackButton" method="_on_letter_stage_word_updated"]
 [connection signal="pressed" from="AttackButton" to="AttackButton" method="_on_pressed"]

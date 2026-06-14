@@ -1,4 +1,5 @@
 extends Control
+class_name UIStagemap
 
 var game: Game = null
 
@@ -9,29 +10,22 @@ func setGame(game: Game) -> void:
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	MusicManager.play("title")
+	pass # Replace with function body.
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
-## Called when Play is pressed.
+## Called when Play is pressed
 func _on_button_play_pressed() -> void:
-	game.startStagemap()
+	self.game.startGame()
 
-## Called when Settings is pressed.
-func _on_button_settings_pressed() -> void:
-	pass # TODO
-
-## Called when Quit is pressed :(
-func _on_button_quit_pressed() -> void:
-	get_tree().quit()
+## Called when Menu is pressed
+func _on_button_menu_pressed() -> void:
+	self.game.startMainMenu()
 
 func _on_button_play_button_down() -> void:
 	SoundManager.playSound("ButtonClick")
 
-func _on_button_settings_button_down() -> void:
-	SoundManager.playSound("ButtonClick")
-
-func _on_button_quit_button_down() -> void:
+func _on_button_menu_button_down() -> void:
 	SoundManager.playSound("ButtonClick")

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://c8sprxyc3a4n3" path="res://scripts/sound_manager.gd" id="1_gb18h"]
 [ext_resource type="AudioStream" uid="uid://bjagluqdqud6h" path="res://sounds/attack.wav" id="2_wwv6j"]
 [ext_resource type="AudioStream" uid="uid://dmar5i4xm48a6" path="res://sounds/effect_inflict.wav" id="3_55or6"]
+[ext_resource type="AudioStream" uid="uid://d3okw8oseqpey" path="res://sounds/button_click.wav" id="3_74mgu"]
 [ext_resource type="AudioStream" uid="uid://c3116sg34igfk" path="res://sounds/effect_tick.wav" id="4_74mgu"]
 [ext_resource type="AudioStream" uid="uid://82slkngan2qt" path="res://sounds/enemy_attack.wav" id="5_s8vuo"]
 [ext_resource type="AudioStream" uid="uid://d4bsmbc8r6fso" path="res://sounds/letter_stage.wav" id="6_wcfih"]
@@ -18,6 +19,9 @@ script = ExtResource("1_gb18h")
 
 [node name="Attack" type="AudioStreamPlayer" parent="." unique_id=178425809]
 stream = ExtResource("2_wwv6j")
+
+[node name="ButtonClick" type="AudioStreamPlayer" parent="." unique_id=803719736]
+stream = ExtResource("3_74mgu")
 
 [node name="EffectInflict" type="AudioStreamPlayer" parent="." unique_id=1389477229]
 stream = ExtResource("3_55or6")

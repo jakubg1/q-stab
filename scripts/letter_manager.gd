@@ -5,7 +5,8 @@ extends Node
 
 var inputAllowed := true
 
-signal word_submitted(attack: Array)
+signal attack_prepared(attack: Array)
+signal word_submitted(word: String)
 
 ## Sets whether the player can interact with the board.
 func setInputAllowed(inputAllowed: bool) -> void:
@@ -131,7 +132,8 @@ func submitWord() -> void:
 			gemCandidate.setGemType(gemType)
 	# Play a sound and make the attack!
 	print(word + " for " + str(score) + (" (!!)" if WordDictionary.isWordValidBad(word) else ""))
-	word_submitted.emit(attack)
+	word_submitted.emit(word)
+	attack_prepared.emit(attack)
 	#SoundManager.playSound("WordSubmit")
 
 ## Called when the node enters the scene tree for the first time.

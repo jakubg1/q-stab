@@ -5,6 +5,7 @@ class_name Game
 
 const SCENES = {
 	"main_menu": preload("res://scenes/main_menu.tscn"),
+	"stagemap": preload("res://scenes/stagemap.tscn"),
 	"battle": preload("res://scenes/battle.tscn")
 }
 
@@ -18,15 +19,17 @@ func setScene(name: String) -> void:
 	currentScene.setGame(self)
 	add_child(currentScene)
 
-## Don't ask me why I have to make this function. Fuck you, GDScript!
-func setSceneBattle() -> void:
-	setScene("battle")
+## Goes to the main menu.
+func startMainMenu() -> void:
+	transition.start(Callable(self, "setScene").bind("main_menu"))
+
+## Goes to the stagemap.
+func startStagemap() -> void:
+	transition.start(Callable(self, "setScene").bind("stagemap"))
 
 ## Starts the game.
 func startGame() -> void:
-	# GDScript can't into lambdas, LOVE2D can:
-	# transition.start(function() self.setScene("battle") end)
-	transition.start(Callable(self, "setSceneBattle"))
+	transition.start(Callable(self, "setScene").bind("battle"))
 	MusicManager.stop(0.5)
 
 ## Called when the node enters the scene tree for the first time.

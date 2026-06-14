@@ -74,6 +74,9 @@ texture_normal = ExtResource("5_5dd4i")
 texture_pressed = ExtResource("6_lgwnu")
 texture_hover = ExtResource("7_flqon")
 
+[connection signal="button_down" from="ButtonPlay" to="." method="_on_button_play_button_down"]
 [connection signal="pressed" from="ButtonPlay" to="." method="_on_button_play_pressed"]
+[connection signal="button_down" from="ButtonSettings" to="." method="_on_button_settings_button_down"]
 [connection signal="pressed" from="ButtonSettings" to="." method="_on_button_settings_pressed"]
+[connection signal="button_down" from="ButtonQuit" to="." method="_on_button_quit_button_down"]
 [connection signal="pressed" from="ButtonQuit" to="." method="_on_button_quit_pressed"]

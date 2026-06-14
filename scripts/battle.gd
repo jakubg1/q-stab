@@ -29,6 +29,7 @@ var turn := Enums.Turn.PLAYER
 var wave := 1 ## Wave number, starting from 1 (1st wave).
 var over := false
 var time := 0.0 ## Total time spent in battle.
+var longestWord := "" ## Longest word in battle.
 
 signal player_move_ended()
 signal enemy_move_ended()
@@ -109,10 +110,16 @@ func end(won: bool) -> void:
 		victorySprite.show()
 		SoundManager.playSound("LevelWin")
 		battleStatsModal.setTime(time)
+		battleStatsModal.setLongestWord(longestWord)
 		battleStatsModal.showDialog(2)
 	else:
 		defeatSprite.show()
 		SoundManager.playSound("LevelLose")
+
+## Given the word, check if it is longer than current longest word and if so set it as the new record holder.
+func considerNewLongestWord(word: String) -> void:
+	if len(word) > len(longestWord):
+		longestWord = word
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -171,3 +178,7 @@ func _on_enemy_respawn_timer_timeout() -> void:
 	spawnEnemy()
 	turn = Enums.Turn.PLAYER
 	letterManager.setInputAllowed(true)
+
+## Called when a word is submitted.
+func _on_letter_manager_word_submitted(word: String) -> void:
+	considerNewLongestWord(word)

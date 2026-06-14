@@ -18,7 +18,7 @@ func _on_enemy_status_effect_inflicted(effect: Enums.StatusEffectType, turns: in
 	addStatusEffect(effect, turns)
 
 ## Called when the player submits a valid word.
-func _on_letter_manager_word_submitted(attack: Array) -> void:
+func _on_letter_manager_attack_prepared(attack: Array) -> void:
 	attacked.emit(self, attack)
 	turn_finished.emit()
 

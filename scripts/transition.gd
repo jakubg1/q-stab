@@ -17,9 +17,9 @@ func start(onDark: Callable) -> void:
 ## Updates the transition appearance.
 func update() -> void:
 	var alpha = 0
-	if t >= 0 && t < 0.3:
-		alpha = t / 0.3 # Fade in
-	elif t >= 0.3 && t < 0.9:
+	if t >= 0 && t < 0.6:
+		alpha = t / 0.6 # Fade in
+	elif t >= 0.6 && t < 0.9:
 		alpha = 1 # Faded in
 	elif t >= 0.9 && t < 1.5:
 		alpha = 1 - (t - 0.9) / 0.6 # Fading out
@@ -34,7 +34,7 @@ func _process(delta: float) -> void:
 	if t >= 0:
 		t += delta
 		# Check whether to call the onDark function.
-		if t >= 0.4 && onDark:
+		if t >= 0.6 && onDark:
 			onDark.call()
 			onDark = null
 		# Check whether the transition has finished.

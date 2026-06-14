@@ -21,6 +21,10 @@ func reset() -> void:
 func setTime(time: float) -> void:
 	window.setTime(time)
 
+## Sets the longest word to be displayed in the status window.
+func setLongestWord(word: String) -> void:
+	window.setLongestWord(word)
+
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
