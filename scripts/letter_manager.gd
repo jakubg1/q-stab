@@ -3,12 +3,6 @@ extends Node
 @onready var letterRack: Node2D = $LetterRack
 @onready var letterStage: Node2D = $LetterStage
 
-@onready var letterStageSound: AudioStreamPlayer = $Sound/LetterStage
-@onready var letterUnstageSound: AudioStreamPlayer = $Sound/LetterUnstage
-@onready var letterNotFoundSound: AudioStreamPlayer = $Sound/LetterNotFound
-@onready var wordSubmitSound: AudioStreamPlayer = $Sound/WordSubmit
-@onready var wordInvalidSound: AudioStreamPlayer = $Sound/WordInvalid
-
 var inputAllowed := true
 
 signal word_submitted(attack: Array)
@@ -20,13 +14,13 @@ func setInputAllowed(inputAllowed: bool) -> void:
 ## Moves a letter in the rack to the stage. If the tile is `null`, plays a "not accepted" sound.
 func moveLetterToStage(tile: LetterTile) -> void:
 	if not tile:
-		letterNotFoundSound.play()
+		SoundManager.playSound("Reject")
 		return
 	if not tile.isSelectable():
 		# letterChainedSound.play()
 		return
 	letterStage.addTile(tile)
-	letterStageSound.play()
+	SoundManager.playSound("LetterStage")
 
 ## Moves a letter from the specified index in the rack to the stage.
 func moveLetterToStageFromIndex(index: int) -> void:
@@ -74,7 +68,7 @@ func moveLetterToRackInternal() -> Node:
 func moveLetterToRack() -> Node:
 	var tile = moveLetterToRackInternal()
 	if tile:
-		letterUnstageSound.play()
+		SoundManager.playSound("LetterUnstage")
 	return tile
 
 ## Moves all letters from the stage back to the rack.
@@ -85,7 +79,7 @@ func moveAllLettersToRack() -> void:
 		var lastTile = moveLetterToRackInternal()
 		if not lastTile:
 			break
-	letterUnstageSound.play()
+	SoundManager.playSound("LetterUnstage")
 
 ## Moves all letters from the stage back to the rack until the specified tile (inclusive!).
 func moveLettersToRackUntil(tile: Node) -> void:
@@ -95,7 +89,7 @@ func moveLettersToRackUntil(tile: Node) -> void:
 		var lastTile = moveLetterToRackInternal()
 		if not lastTile or lastTile == tile:
 			break
-	letterUnstageSound.play()
+	SoundManager.playSound("LetterUnstage")
 
 ## Returns the gem type the player gets when scoring the specified amount of points for a word.
 func getGemType(score: int) -> Enums.GemType:
@@ -118,7 +112,7 @@ func submitWord() -> void:
 	var word = letterStage.getWord()
 	if not WordDictionary.isWordValid(word):
 		print(word + ": This is not a valid word!")
-		wordInvalidSound.play()
+		SoundManager.playSound("WordInvalid")
 		return
 	# Calculate the word score.
 	var base = letterStage.getWordScore()
@@ -138,7 +132,7 @@ func submitWord() -> void:
 	# Play a sound and make the attack!
 	print(word + " for " + str(score) + (" (!!)" if WordDictionary.isWordValidBad(word) else ""))
 	word_submitted.emit(attack)
-	wordSubmitSound.play()
+	#SoundManager.playSound("WordSubmit")
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:

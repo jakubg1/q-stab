@@ -28,6 +28,7 @@ var enemy: Enemy = null
 var turn := Enums.Turn.PLAYER
 var wave := 1 ## Wave number, starting from 1 (1st wave).
 var over := false
+var time := 0.0 ## Total time spent in battle.
 
 signal player_move_ended()
 signal enemy_move_ended()
@@ -103,11 +104,15 @@ func advanceWave() -> void:
 func end(won: bool) -> void:
 	over = true
 	letterManager.setInputAllowed(false)
+	MusicManager.stop()
 	if won:
 		victorySprite.show()
+		SoundManager.playSound("LevelWin")
+		battleStatsModal.setTime(time)
 		battleStatsModal.showDialog(2)
 	else:
 		defeatSprite.show()
+		SoundManager.playSound("LevelLose")
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -117,7 +122,8 @@ func _ready() -> void:
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	if not over:
+		time += delta
 
 ## Called when the player has finished their turn.
 func _on_player_turn_finished() -> void:

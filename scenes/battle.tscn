@@ -5,11 +5,6 @@
 [ext_resource type="Script" uid="uid://bri670w5c1is5" path="res://scripts/letter_manager.gd" id="4_jt4d8"]
 [ext_resource type="PackedScene" uid="uid://eks5o40sbdl2" path="res://scenes/letter_rack.tscn" id="5_kl6ie"]
 [ext_resource type="PackedScene" uid="uid://dmcu3x7vffmda" path="res://scenes/letter_stage.tscn" id="6_1m01a"]
-[ext_resource type="AudioStream" uid="uid://d4bsmbc8r6fso" path="res://sounds/letter_stage.wav" id="7_lv4so"]
-[ext_resource type="AudioStream" uid="uid://wvnbpem07fdt" path="res://sounds/letter_unstage.wav" id="8_eivww"]
-[ext_resource type="AudioStream" uid="uid://c0mqv6oueoxmb" path="res://sounds/reject.wav" id="9_rwtbh"]
-[ext_resource type="AudioStream" uid="uid://cysfhk3d5vqpe" path="res://sounds/word_submit.wav" id="10_f0g0v"]
-[ext_resource type="AudioStream" uid="uid://cmtgi7o217x4t" path="res://sounds/word_invalid.wav" id="11_at2n2"]
 [ext_resource type="PackedScene" uid="uid://clftrtubxugy3" path="res://scenes/health_bar.tscn" id="12_saiin"]
 [ext_resource type="PackedScene" uid="uid://cli50myv4y6h7" path="res://scenes/status_effect_container.tscn" id="14_dd63g"]
 [ext_resource type="FontFile" uid="uid://ckttjiby7l5pr" path="res://fonts/comicoro.ttf" id="15_dd63g"]
@@ -51,23 +46,6 @@ position = Vector2(160, 118)
 
 [node name="LetterStage" parent="LetterManager" unique_id=354605681 instance=ExtResource("6_1m01a")]
 position = Vector2(200, 68)
-
-[node name="Sound" type="Node" parent="LetterManager" unique_id=1750574474]
-
-[node name="LetterStage" type="AudioStreamPlayer" parent="LetterManager/Sound" unique_id=1424288909]
-stream = ExtResource("7_lv4so")
-
-[node name="LetterUnstage" type="AudioStreamPlayer" parent="LetterManager/Sound" unique_id=1310108758]
-stream = ExtResource("8_eivww")
-
-[node name="LetterNotFound" type="AudioStreamPlayer" parent="LetterManager/Sound" unique_id=799820117]
-stream = ExtResource("9_rwtbh")
-
-[node name="WordSubmit" type="AudioStreamPlayer" parent="LetterManager/Sound" unique_id=434567799]
-stream = ExtResource("10_f0g0v")
-
-[node name="WordInvalid" type="AudioStreamPlayer" parent="LetterManager/Sound" unique_id=1923631268]
-stream = ExtResource("11_at2n2")
 
 [node name="PlayerHealthBar" parent="." unique_id=419631214 instance=ExtResource("12_saiin")]
 position = Vector2(2, 14)
@@ -133,7 +111,7 @@ texture_disabled = ExtResource("21_sattt")
 script = ExtResource("22_jid5g")
 
 [node name="EnemyRespawnTimer" type="Timer" parent="." unique_id=1926284760]
-wait_time = 5.0
+wait_time = 2.5
 one_shot = true
 
 [connection signal="player_move_ended" from="." to="Player" method="_on_battle_player_move_ended"]

@@ -1,0 +1,6 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://t4xdig2xl8bu"]
+
+[ext_resource type="Shader" uid="uid://6g4adb36e24a" path="res://shaders/whiten.gdshader" id="1_0mpkg"]
+
+[resource]
+shader = ExtResource("1_0mpkg")

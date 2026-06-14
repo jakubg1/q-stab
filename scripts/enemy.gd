@@ -1,10 +1,12 @@
 extends Entity
 class_name Enemy
 
-@onready var sprite: AnimatedSprite2D = $Sprite
+@onready var sprite: EnemySprite = $Sprite
 @onready var actionTimer: Timer = $ActionTimer
 
 var attacks: Array[Dictionary] = []
+var deadTime = -1
+var hurtTime = -1
 
 ## Loads enemy data from the enemy database entry. You must call this when creating an enemy.
 func setData(enemyData: Dictionary[String, Variant]) -> void:
@@ -22,11 +24,13 @@ func attack() -> void:
 ## Damages the entity the given amount of HP. Kills it when the health reaches 0.
 func damage(amount: int, bypassBlock: bool = false) -> void:
 	sprite.play("Hurt")
+	hurtTime = 0
 	super.damage(amount, bypassBlock)
 
 ## Kills this entity.
 func kill() -> void:
 	sprite.play("Dead")
+	deadTime = 0
 	super.kill()
 
 ## Queues a move by starting a timer until the enemy attacks.
@@ -37,11 +41,20 @@ func queueMove() -> void:
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass
+	var tween = create_tween()
+	tween.tween_property(sprite, "position", Vector2(80, -24), 0)
+	tween.tween_property(sprite, "position", Vector2(0, -24), 0.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	if deadTime >= 0:
+		deadTime += delta
+		sprite.modulate.a = clamp(2 - deadTime, 0, 1)
+	if hurtTime >= 0:
+		hurtTime += delta
+		if hurtTime >= 0.1:
+			hurtTime = -1
+	sprite.setFlashing(hurtTime != -1)
 
 ## Called when a player performs an attack towards the enemy.
 func _on_player_attacked(attacker: Entity, effects: Array) -> void:

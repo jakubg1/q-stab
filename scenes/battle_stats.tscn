@@ -1,7 +1,13 @@
 [gd_scene format=3 uid="uid://du4weehsnsg6r"]
 
 [ext_resource type="Texture2D" uid="uid://mltt4q55tecg" path="res://images/level_stats_background.png" id="1_8x2fi"]
+[ext_resource type="Script" uid="uid://k5qd66moxpjd" path="res://scripts/battle_stats.gd" id="1_u35b0"]
 [ext_resource type="LabelSettings" uid="uid://doftay8drgli7" path="res://label_settings.tres" id="2_r1qnw"]
+[ext_resource type="FontFile" uid="uid://ckttjiby7l5pr" path="res://fonts/comicoro.ttf" id="4_7638k"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_66nns"]
+resource_local_to_scene = true
+font = ExtResource("4_7638k")
 
 [node name="BattleStats" type="Control" unique_id=942397546]
 layout_mode = 3
@@ -10,10 +16,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+offset_top = -2.5
+offset_bottom = -2.5
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+script = ExtResource("1_u35b0")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=990084487]
 layout_mode = 1
@@ -22,10 +31,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -42.5
-offset_top = -60.0
-offset_right = 42.5
-offset_bottom = 60.0
+offset_left = -60.0
+offset_top = -45.0
+offset_right = 60.0
+offset_bottom = 45.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_8x2fi")
@@ -37,12 +46,95 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -42.0
-offset_top = -56.5
-offset_right = 43.0
-offset_bottom = -41.5
+offset_left = -57.0
+offset_top = -42.0
+offset_right = 57.0
+offset_bottom = -27.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "Victory!"
 label_settings = ExtResource("2_r1qnw")
 horizontal_alignment = 1
+
+[node name="ClickToContinueLabel" type="Label" parent="." unique_id=465787480]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -57.0
+offset_top = 22.0
+offset_right = 57.0
+offset_bottom = 37.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Click to continue..."
+label_settings = SubResource("LabelSettings_66nns")
+horizontal_alignment = 1
+
+[node name="TimeLabel" type="Label" parent="." unique_id=1721620316]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -55.0
+offset_top = -22.0
+offset_right = 55.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Time Taken:"
+label_settings = ExtResource("2_r1qnw")
+
+[node name="TimeValue" type="Label" parent="." unique_id=1365154185]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -55.0
+offset_top = -22.0
+offset_right = 55.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0:00"
+label_settings = ExtResource("2_r1qnw")
+horizontal_alignment = 2
+
+[node name="LongestWordLabel" type="Label" parent="." unique_id=308705671]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -55.0
+offset_top = -10.0
+offset_right = 55.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Longest Word:"
+label_settings = ExtResource("2_r1qnw")
+
+[node name="LongestWordValue" type="Label" parent="." unique_id=1779939658]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -55.0
+offset_top = 2.0
+offset_right = 55.0
+offset_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "DISGUSTING"
+label_settings = ExtResource("2_r1qnw")
+horizontal_alignment = 2

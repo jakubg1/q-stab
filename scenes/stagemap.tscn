@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://b1scwoc3hknih"]
+
+[ext_resource type="Texture2D" uid="uid://dwybmjweh466s" path="res://images/stagemap.png" id="1_v3lvg"]
+[ext_resource type="Texture2D" uid="uid://cq08bthm7dlj6" path="res://images/button_menu.png" id="2_kqtj4"]
+[ext_resource type="Texture2D" uid="uid://b0yqfs60kl3rl" path="res://images/button_menu_pressed.png" id="3_v8rp7"]
+[ext_resource type="Texture2D" uid="uid://u8ba13dco05h" path="res://images/button_menu_hovered.png" id="4_hpk81"]
+
+[node name="Stagemap" type="Control" unique_id=376238746]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Background" type="TextureRect" parent="." unique_id=160405968]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_v3lvg")
+
+[node name="TextureButton" type="TextureButton" parent="." unique_id=1586787277]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 200.0
+offset_right = 90.0
+offset_bottom = 220.0
+grow_vertical = 0
+texture_normal = ExtResource("2_kqtj4")
+texture_pressed = ExtResource("3_v8rp7")
+texture_hover = ExtResource("4_hpk81")

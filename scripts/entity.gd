@@ -1,10 +1,6 @@
 extends Node2D
 class_name Entity
 
-#@onready var attackSound: AudioStreamPlayer = $Sound/Attack
-#@onready var effectInflictSound: AudioStreamPlayer = $Sound/EffectInflict
-#@onready var effectTickSound: AudioStreamPlayer = $Sound/EffectTick
-
 var displayName = ""
 var health = 50
 var maxHealth = 50
@@ -105,7 +101,7 @@ func tickStatusEffects() -> void:
 		match effect:
 			Enums.StatusEffectType.POISON:
 				damage(ceil(maxHealth * 0.05), true)
-				#effectTickSound.play()
+				SoundManager.playSound("EffectTick")
 			Enums.StatusEffectType.BURNING:
 				damage(ceil(maxHealth * 0.1), true)
 		print(displayName + ": Status effect applied!")
@@ -130,8 +126,10 @@ func receiveAttack(attacker: Entity, effects: Array) -> void:
 				if hasStatusEffect(Enums.StatusEffectType.VULNERABLE):
 					amount = ceil(amount * 1.5)
 				damage(amount)
+				SoundManager.playSound("Attack")
 			"effect":
 				addStatusEffect(effect.effect, effect.turns)
+				SoundManager.playSound("EffectInflict")
 			"tileEffect":
 				tile_effect_attack_received.emit(effect.effect, effect.duration, effect.amount)
 

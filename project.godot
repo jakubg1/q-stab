@@ -26,6 +26,7 @@ WordDictionary="*uid://cw5l0be1veuq5"
 Enums="*uid://ckmbqpwui76fg"
 EnemyDatabase="*uid://dbcb5plkfmnfv"
 MusicManager="*uid://mn1dserku0v5"
+SoundManager="*uid://dtqyxwwjeh8b2"
 
 [display]
 

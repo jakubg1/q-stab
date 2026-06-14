@@ -3,4 +3,5 @@
 [ext_resource type="FontFile" uid="uid://ckttjiby7l5pr" path="res://fonts/comicoro.ttf" id="1_8aso4"]
 
 [resource]
+resource_local_to_scene = true
 font = ExtResource("1_8aso4")

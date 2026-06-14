@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://dtqyxwwjeh8b2"]
+
+[ext_resource type="Script" uid="uid://c8sprxyc3a4n3" path="res://scripts/sound_manager.gd" id="1_gb18h"]
+[ext_resource type="AudioStream" uid="uid://bjagluqdqud6h" path="res://sounds/attack.wav" id="2_wwv6j"]
+[ext_resource type="AudioStream" uid="uid://dmar5i4xm48a6" path="res://sounds/effect_inflict.wav" id="3_55or6"]
+[ext_resource type="AudioStream" uid="uid://c3116sg34igfk" path="res://sounds/effect_tick.wav" id="4_74mgu"]
+[ext_resource type="AudioStream" uid="uid://82slkngan2qt" path="res://sounds/enemy_attack.wav" id="5_s8vuo"]
+[ext_resource type="AudioStream" uid="uid://d4bsmbc8r6fso" path="res://sounds/letter_stage.wav" id="6_wcfih"]
+[ext_resource type="AudioStream" uid="uid://wvnbpem07fdt" path="res://sounds/letter_unstage.wav" id="7_laeq7"]
+[ext_resource type="AudioStream" uid="uid://dyuiwi1b6uher" path="res://sounds/level_lose.ogg" id="8_55or6"]
+[ext_resource type="AudioStream" uid="uid://c0mqv6oueoxmb" path="res://sounds/reject.wav" id="8_mj6ls"]
+[ext_resource type="AudioStream" uid="uid://cmtgi7o217x4t" path="res://sounds/word_invalid.wav" id="9_6a7a8"]
+[ext_resource type="AudioStream" uid="uid://iehrled8kes7" path="res://sounds/level_win.ogg" id="9_74mgu"]
+[ext_resource type="AudioStream" uid="uid://cysfhk3d5vqpe" path="res://sounds/word_submit.wav" id="10_yr0f0"]
+
+[node name="SoundManager" type="Node" unique_id=1867507985]
+script = ExtResource("1_gb18h")
+
+[node name="Attack" type="AudioStreamPlayer" parent="." unique_id=178425809]
+stream = ExtResource("2_wwv6j")
+
+[node name="EffectInflict" type="AudioStreamPlayer" parent="." unique_id=1389477229]
+stream = ExtResource("3_55or6")
+
+[node name="EffectTick" type="AudioStreamPlayer" parent="." unique_id=1436176539]
+stream = ExtResource("4_74mgu")
+
+[node name="EnemyAttack" type="AudioStreamPlayer" parent="." unique_id=1910867439]
+stream = ExtResource("5_s8vuo")
+
+[node name="LetterStage" type="AudioStreamPlayer" parent="." unique_id=1460485709]
+stream = ExtResource("6_wcfih")
+
+[node name="LetterUnstage" type="AudioStreamPlayer" parent="." unique_id=1758701735]
+stream = ExtResource("7_laeq7")
+
+[node name="LevelLose" type="AudioStreamPlayer" parent="." unique_id=616950329]
+stream = ExtResource("8_55or6")
+
+[node name="LevelWin" type="AudioStreamPlayer" parent="." unique_id=1980776898]
+stream = ExtResource("9_74mgu")
+
+[node name="Reject" type="AudioStreamPlayer" parent="." unique_id=276724132]
+stream = ExtResource("8_mj6ls")
+
+[node name="WordInvalid" type="AudioStreamPlayer" parent="." unique_id=1940438085]
+stream = ExtResource("9_6a7a8")
+
+[node name="WordSubmit" type="AudioStreamPlayer" parent="." unique_id=2138667936]
+stream = ExtResource("10_yr0f0")
