@@ -1,6 +1,8 @@
 extends Node
 class_name Game
 
+@onready var transition: UITransition = $Transition
+
 const SCENES = {
 	"main_menu": preload("res://scenes/main_menu.tscn"),
 	"battle": preload("res://scenes/battle.tscn")
@@ -16,9 +18,15 @@ func setScene(name: String) -> void:
 	currentScene.setGame(self)
 	add_child(currentScene)
 
+## Don't ask me why I have to make this function. Fuck you, GDScript!
+func setSceneBattle() -> void:
+	setScene("battle")
+
 ## Starts the game.
 func startGame() -> void:
-	setScene("battle")
+	# GDScript can't into lambdas, LOVE2D can:
+	# transition.start(function() self.setScene("battle") end)
+	transition.start(Callable(self, "setSceneBattle"))
 
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:

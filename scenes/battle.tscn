@@ -17,7 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://caoymieaxil56" path="res://images/victory.png" id="16_8a2ah"]
 [ext_resource type="Texture2D" uid="uid://cavphm4ahuex8" path="res://images/msg_turn_player.png" id="16_jt4d8"]
 [ext_resource type="Texture2D" uid="uid://jhvajkubjk5b" path="res://images/defeat.png" id="17_ikjs2"]
-[ext_resource type="Script" uid="uid://6xjtqhu6mffv" path="res://scripts/turn_sprite.gd" id="17_kl6ie"]
+[ext_resource type="Script" path="res://scripts/turn_sprite.gd" id="17_kl6ie"]
 [ext_resource type="Texture2D" uid="uid://ce4uy60dxjauv" path="res://images/msg_turn_enemy.png" id="18_1m01a"]
 [ext_resource type="Texture2D" uid="uid://g3710optnea7" path="res://images/button_attack.png" id="18_1rdfn"]
 [ext_resource type="Texture2D" uid="uid://k2xboj75b0i3" path="res://images/button_attack_pressed.png" id="19_r0ctv"]

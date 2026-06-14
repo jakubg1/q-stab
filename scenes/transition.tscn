@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://b8ydqj7pft2fa"]
+
+[ext_resource type="Script" uid="uid://dxjkkmjwpfmh3" path="res://scripts/transition.gd" id="1_rerct"]
+
+[node name="Transition" type="Node2D" unique_id=2006102277]
+script = ExtResource("1_rerct")
+
+[node name="Rect" type="ColorRect" parent="." unique_id=565738552]
+z_index = 1
+offset_right = 400.0
+offset_bottom = 225.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0)

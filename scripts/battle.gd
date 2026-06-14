@@ -17,8 +17,8 @@ extends Node
 @onready var battleStatsModal: UIBattleStatsModal = $BattleStatsModal
 
 var WAVES := [
-	#EnemyDatabase.placeholder,
-	#EnemyDatabase.slime,
+	EnemyDatabase.placeholder,
+	EnemyDatabase.slime,
 	EnemyDatabase.slime
 ]
 

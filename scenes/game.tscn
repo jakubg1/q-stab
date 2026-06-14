@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b7a1vg5211i7h"]
 
 [ext_resource type="Script" uid="uid://ccrqw3m8h104v" path="res://scripts/game.gd" id="1_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://b8ydqj7pft2fa" path="res://scenes/transition.tscn" id="2_yqjtg"]
 
 [node name="Game" type="Node" unique_id=1705985166]
 script = ExtResource("1_lnu2h")
@@ -10,3 +11,5 @@ offset_right = 400.0
 offset_bottom = 225.0
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
+
+[node name="Transition" parent="." unique_id=2006102277 instance=ExtResource("2_yqjtg")]
