@@ -6,7 +6,7 @@
 script = ExtResource("1_rerct")
 
 [node name="Rect" type="ColorRect" parent="." unique_id=565738552]
-z_index = 1
+z_index = 5
 offset_right = 400.0
 offset_bottom = 225.0
 mouse_filter = 2

@@ -5,6 +5,8 @@ class_name UIBattleStatsModal
 @onready var animation: AnimationPlayer = $AnimationPlayer
 @onready var timer: Timer = $Timer
 
+signal closed()
+
 ## Shows the battle stat dialog.
 func showDialog(delay: float = 0) -> void:
 	if delay == 0:
@@ -32,6 +34,15 @@ func _ready() -> void:
 ## Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
+## Called on an input event.
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed:
+		# Handle mouse button presses.
+		closed.emit()
+	elif event is InputEventKey and event.pressed:
+		# Handle keyboard input.
+		closed.emit()
 
 ## Called when the show delay has ended.
 func _on_timer_timeout() -> void:

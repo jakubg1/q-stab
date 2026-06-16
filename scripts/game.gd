@@ -18,18 +18,20 @@ func setScene(name: String) -> void:
 	currentScene = SCENES[name].instantiate()
 	currentScene.setGame(self)
 	add_child(currentScene)
+	if name == "battle":
+		currentScene.connect("finished", func(): startStagemap())
 
 ## Goes to the main menu.
 func startMainMenu() -> void:
-	transition.start(Callable(self, "setScene").bind("main_menu"))
+	transition.start(func(): setScene("main_menu"))
 
 ## Goes to the stagemap.
 func startStagemap() -> void:
-	transition.start(Callable(self, "setScene").bind("stagemap"))
+	transition.start(func(): setScene("stagemap"))
 
 ## Starts the game.
 func startGame() -> void:
-	transition.start(Callable(self, "setScene").bind("battle"))
+	transition.start(func(): setScene("battle"))
 	MusicManager.stop(0.5)
 
 ## Called when the node enters the scene tree for the first time.

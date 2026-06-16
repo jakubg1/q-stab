@@ -34,6 +34,7 @@ var longestWord := "" ## Longest word in battle.
 signal player_move_ended()
 signal enemy_move_ended()
 signal turn_ended()
+signal finished()
 
 ## Sets the game when this scene starts.
 ## This is necessary so that we can move the game control out of the scene tree!
@@ -112,6 +113,7 @@ func end(won: bool) -> void:
 		battleStatsModal.setTime(time)
 		battleStatsModal.setLongestWord(longestWord)
 		battleStatsModal.showDialog(2)
+		battleStatsModal.connect("closed", func(): finished.emit())
 	else:
 		defeatSprite.show()
 		SoundManager.playSound("LevelLose")
